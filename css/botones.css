@@ -1,0 +1,27 @@
+<style type="text/css">
+
+.alignIni{
+  margin-top: 200px;
+  margin-left: 400px;
+}
+.boton_basico{
+  padding: 10px;
+  font-weight: 600;
+  font-size: 20px;
+  color: #ffffff;
+  background-color: #00ff75;
+  border-radius: 8px;
+  left: 20px;
+}
+.cuadro_texto{
+  padding: 10px;
+  font-weight: 600;
+  font-size: 20px;
+  color: #000000;
+  background-color: #ffffff;
+  left: 20px;
+}
+.logoIni {
+
+}
+</style>
