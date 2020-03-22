@@ -14,7 +14,7 @@
 	<!-- meta character set -->
 	<meta charset="UTF-8">
 	<!-- Site Title -->
-	<title>Travel</title>
+	<title>Dibujillo</title>
 	<link href="https://fonts.googleapis.com/css?family=Poppins:100,200,400,300,500,600,700" rel="stylesheet">
 	<!--
     CSS
@@ -37,11 +37,20 @@
 		/* width:25%; */
 	}
 	.cuadrado{
-		padding:3cm;
-		margin:5px;
+		padding:1cm;
+		padding-left:3cm;
+		padding-right:3cm;
 		background-color: #ffffff;
 		border: solid 1px #3b4652;
 		color: white;
+	}
+	.cuadrado_relleno{
+		padding:10px;
+		margin:0 0 25px;
+		background-color: #bdfccf;
+		border: solid 1px #3b4652;
+		color: white;
+		border-radius: 10px;
 	}
 	</style>
 </head>
@@ -53,18 +62,27 @@
 		<div class="row fullscreen align-items-center justify-content-between aumentoArriba">
 		<img src="img/logo1.jpeg">
 			<div class="col-lg-8 col-md-6 banner-right margenAuto">
-						<form action="jugar.html" class="form-wrap">
+						<div class="form-wrap">
 								<div class="cuadrado">
-								<button class="boton_basico" href="iniciarSesion.html" >Identificarse</button>
+									<div class="cuadrado_relleno">
+										<form action="jugar.html" class="form-wrap">
+											<input type="text" name="Email" placeholder="Email">
+											<br><br>
+											<input type="text" name="Contraseña" placeholder="Contraseña">
+											<br><br>
+											<input type="submit" class="boton_basico" name="Go">
+										</form>
+									</div>
 								<hr>
 								<p class="cuadro_texto" >Partida rápida
-								</br>
-										<input type="text" value="Nick: "
+									<br><br>
+									<input type="text" value="Nick: ">
+									<br><br>
+									<a href="" class="boton_basico" size="30"> Go </a>
 								</p>
 
 							</div>
-							<input type="submit" value="Buscar viajes" class="primary-btn text-uppercase"/>
-						</form>
+						</div>
 						</div>
 					</div>
 				</div>
