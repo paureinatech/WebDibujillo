@@ -4,6 +4,8 @@
   margin-top: 200px;
   margin-left: 400px;
 }
+a:hover {color:black;}
+
 .boton_basico{
   padding: 10px;
   font-weight: 600;
