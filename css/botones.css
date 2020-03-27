@@ -9,9 +9,24 @@
   font-weight: 600;
   font-size: 20px;
   color: #ffffff;
-  background-color: #00ff75;
+  background-color: #65faa6;
   border-radius: 8px;
   left: 20px;
+}
+.boton_grande{
+  padding: 20px;
+  padding-left: 100px;
+  padding-right: 100px;
+  font-weight: 800;
+  font-size: 30px;
+  color: #ffffff;
+  background-color: #65faa6;
+  border-radius: 8px;
+  left: 20px;
+}
+.boton_menosancho{
+  padding-left: 15px;
+  padding-right: 15px;
 }
 .cuadro_texto{
   padding: 10px;
