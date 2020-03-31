@@ -1,0 +1,32 @@
+<style type="text/css">	
+	
+	h1 {
+		font-size: 2em;
+		font-weight: bold;
+	}
+	
+	p{
+		color:#000000;
+		margin-top:20px;
+		padding-left: 20px;
+		font-weight: bold;
+	}
+	body {
+		color: black;
+		background-color:#bdfccf;
+	}
+	
+	.buttonlist {
+		padding: 10px 70px;
+		margin-left: 300px;
+		color: #bdfccf;
+		border: 1px solid #000000;
+		opacity: 1;
+	}
+	
+	.panel-collapse{
+		margin-left: 300px;
+		background-color:#bdfccf;
+	}
+</style>
+	

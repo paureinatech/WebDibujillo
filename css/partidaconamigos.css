@@ -1,0 +1,91 @@
+<style type="text/css">	
+	
+	.cuadrado{
+		position: absolute;
+		z-index: -1;
+		padding:320px 300px ;
+		background-color: #FFFFFF;
+		border-radius: 20%;
+	}
+	
+	.cuadrado2{
+		position: absolute;
+		z-index: -1;
+		padding:280px 300px ;
+		background-color: #FFFFFF;
+		border-radius: 20%;
+	}
+	
+	
+	body {
+		color: black;
+	}
+	
+	.buttonN{
+		position: absolute;
+		font-weight: 600;
+		font-size: 20px;
+		z-index: 2;
+		font: #ffffff;
+		background-color: #65faa6;
+		margin-top: 30px;
+		border: 1px solid black;
+	}
+	
+	.blist{
+		position: relative;
+		font-weight: 600;
+		font-size: 20px;
+		margin-top: 160px;
+		margin-left: 110px;
+		z-index: 2;
+	}
+	
+	.bunit{
+		padding: 20px;
+		border: 1px solid black;
+	}
+	
+	a:hover {color:black;}
+	
+	
+	.navProp{
+		position: relative;
+		z-index: 100;
+	}
+	
+	.codigo{
+		margin-top: 280px; 
+		padding: 30px 290px;
+		text-align: center;
+	}
+	
+	.nuevaP{
+		padding: 30px 250px;
+	}
+	
+	.existeP{
+		padding: 30px 270px;
+	}
+	
+	.code{
+		position:relative;
+		margin-left: 500px;
+		padding: 15px 100px; 
+		border: 1px solid black;
+		text-align: center;
+		line-height: 10pt;
+	}
+	
+	
+	.go{
+		position:relative;
+		padding: 40px;
+		margin-left: 630px;
+		border-radius: 100%;
+		background-color: #65faa6;
+		border: 1px solid black;
+		font-weight: 600;
+		font-size: 20px;
+	}
+	</style>
