@@ -1,36 +1,36 @@
 <!DOCTYPE html>
 <html lang="zxx" class="no-js">
 <head>
-	<!-- Mobile Specific Meta -->
-	<meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-	<!-- Favicon-->
-	<!-- <link rel="shortcut icon" href="img/fav.png"> -->
-	<!-- Author Meta -->
-	<meta name="author" content="colorlib">
-	<!-- Meta Description -->
-	<meta name="description" content="">
-	<!-- Meta Keyword -->
-	<meta name="keywords" content="">
-	<!-- meta character set -->
-	<meta charset="UTF-8">
-	<!-- Site Title -->
-	<title>Dibujillo</title>
-	<link href="https://fonts.googleapis.com/css?family=Poppins:100,200,400,300,500,600,700" rel="stylesheet">
-	<!--
+    <!-- Mobile Specific Meta -->
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <!-- Favicon-->
+    <!-- <link rel="shortcut icon" href="img/fav.png"> -->
+    <!-- Author Meta -->
+    <meta name="author" content="colorlib">
+    <!-- Meta Description -->
+    <meta name="description" content="">
+    <!-- Meta Keyword -->
+    <meta name="keywords" content="">
+    <!-- meta character set -->
+    <meta charset="UTF-8">
+    <!-- Site Title -->
+    <title>Dibujillo</title>
+    <link href="https://fonts.googleapis.com/css?family=Poppins:100,200,400,300,500,600,700" rel="stylesheet">
+    <!--
     CSS
     ============================================= -->
-	<!-- <link rel="stylesheet" href="css/linearicons.css"> -->
-	<!-- <link rel="stylesheet" href="css/font-awesome.min.css"> -->
-	<link rel="stylesheet" href="css/bootstrap.css">
-	<!-- <link rel="stylesheet" href="css/magnific-popup.css"> -->
-	<!-- <link rel="stylesheet" href="css/jquery-ui.css"> -->
-	<!-- <link rel="stylesheet" href="css/nice-select.css"> -->
-	<!-- <link rel="stylesheet" href="css/animate.min.css"> -->
-	<!-- <link rel="stylesheet" href="css/owl.carousel.css"> -->
-	<link rel="stylesheet" href="css/main.css">
-	<link rel="stylesheet" href="css/botones.css">
+    <!-- <link rel="stylesheet" href="css/linearicons.css"> -->
+    <!-- <link rel="stylesheet" href="css/font-awesome.min.css"> -->
+    <link rel="stylesheet" href="css/bootstrap.css">
+    <!-- <link rel="stylesheet" href="css/magnific-popup.css"> -->
+    <!-- <link rel="stylesheet" href="css/jquery-ui.css"> -->
+    <!-- <link rel="stylesheet" href="css/nice-select.css"> -->
+    <!-- <link rel="stylesheet" href="css/animate.min.css"> -->
+    <!-- <link rel="stylesheet" href="css/owl.carousel.css"> -->
+    <link rel="stylesheet" href="css/main.css">
+    <link rel="stylesheet" href="css/botones.css">
 
-	<style type="text/css">
+    <style type="text/css">
 	img{
 		display:block;
 		margin:auto;
@@ -52,66 +52,72 @@
 		color: white;
 		border-radius: 10px;
 	}
-	</style>
+
+
+
+    </style>
 </head>
 <body style="display: block;">
 
 
 <!-- start banner Area -->
-	<div class="container">
-		<div class="row fullscreen align-items-center justify-content-between aumentoArriba">
-		<img src="img/logo1.jpeg">
-			<div class="col-lg-8 col-md-6 banner-right margenAuto">
-						<div class="form-wrap">
-								<div class="cuadrado">
-									<div class="cuadrado_relleno">
-										<form action="jugar.html" class="form-wrap">
-											<input type="text" name="Email" placeholder="Email">
-											<br><br>
-											<input type="text" name="Contraseña" placeholder="Contraseña">
-											<br><br>
-											<input type="submit" class="boton_basico" name="Go">
-										</form>
-									</div>
-								<hr>
-								<p class="cuadro_texto" >Partida rápida
-									<br><br>
-									<input type="text" value="Nick: ">
-									<br><br>
-									<a href="" class="boton_basico" size="30"> Go </a>
-								</p>
+<div class="container">
+    <div class="row fullscreen align-items-center justify-content-between aumentoArriba">
+        <img src="img/logo1.jpeg">
+        <div class="col-lg-8 col-md-6 banner-right margenAuto">
+            <div class="form-wrap">
+                <div class="cuadrado">
+                    <div class="cuadrado_relleno">
+                        <form name="signInForm" class="form-wrap">
+                            <input id="email" type="text" name="email" placeholder="Email">
+                            <br><br>
+                            <input id="password" type="text" name="password" placeholder="Contraseña">
+                            <br><br>
+                            <input type="button" onclick="signIn()" class="boton_basico" value="Go">
+                        </form>
 
-							</div>
-						</div>
-						</div>
-					</div>
-				</div>
-			</div>
-		</div>
-	</div>
+                    </div>
+                    <hr>
+                    <p class="cuadro_texto">Partida rápida
+                        <br><br>
+                        <input type="text" value="Nick: ">
+                        <br><br>
+                        <a href="" class="boton_basico"> Go </a>
+                    </p>
+
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
 <!-- End banner Area -->
 
 <!-- start footer Area -->
 <footer class="footer-area section-gap">
-	<div class="container">
-		<div class="row footer-bottom d-flex justify-content-between align-items-center">
-			<p class="col-lg-8 col-sm-12 footer-text m-0"><!-- Link back to Colorlib can't be removed. Template is licensed under CC BY 3.0. -->
-				<script>document.write(new Date().getFullYear());</script>  | Dibujillo  <i class="fa fa-heart-o" aria-hidden="true"></i>
-		</div>
-	</div>
+    <div class="container">
+        <div class="row footer-bottom d-flex justify-content-between align-items-center">
+            <p class="col-lg-8 col-sm-12 footer-text m-0">
+                <!-- Link back to Colorlib can't be removed. Template is licensed under CC BY 3.0. -->
+                <script>document.write(new Date().getFullYear());</script>
+                | Dibujillo <i class="fa fa-heart-o" aria-hidden="true"></i>
+        </div>
+    </div>
 </footer>
 <!-- End footer Area -->
 
 <!-- Scripts para poder usar Firebase, siempre que se quiera usar tiene que aparecer al final del archivo -->
 <!-- The core Firebase JS SDK is always required and must be listed first -->
-<script src="/__/firebase/7.14.0/firebase-app.js"></script>
+<script src="https://www.gstatic.com/firebasejs/7.14.0/firebase-app.js"></script>
 
 <!-- TODO: Add SDKs for Firebase products that you want to use
      https://firebase.google.com/docs/web/setup#available-libraries -->
-<script src="/__/firebase/7.14.0/firebase-analytics.js"></script>
+<script src="https://www.gstatic.com/firebasejs/7.14.0/firebase-analytics.js"></script>
+<script src="https://www.gstatic.com/firebasejs/7.14.0/firebase-auth.js"></script>
+<script src="https://www.gstatic.com/firebasejs/7.14.0/firebase-firestore.js"></script>
 
-<!-- Initialize Firebase -->
-<script src="/__/firebase/init.js"></script>
+<script src="js/dibujillo/dibujillo.js"></script>
+<script src="js/dibujillo/index.js"></script>
 
 </body>
 </html>
