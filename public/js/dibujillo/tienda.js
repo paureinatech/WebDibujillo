@@ -38,12 +38,12 @@ function escucharAuthentication() {
         escucharUsuario(user.email);
 
         console.log('Sesion iniciada con exito');
-        window.location.replace("juegos.html");
 
       } else {
         // User is signed out.
         // ...
-        console.log("No hay usuario logueado");
+        console.log("No hay usuario logueado, volviendo al inicio");
+        window.location.replace("index.html");
       }
     });
 }
@@ -64,6 +64,7 @@ function escucharUsuario(email) {
             iconos : data.iconos,
             solicitudes : data.solicitudes,
         };
+        colores.forEach(cargarColores);
     });
 }
 
@@ -85,56 +86,27 @@ async function signOut() {
 
 //-------------------------------------------------------------------
 
-var email = document.getElementById('email');
-var password = document.getElementById('password');
-var signInButton = document.getElementById('signInButton');
+var colores = [{nombre:"Negro", color:"0xFF000000", imagen:"img/colores/negro.png"},
+{nombre:"Rojo", color:"0xFF000000", imagen:"img/colores/rojo.png"},
+{nombre:"Azul", color:"0xFF1E88E5", imagen:"img/colores/azul_oscuro.png"},
+{nombre:"Amarillo", color:"0xFFFFEB3B", imagen:"img/colores/amarillo.png"},
+{nombre:"Verde", color:"0xFF4CAF50", imagen:"img/colores/verde_oscuro.png"},];
 
-async function signIn() {
+var listaColores = document.getElementById('listaColores');
 
-    if (!validateForm()) {
-        return;
-    }
-    else {
-      console.log('Logueando...');
-    }
-
-    var result = true;
-
-    await firebase.auth().signInWithEmailAndPassword(email.value, password.value).catch(function(error) {
-      // Handle Errors here.
-      var errorCode = error.code;
-      var errorMessage = error.message;
-      console.log('Error al iniciar sesion');
-      console.log(errorMessage);
-      // ...
-      result = false;
-    });
-    if (result == true) {
-        console.log('Sesion iniciada con exito');
-        window.location.replace("juegos.html");
-    }
-    else {
-        console.log('No se ha podido iniciar sesion');
-        document.signInForm.password.focus();
-    }
-
-    return result;
+function comprarColor(color) {
+    console.log("Color comprado " + color);
 }
 
-function validateForm() {
-    console.log('Comprobando campos');
-    if (document.signInForm.email.value == "") {
-        alert("Por favor introduzca su email");
-        document.signInForm.email.focus();
-        return false;
+function cargarColores(color) {
+    if (usuario.colores.includes(color.color)) {
+        console.log('tiene el color');
+        listaColores.innerHTML += '<a class="btn btn-success btn-lg buttonlist" role="button"><p style="float: left;" > &emsp;&emsp;' + color.nombre + '<img align="left" src="' + color.imagen + '" width="30px"></p><p style="float: right"> 50&nbsp; <img src="img/moneda.png" width="30px"></p></a>';
     }
-    if (document.signInForm.password.value == "") {
-        alert("Por favor introduzca su contraseña");
-        document.signInForm.password.focus();
-        return false;
+    else {
+        console.log('no lo tiene');
+        listaColores.innerHTML += '<a class="btn btn-success btn-lg buttonlist" role="button" onclick="comprarColor(' + color.color + ')"><p style="float: left;" > &emsp;&emsp;' + color.nombre + '<img align="left" src="' + color.imagen + '" width="30px"></p><p style="float: right"> 50&nbsp; <img src="img/moneda.png" width="30px"></p></a>';
     }
-    //console.log(document.signInForm.email)
-    return ( true );
 }
 
 escucharAuthentication();
