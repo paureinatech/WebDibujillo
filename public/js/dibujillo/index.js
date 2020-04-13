@@ -18,6 +18,10 @@ var user = null;
 
 var usuario;
 
+
+
+// Estas funciones son basicas de funcionamiento, NO TOCAR
+
 function escucharAuthentication() {
     firebase.auth().onAuthStateChanged(function(user) {
       console.log('Cambios en el usuario');
@@ -80,9 +84,8 @@ async function signOut() {
 }
 
 //-------------------------------------------------------------------
-
 // Funciones propias de la pantalla de inicio de sesion
-
+// EStas son las funciones propias de cada pantalla y donde debeis modificar
 //-------------------------------------------------------------------
 
 var email = document.getElementById('email');
@@ -137,4 +140,5 @@ function validateForm() {
     return ( true );
 }
 
+// No tocar esta linea y dejarla puesta en todos los JS
 escucharAuthentication();

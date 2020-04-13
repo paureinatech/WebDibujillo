@@ -86,26 +86,29 @@ async function signOut() {
 
 //-------------------------------------------------------------------
 
-var colores = [{nombre:"Negro", color:"0xFF000000", imagen:"img/colores/negro.png"},
-{nombre:"Rojo", color:"0xFF000000", imagen:"img/colores/rojo.png"},
-{nombre:"Azul", color:"0xFF1E88E5", imagen:"img/colores/azul_oscuro.png"},
-{nombre:"Amarillo", color:"0xFFFFEB3B", imagen:"img/colores/amarillo.png"},
-{nombre:"Verde", color:"0xFF4CAF50", imagen:"img/colores/verde_oscuro.png"},];
+var colores = [{nombre:"Negro", color:"0XFF000000", imagen:"img/colores/negro.png"},
+{nombre:"Rojo", color:"0XFFFF2632", imagen:"img/colores/rojo.png"},
+{nombre:"Azul", color:"0XFF1E88E5", imagen:"img/colores/azul_oscuro.png"},
+{nombre:"Amarillo", color:"0XFFFFEB3B", imagen:"img/colores/amarillo.png"},
+{nombre:"Verde", color:"0XFF4CAF50", imagen:"img/colores/verde_claro.png"},];
 
 var listaColores = document.getElementById('listaColores');
 
 function comprarColor(color) {
     console.log("Color comprado " + color);
+    firestore.collection('usuarios').doc(usuario.email).update({
+        colores: firebase.firestore.FieldValue.arrayUnion(color)
+    });
 }
 
 function cargarColores(color) {
     if (usuario.colores.includes(color.color)) {
-        console.log('tiene el color');
-        listaColores.innerHTML += '<a class="btn btn-success btn-lg buttonlist" role="button"><p style="float: left;" > &emsp;&emsp;' + color.nombre + '<img align="left" src="' + color.imagen + '" width="30px"></p><p style="float: right"> 50&nbsp; <img src="img/moneda.png" width="30px"></p></a>';
+        listaColores.innerHTML += '<a class="btn btn-success btn-lg buttonlist" role="button"><p style="float: left;" > &emsp;&emsp;' + color.nombre + '<img align="left" src="' + color.imagen + '" width="30px"></p><p style="float: right"><img src="img/check.svg" width="30px"></p></a>';
     }
     else {
-        console.log('no lo tiene');
-        listaColores.innerHTML += '<a class="btn btn-success btn-lg buttonlist" role="button" onclick="comprarColor(' + color.color + ')"><p style="float: left;" > &emsp;&emsp;' + color.nombre + '<img align="left" src="' + color.imagen + '" width="30px"></p><p style="float: right"> 50&nbsp; <img src="img/moneda.png" width="30px"></p></a>';
+        console.log(color.color);
+        var newColor = color.color;
+        listaColores.innerHTML += '<a class="btn btn-success btn-lg buttonlist" role="button" onclick="comprarColor(\"' + newColor + '\")"><p style="float: left;" > &emsp;&emsp;' + color.nombre + '<img align="left" src="' + color.imagen + '" width="30px"></p><p style="float: right"> 50&nbsp; <img src="img/moneda.png" width="30px"></p></a>';
     }
 }
 
