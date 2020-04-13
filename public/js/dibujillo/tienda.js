@@ -64,6 +64,7 @@ function escucharUsuario(email) {
             iconos : data.iconos,
             solicitudes : data.solicitudes,
         };
+        listaColores.innerHTML = "";
         colores.forEach(cargarColores);
     });
 }
@@ -95,10 +96,12 @@ var colores = [{nombre:"Negro", color:"0XFF000000", imagen:"img/colores/negro.pn
 var listaColores = document.getElementById('listaColores');
 
 function comprarColor(color) {
-    console.log("Color comprado " + color);
-    firestore.collection('usuarios').doc(usuario.email).update({
-        colores: firebase.firestore.FieldValue.arrayUnion(color)
-    });
+    if (usuario.monedas > 50) {
+        firestore.collection('usuarios').doc(usuario.email).update({
+            colores: firebase.firestore.FieldValue.arrayUnion(color),
+            monedas: firebase.firestore.FieldValue.increment(-50),
+        });
+    }
 }
 
 function cargarColores(color) {
@@ -106,9 +109,7 @@ function cargarColores(color) {
         listaColores.innerHTML += '<a class="btn btn-success btn-lg buttonlist" role="button"><p style="float: left;" > &emsp;&emsp;' + color.nombre + '<img align="left" src="' + color.imagen + '" width="30px"></p><p style="float: right"><img src="img/check.svg" width="30px"></p></a>';
     }
     else {
-        console.log(color.color);
-        var newColor = color.color;
-        listaColores.innerHTML += '<a class="btn btn-success btn-lg buttonlist" role="button" onclick="comprarColor(\"' + newColor + '\")"><p style="float: left;" > &emsp;&emsp;' + color.nombre + '<img align="left" src="' + color.imagen + '" width="30px"></p><p style="float: right"> 50&nbsp; <img src="img/moneda.png" width="30px"></p></a>';
+        listaColores.innerHTML += '<a class="btn btn-success btn-lg buttonlist" role="button" onclick=comprarColor("' + color.color + '")><p style="float: left;" > &emsp;&emsp;' + color.nombre + '<img align="left" src="' + color.imagen + '" width="30px"></p><p style="float: right"> 50&nbsp; <img src="img/moneda.png" width="30px"></p></a>';
     }
 }
 
