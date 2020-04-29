@@ -1,0 +1,122 @@
+<!DOCTYPE html>
+<html lang="zxx" class="no-js">
+<head>
+    <!-- Mobile Specific Meta -->
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <!-- Favicon-->
+    <!-- <link rel="shortcut icon" href="img/fav.png"> -->
+    <!-- Author Meta -->
+    <meta name="author" content="colorlib">
+    <!-- Meta Description -->
+    <meta name="description" content="">
+    <!-- Meta Keyword -->
+    <meta name="keywords" content="">
+    <!-- meta character set -->
+    <meta charset="UTF-8">
+    <!-- Bootstrap -->
+    <link rel="stylesheet" href="css/main.css">
+
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.16.0/umd/popper.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.4.1/js/bootstrap.min.js"></script>
+
+    <!-- Site Title -->
+    <title>Tienda</title>
+    <link href="https://fonts.googleapis.com/css?family=Poppins:100,200,400,300,500,600,700" rel="stylesheet">
+    <!-- add icon link -->
+    <link rel="icon" href="img/logo_sinfondo.png" type="image/x-icon">
+    <!--
+    CSS
+    ============================================= -->
+
+    <link rel="stylesheet" href="css/bootstrap.css">
+    <link rel="stylesheet" href="css/main.css">
+    <link rel="stylesheet" href="css/social.css">
+
+
+</head>
+
+<body>
+<nav class="navbar navbar-expand-lg navbar-light navbar-light navProp" style="background-color: #65faa6" ;>
+    <a href="inicio.html"><img src="img/logo_sinfondo.png" width="70px" HSPACE="45"></a>
+    <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNav"
+            aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+        <span class="navbar-toggler-icon"></span>
+    </button>
+    <div class="collapse navbar-collapse" id="navbarNav">
+        <ul class="navbar-nav">
+            <li class="nav-item">
+                <a class="nav-link" href="juegos.html"><img src="img/mando.svg" HSPACE="100"></a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link" href="tienda.html"><img src="img/tiendaNegro.svg" HSPACE="100"></a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link" href="social.html"><img src="img/people.svg" HSPACE="100"></a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link" href="profile.html"><img src="img/perfil.svg" HSPACE="100"></a>
+            </li>
+        </ul>
+    </div>
+</nav>
+
+<h1 align="center" style="margin-top: 50px">SOCIAL</h1>
+
+<br/><br/>
+
+<div class="option-list">
+    <div>
+        <ul class="topnav">
+            <li class="all active">Amigos</li>
+            <li class="online">Solicitudes</li>
+        </ul>
+    </div>
+
+    <div class="table-responsive">
+        <table class="table user-list">
+            <thead>
+            <tr>
+                <th><span>Nick</span></th>
+                <th><span>Puntos</span></th>
+                <th><span>Monedas</span></th>
+                <th>&nbsp;</th>
+            </tr>
+            </thead>
+            <tbody>
+            <tr>
+                <td>
+                    <img src="https://bootdey.com/img/Content/user_1.jpg" alt="">
+                    <span href="#" class="user-link">Turbis</span>
+                </td>
+                <td>2000</td>
+                <td>8000</td>
+            </tr>
+            <tr>
+                <td>
+                    <img src="https://bootdey.com/img/Content/user_2.jpg" alt="">
+                    <span href="#" class="user-link">Paulis</span>
+                </td>
+                <td>2000</td>
+                <td>8000</td>
+            </tr>
+            </tbody>
+        </table>
+    </div>
+
+</div>
+
+<!-- Scripts para poder usar Firebase, siempre que se quiera usar tiene que aparecer al final del archivo -->
+<!-- The core Firebase JS SDK is always required and must be listed first -->
+<script src="https://www.gstatic.com/firebasejs/7.14.0/firebase-app.js"></script>
+
+<!-- TODO: Add SDKs for Firebase products that you want to use
+     https://firebase.google.com/docs/web/setup#available-libraries -->
+<script src="https://www.gstatic.com/firebasejs/7.14.0/firebase-analytics.js"></script>
+<script src="https://www.gstatic.com/firebasejs/7.14.0/firebase-auth.js"></script>
+<script src="https://www.gstatic.com/firebasejs/7.14.0/firebase-firestore.js"></script>
+
+<script src="js/dibujillo/social.js"></script>
+
+</body>
+</html>
