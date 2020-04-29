@@ -4706,6 +4706,15 @@ body.mobile-nav-active #mobile-nav-toggle {
   border-radius: 10px;
 }
 
+.cuadrado_relleno2{
+  padding:10px;
+  margin:25px;
+  background-color: #FCFFB4;
+  border: solid 1px #3b4652;
+  color: white;
+  border-radius: 10px;
+}
+
 .margenAuto{
   margin:auto;
 }

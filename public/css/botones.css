@@ -15,6 +15,17 @@ a:hover {color:black;}
   border-radius: 8px;
   left: 20px;
 }
+
+.boton_basico2{
+  padding: 10px;
+  font-weight: 600;
+  font-size: 20px;
+  color: #000000;
+  background-color: #F8E218;
+  border-radius: 8px;
+  left: 20px;
+}
+
 .boton_grande{
   padding: 20px;
   padding-left: 100px;
