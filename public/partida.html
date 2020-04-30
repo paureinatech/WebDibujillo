@@ -29,6 +29,7 @@
     <!-- <link rel="stylesheet" href="css/owl.carousel.css"> -->
     <link rel="stylesheet" href="css/main.css">
     <link rel="stylesheet" href="css/botones.css">
+    <link rel="stylesheet" href="css/partida.css">
 </head>
 
 <body style="background-color:#bdfccf;">
@@ -40,7 +41,7 @@
         <span class="navbar-toggler-icon"></span>
     </button>
     <div class="collapse navbar-collapse" id="navbarNav">
-        <ul class="navbar-nav justify-content-between">
+        <ul class="navbar-nav">
             <li class="nav-item">
                 <a class="nav-link" href="juegos.html"><img src="img/mandoNegro.svg" HSPACE="100"></a>
             </li>
@@ -58,18 +59,55 @@
 </nav>
 <!-- Fin de Menú -->
 <div class="container-fluid">
-    <div class="list-group list-group-horizontal align-top justify-content-between">
-        <div id="listaJugadores" class="btn-group-vertical align-self-start">
-
+    <div class="row">
+        <div class="col-3">
+            <div id="listaJugadores" class="table-responsive-vertical" >
+                <table class="table user-list " >
+                    <thead>
+                    <tr>
+                        <th><span>Nick</span></th>
+                        <th><span>Puntos</span></th>
+                        <th>&nbsp;</th>
+                    </tr>
+                    </thead>
+                    <tbody>
+                    <tr>
+                        <td>
+                            <img src="https://bootdey.com/img/Content/user_1.jpg" alt="">
+                            <a class="user-link">Ilimanili</a>
+                        </td>
+                        <td>2000</td>
+                    </tr>
+                    <tr>
+                        <td>
+                            <img src="https://bootdey.com/img/Content/user_3.jpg" alt="">
+                            <a class="user-link">Yaime</a>
+                        </td>
+                        <td>2000</td>
+                    </tr>
+                    </tbody>
+                </table>
+            </div>
         </div>
 
-        <canvas id="canvas" width="600" height="600"
-                style="position:relative;border:2px solid;background-color: #ffffff"></canvas>
-        <div id="chat" class="btn-group-vertical align-self-start">
+        <div class="col-6">
+        <canvas id="canvas" width="600" height="580"
+                style="position:relative;border:2px solid;"></canvas>
+        </div>
 
+        <div class="col-3">
+
+                <ul class="chat-thread">
+                    <li>Are we meeting today?</li>
+                    <li>yes, what time suits you?</li>
+                    <li>I was thinking after lunch, I have a meeting in the morning</li>
+                </ul>
+
+                <form class="chat-window">
+                    <input class="chat-window-message" name="chat-window-message" type="text" autocomplete="off" autofocus />
+                </form>
         </div>
     </div>
-
 </div>
 
 <!-- Scripts para poder usar Firebase, siempre que se quiera usar tiene que aparecer al final del archivo -->
