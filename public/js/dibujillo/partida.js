@@ -1,5 +1,4 @@
 // Your web app's Firebase configuration
-/*
 var firebaseConfig = {
     apiKey: "AIzaSyDzJ50PyRubhuR2I3dSBUcS70rYpi5FV9M",
     authDomain: "dibujillo.firebaseapp.com",
@@ -97,12 +96,15 @@ var listaJugadores = document.getElementById('listaJugadores');
 var lienzo = document.querySelector('#canvas')
 var chat = document.getElementById('chat');
 
+var partidaActual;
+
 function escucharPartida(id) {
 
     firestore.collection('partidas').doc(id).onSnapshot(function(doc) {
         console.log("Current data: ", doc.data());
 
         var partida = doc.data();
+        partidaActual = partida;
 
         listaJugadores.innerHTML = "";
         var jugadores = partida.jugadores;
@@ -111,6 +113,8 @@ function escucharPartida(id) {
         chat.innerHTML = "";
         var mensajes = partida.chat;
         mensajes.forEach(actualizarChat);
+        var lis = document.getElementById("chat").getElementsByTagName("li");
+        lis[lis.length-1].scrollIntoView();
 
         var puntos = partida.puntos;
         actualizarLienzo(puntos);
@@ -119,11 +123,11 @@ function escucharPartida(id) {
 }
 
 function actualizarJugadores(jugador) {
-    listaJugadores.innerHTML += '<a class="btn btn-success btn-lg buttonlist" role="button"><p style="float: left;" > &emsp;&emsp;' + jugador.usuario.apodo + '</p><p style="float: right">' + jugador.score + '</p></a>';
+    listaJugadores.innerHTML += '<tr><td><img style="max-width:100%;" width="50" height="50" src="' + jugador.usuario.photoUrl + '" alt=""><a class="user-link">' + jugador.usuario.apodo + '</a></td><td>' + jugador.score + '</td></tr>';
 }
 
 function actualizarChat(mensaje) {
-    chat.innerHTML += '<a class="btn btn-success btn-lg buttonlist" role="button"><p style="float: left;" > &emsp;&emsp;' + mensaje.usuario.apodo + '</p><p style="float: right">' + mensaje.contenido + '</p></a>';
+    chat.innerHTML += '<li><span class="chat-row-apodo">' + mensaje.usuario.apodo + '</span><span>' + mensaje.contenido + '</span></li>';
 }
 
 function actualizarLienzo(puntos) {
@@ -152,6 +156,29 @@ function actualizarLienzo(puntos) {
     });
     ctx.stroke();
 }
+
+function mandarMensaje(mensaje) {
+    var timestamp = Date.now();
+    firestore.collection('partidas').doc(partidaActual.id).update({
+        chat: firebase.firestore.FieldValue.arrayUnion({
+            contenido: mensaje,
+            timestamp: timestamp,
+            usuario: usuario,
+        }),
+    });
+}
+
+var input = document.getElementById("chat-input");
+
+input.addEventListener("keyup", function (event) {
+  if (event.keyCode === 13) {
+    event.preventDefault();
+    if (input.value != "") {
+        mandarMensaje(input.value);
+    }
+    input.value = "";
+  }
+});
 
 let lineas = [];
 let correccionX = 0;
@@ -219,150 +246,6 @@ function dejarDibujo() {
 
 escucharAuthentication();
 escucharPartida('prueba');
-*/
-
-// Chat (WebRTC)
-//
-// Currently supported in Chrome and Firefox only.
-// WebRTC support is ultra basic at the moment - send/receive // in current window only.
-// Design based on Bookmarks app by // Eyal Zuri - http://dribbble.com/shots/1261465-Bookmarks-app-gif
-//
-// The below JS has been adapted from this excellent RTCDataChannel demo
-// http://simpl.info/rtcdatachannel/
-
-var sendChannel,
-	receiveChannel,
-	chatWindow = document.querySelector('.chat-window'),
-	chatWindowMessage = document.querySelector('.chat-window-message'),
-	chatThread = document.querySelector('.chat-thread');
-
-// Create WebRTC connection
-createConnection();
-
-// On form submit, send message
-chatWindow.onsubmit = function (e) {
-	e.preventDefault();
-
-	sendData();
-
-	return false;
-};
-
-function createConnection () {
-    var servers = null;
-
-    if (window.mozRTCPeerConnection) {
-	    window.localPeerConnection = new mozRTCPeerConnection(servers, {
-	        optional: [{
-	            RtpDataChannels: true
-	        }]
-	    });
-    } else {
-	    window.localPeerConnection = new webkitRTCPeerConnection(servers, {
-	        optional: [{
-	            RtpDataChannels: true
-	        }]
-	    });
-    }
-
-    try {
-        // Reliable Data Channels not yet supported in Chrome
-        sendChannel = localPeerConnection.createDataChannel('sendDataChannel', {
-            reliable: false
-        });
-    } catch (e) {
-    }
-
-    localPeerConnection.onicecandidate = gotLocalCandidate;
-    sendChannel.onopen = handleSendChannelStateChange;
-    sendChannel.onclose = handleSendChannelStateChange;
-
-    if (window.mozRTCPeerConnection) {
-	    window.remotePeerConnection = new mozRTCPeerConnection(servers, {
-	        optional: [{
-	            RtpDataChannels: true
-	        }]
-	    });
-    } else {
-	    window.remotePeerConnection = new webkitRTCPeerConnection(servers, {
-	        optional: [{
-	            RtpDataChannels: true
-	        }]
-	    });
-    }
-
-    remotePeerConnection.onicecandidate = gotRemoteIceCandidate;
-    remotePeerConnection.ondatachannel = gotReceiveChannel;
-
-    // Firefox seems to require an error callback
-    localPeerConnection.createOffer(gotLocalDescription, function (err) {
-    });
-}
-
-function sendData () {
-    sendChannel.send(chatWindowMessage.value);
-}
-
-function gotLocalDescription (desc) {
-    localPeerConnection.setLocalDescription(desc);
-    remotePeerConnection.setRemoteDescription(desc);
-    // Firefox seems to require an error callback
-    remotePeerConnection.createAnswer(gotRemoteDescription, function (err) {
-    });
-}
-
-function gotRemoteDescription (desc) {
-    remotePeerConnection.setLocalDescription(desc);
-    localPeerConnection.setRemoteDescription(desc);
-}
-
-function gotLocalCandidate (event) {
-    if (event.candidate) {
-        remotePeerConnection.addIceCandidate(event.candidate);
-    }
-}
-
-function gotRemoteIceCandidate (event) {
-    if (event.candidate) {
-        localPeerConnection.addIceCandidate(event.candidate);
-    }
-}
-
-function gotReceiveChannel (event) {
-    receiveChannel = event.channel;
-    receiveChannel.onmessage = handleMessage;
-    receiveChannel.onopen = handleReceiveChannelStateChange;
-    receiveChannel.onclose = handleReceiveChannelStateChange;
-}
-
-function handleMessage (event) {
-    var chatNewThread = document.createElement('li'),
-    	chatNewMessage = document.createTextNode(event.data);
-
-    // Add message to chat thread and scroll to bottom
-    chatNewThread.appendChild(chatNewMessage);
-    chatThread.appendChild(chatNewThread);
-    chatThread.scrollTop = chatThread.scrollHeight;
-
-    // Clear text value
-    chatWindowMessage.value = '';
-}
-
-function handleSendChannelStateChange () {
-    var readyState = sendChannel.readyState;
-
-    if (readyState == 'open') {
-        chatWindowMessage.disabled = false;
-        chatWindowMessage.focus();
-    	chatWindowMessage.placeholder = "";
-    } else {
-        chatWindowMessage.disabled = true;
-    }
-}
-
-function handleReceiveChannelStateChange () {
-    var readyState = receiveChannel.readyState;
-}
 
 lienzo.addEventListener('mousedown', empezarDibujo, false);
 lienzo.addEventListener('mousemove', dibujarLinea, false);

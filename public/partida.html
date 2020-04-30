@@ -14,6 +14,11 @@
     <!-- meta character set -->
     <meta charset="UTF-8">
     <!-- Site Title -->
+
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.16.0/umd/popper.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.4.1/js/bootstrap.min.js"></script>
+
     <title>Partida</title>
     <link href="https://fonts.googleapis.com/css?family=Poppins:100,200,400,300,500,600,700" rel="stylesheet">
     <!--
@@ -61,8 +66,8 @@
 <div class="container-fluid">
     <div class="row">
         <div class="col-3">
-            <div id="listaJugadores" class="table-responsive-vertical" >
-                <table class="table user-list " >
+            <div class="table-responsive-vertical">
+                <table class="table user-list ">
                     <thead>
                     <tr>
                         <th><span>Nick</span></th>
@@ -70,42 +75,26 @@
                         <th>&nbsp;</th>
                     </tr>
                     </thead>
-                    <tbody>
-                    <tr>
-                        <td>
-                            <img src="https://bootdey.com/img/Content/user_1.jpg" alt="">
-                            <a class="user-link">Ilimanili</a>
-                        </td>
-                        <td>2000</td>
-                    </tr>
-                    <tr>
-                        <td>
-                            <img src="https://bootdey.com/img/Content/user_3.jpg" alt="">
-                            <a class="user-link">Yaime</a>
-                        </td>
-                        <td>2000</td>
-                    </tr>
+                    <tbody id="listaJugadores">
                     </tbody>
                 </table>
             </div>
         </div>
 
         <div class="col-6">
-        <canvas id="canvas" width="600" height="580"
-                style="position:relative;border:2px solid;"></canvas>
+            <canvas id="canvas" width="600" height="580"
+                    style="position:relative;border:2px solid;"></canvas>
         </div>
 
         <div class="col-3">
+            <span class="chat-title">Chat</span>
+            <ul id="chat" class="chat-row">
 
-                <ul class="chat-thread">
-                    <li>Are we meeting today?</li>
-                    <li>yes, what time suits you?</li>
-                    <li>I was thinking after lunch, I have a meeting in the morning</li>
-                </ul>
+            </ul>
 
-                <form class="chat-window">
-                    <input class="chat-window-message" name="chat-window-message" type="text" autocomplete="off" autofocus />
-                </form>
+            <form id="form" class="chat-window">
+                <input id="chat-input" class="chat-window-message" type="text" autocomplete="off" autofocus/>
+            </form>
         </div>
     </div>
 </div>
@@ -121,6 +110,12 @@
 <script src="https://www.gstatic.com/firebasejs/7.14.0/firebase-firestore.js"></script>
 
 <script src="js/dibujillo/partida.js"></script>
+
+<script>
+    $("form").submit(function( event ) {
+        event.preventDefault();
+    });
+</script>
 
 </body>
 </html>
