@@ -92,7 +92,8 @@ var colores = [{nombre:"Negro", color:"0XFF000000", imagen:"img/colores/negro.pn
 {nombre:"Verde", color:"0XFF4CAF50", imagen:"img/colores/verde_claro.png"},];
 
 var listaJugadores = document.getElementById('listaJugadores');
-var lienzo = document.getElementById('canvas');
+//var lienzo = document.getElementById('canvas');
+var lienzo = document.querySelector('#canvas')
 var chat = document.getElementById('chat');
 
 function escucharPartida(id) {
@@ -110,9 +111,8 @@ function escucharPartida(id) {
         var mensajes = partida.chat;
         mensajes.forEach(actualizarChat);
 
-        lienzo.innerHTML = "";
         var puntos = partida.puntos;
-        puntos.forEach(actualizarLienzo);
+        actualizarLienzo(puntos);
 
     });
 }
@@ -126,8 +126,102 @@ function actualizarChat(mensaje) {
 }
 
 function actualizarLienzo(puntos) {
+    let ctx = lienzo.getContext('2d');
+    // Estilo de la linea
+    ctx.lineJoin = ctx.lineCap = 'round';
+    ctx.lineWidth = 3;
+    // Color de la linea
+    ctx.strokeStyle = '#000000';
 
+    var tocaSeparar = false;
+
+    ctx.beginPath();
+    ctx.clearRect(0, 0, 600, 600);
+    puntos.forEach(function (punto) {
+        if (punto.x > -1) {
+            if (tocaSeparar) {
+                ctx.moveTo(punto.x, punto.y);
+                tocaSeparar = false;
+            }
+            ctx.lineTo(punto.x, punto.y);
+        }
+        else {
+            tocaSeparar = true;
+        }
+    });
+    ctx.stroke();
+}
+
+let lineas = [];
+let correccionX = 0;
+let correccionY = 0;
+let pintarLinea = false;
+var color = '#000000';
+
+let posicion = lienzo.getBoundingClientRect();
+correccionX = posicion.x;
+correccionY = posicion.y;
+
+lienzo.width = 600;
+lienzo.height = 600;
+
+function empezarDibujo() {
+    pintarLinea = true;
+    lineas.push([]);
+    console.log('Pintamos');
+    if (lineas.length == 0) {
+        pintarLinea = false;
+    }
+}
+
+function dibujarLinea (evento) {
+    evento.preventDefault();
+    if (pintarLinea) {
+        let ctx = lienzo.getContext('2d');
+        // Estilo de la linea
+        ctx.lineJoin = ctx.lineCap = 'round';
+        ctx.lineWidth = 3;
+        // Color de la linea
+        ctx.strokeStyle = color;
+
+        let nuevaPosicionX = 0;
+        let nuevaPosicionY = 0;
+        if (evento.changedTouches == undefined) {
+            nuevaPosicionX = evento.layerX;
+            nuevaPosicionY = evento.layerY;
+        }
+        else {
+            nuevaPosicionX = evento.changedTouches[0].pageX - correccionX;
+            nuevaPosicionY = evento.changedTouches[0].pageY - correccionY;
+        }
+        // Guardamos la linea
+        lineas[lineas.length - 1].push({
+            x: nuevaPosicionX,
+            y: nuevaPosicionY
+        });
+        // Redibujamos todas las lineas guardadas
+        ctx.beginPath();
+        lineas.forEach(function (segmento) {
+            ctx.moveTo(segmento[0].x, segmento[0].y);
+            segmento.forEach(function (punto, index) {
+                ctx.lineTo(punto.x, punto.y);
+            });
+        });
+        ctx.stroke();
+    }
+}
+
+function dejarDibujo() {
+    pintarLinea = false;
+    console.log('Dejamos de pintar');
 }
 
 escucharAuthentication();
 escucharPartida('prueba');
+
+lienzo.addEventListener('mousedown', empezarDibujo, false);
+lienzo.addEventListener('mousemove', dibujarLinea, false);
+lienzo.addEventListener('mouseup', dejarDibujo, false);
+
+lienzo.addEventListener('touchstart', empezarDibujo, false);
+lienzo.addEventListener('touchmove', dibujarLinea, false);
