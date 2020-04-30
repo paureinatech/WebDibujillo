@@ -107,7 +107,7 @@ function cargarAmigo(amigo) {
         if (doc.exists) {
             var usuario = doc.data();
             var filaamigo = document.getElementById(amigo);
-            filaamigo.innerHTML = '<td><img style="max-width:100%;" width="50" height="50" src="' + usuario.photoUrl + '" alt=""><span href="#" class="user-link">' + usuario.apodo + '</span></td><td>' + usuario.total_puntos + '</td><td>' + usuario.monedas + '</td>';
+            filaamigo.innerHTML = '<td><img class="aspect" src="' + usuario.photoUrl + '" alt=""><span href="#" class="user-link">' + usuario.apodo + '</span></td><td>' + usuario.total_puntos + '</td><td>' + usuario.monedas + '</td>';
         }
     });
 }
@@ -119,7 +119,7 @@ function cargarSolicitud(solicitud) {
         if (doc.exists) {
             var usuario = doc.data();
             var filaamigo = document.getElementById(solicitud);
-            filaamigo.innerHTML = '<td><img style="max-width:100%;" width="50" height="50" src="' + usuario.photoUrl + '" alt=""><span href="#" class="user-link">' + usuario.apodo + '</span></td><td>' + usuario.total_puntos + '</td><td style="width: 20%;"><a class="table-button"><span onclick=aceptarSolicitud("' + solicitud + '") class="btn fa-stack"><i class="fa fa-check fa-stack-2x "></i></span></a><a class="table-button"><span onclick=denegarSolicitud("' + solicitud + '") class="btn fa-stack"><i class="fa fa-times fa-stack-2x "></i></span></a></td>';
+            filaamigo.innerHTML = '<td><img class="aspect" src="' + usuario.photoUrl + '" alt=""><span href="#" class="user-link">' + usuario.apodo + '</span></td><td>' + usuario.total_puntos + '</td><td style="width: 20%;"><a class="table-button"><span onclick=aceptarSolicitud("' + solicitud + '") class="btn fa-stack"><i class="fa fa-check fa-stack-2x "></i></span></a><a class="table-button"><span onclick=denegarSolicitud("' + solicitud + '") class="btn fa-stack"><i class="fa fa-times fa-stack-2x "></i></span></a></td>';
         }
     });
 }
