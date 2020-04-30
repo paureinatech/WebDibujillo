@@ -135,7 +135,7 @@ function actualizarLienzo(puntos) {
     // Estilo de la linea
     ctx.lineJoin = ctx.lineCap = 'round';
     ctx.lineWidth = 3;
-    // Color de la linea
+    // Color de la linea variable
     ctx.strokeStyle = '#000000';
 
     var tocaSeparar = false;
