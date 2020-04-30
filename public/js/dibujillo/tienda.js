@@ -106,10 +106,10 @@ function comprarColor(color) {
 
 function cargarColores(color) {
     if (usuario.colores.includes(color.color)) {
-        listaColores.innerHTML += '<a class="btn btn-success btn-lg buttonlist" role="button"><p style="float: left;" > &emsp;&emsp;' + color.nombre + '<img align="left" src="' + color.imagen + '" width="30px"></p><p style="float: right"><img src="img/check.svg" width="30px"></p></a>';
+        listaColores.innerHTML += '<a class="btn btn-success btn-lg" role="button"><p style="float: left;" > &emsp;&emsp;' + color.nombre + '<img align="left" src="' + color.imagen + '" width="30px"></p><p style="float: right"><img src="img/check.svg" width="30px"></p></a>';
     }
     else {
-        listaColores.innerHTML += '<a class="btn btn-success btn-lg buttonlist" role="button" onclick=comprarColor("' + color.color + '")><p style="float: left;" > &emsp;&emsp;' + color.nombre + '<img align="left" src="' + color.imagen + '" width="30px"></p><p style="float: right"> 50&nbsp; <img src="img/moneda.png" width="30px"></p></a>';
+        listaColores.innerHTML += '<a class="btn btn-success btn-lg" role="button" onclick=comprarColor("' + color.color + '")><p style="float: left;" > &emsp;&emsp;' + color.nombre + '<img align="left" src="' + color.imagen + '" width="30px"></p><p style="float: right"> 50&nbsp; <img src="img/moneda.png" width="30px"></p></a>';
     }
 }
 
