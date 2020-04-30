@@ -85,5 +85,13 @@
         padding: 12px 8px;
     }
 
+    .fa-check {
+      color: green;
+    }
+
+    .fa-times {
+          color: red;
+    }
+
 
 </style>
