@@ -123,7 +123,7 @@ function escucharPartida(id) {
 }
 
 function actualizarJugadores(jugador) {
-    listaJugadores.innerHTML += '<tr><td><img style="max-width:100%;" width="50" height="50" src="' + jugador.usuario.photoUrl + '" alt=""><a class="user-link">' + jugador.usuario.apodo + '</a></td><td>' + jugador.score + '</td></tr>';
+    listaJugadores.innerHTML += '<tr><td><img class="aspect" src="' + jugador.usuario.photoUrl + '" alt=""><a class="user-link">' + jugador.usuario.apodo + '</a></td><td>' + jugador.score + '</td></tr>';
 }
 
 function actualizarChat(mensaje) {
@@ -158,7 +158,7 @@ function actualizarLienzo(puntos) {
 }
 
 function mandarMensaje(mensaje) {
-    var timestamp = Date.now();
+    var timestamp = firebase.firestore.Timestamp.fromDate(new Date());
     firestore.collection('partidas').doc(partidaActual.id).update({
         chat: firebase.firestore.FieldValue.arrayUnion({
             contenido: mensaje,
