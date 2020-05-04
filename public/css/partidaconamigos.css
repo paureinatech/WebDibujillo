@@ -8,6 +8,34 @@
 		pointer-events: none;
 	}
 	
+		.cuadrado{
+		position: absolute;
+		z-index: -1;
+		background-color: #FFFFFF;
+		border-radius: 20%;
+		top: 0;
+		left: 8em;
+		right: 8em;
+		bottom: 0;
+		padding: 350px 200px ;
+		border: 1px solid black;
+		
+	}
+	
+	.cuadrado2{
+		position: absolute;
+		z-index: -1;
+		padding: 250px 200px ;
+		background-color: #FFFFFF;
+		border-radius: 20%;
+		border: 1px solid black;
+		top: 0;
+		left: 8em;
+		right: 8em;
+		bottom: 0;
+	}
+	
+	
 	.buttonN{
 		font-weight: 600;
 		font-size: 20px;
