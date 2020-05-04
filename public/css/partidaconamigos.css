@@ -1,43 +1,28 @@
 <style type="text/css">	
 	
-	.cuadrado{
-		position: absolute;
-		z-index: -1;
-		padding:320px 300px ;
-		background-color: #FFFFFF;
-		border-radius: 20%;
-	}
-	
-	.cuadrado2{
-		position: absolute;
-		z-index: -1;
-		padding:280px 300px ;
-		background-color: #FFFFFF;
-		border-radius: 20%;
-	}
-	
-	
-	body {
+	body{
 		color: black;
 	}
 	
+	.disa{
+		pointer-events: none;
+	}
+	
 	.buttonN{
-		position: absolute;
 		font-weight: 600;
 		font-size: 20px;
-		z-index: 2;
 		font: #ffffff;
 		background-color: #65faa6;
 		margin-top: 30px;
 		border: 1px solid black;
+		line-height: 20px;
 	}
 	
 	.blist{
 		position: relative;
 		font-weight: 600;
 		font-size: 20px;
-		margin-top: 160px;
-		margin-left: 110px;
+		margin-top: 50px;
 		z-index: 2;
 	}
 	
@@ -55,7 +40,7 @@
 	}
 	
 	.codigo{
-		margin-top: 280px; 
+		margin-top: 60px; 
 		padding: 30px 290px;
 		text-align: center;
 	}
@@ -65,12 +50,11 @@
 	}
 	
 	.existeP{
-		padding: 30px 270px;
+		padding: 30px 250px;
 	}
 	
 	.code{
 		position:relative;
-		margin-left: 500px;
 		padding: 15px 100px; 
 		border: 1px solid black;
 		text-align: center;
@@ -81,7 +65,6 @@
 	.go{
 		position:relative;
 		padding: 40px;
-		margin-left: 630px;
 		border-radius: 100%;
 		background-color: #65faa6;
 		border: 1px solid black;
