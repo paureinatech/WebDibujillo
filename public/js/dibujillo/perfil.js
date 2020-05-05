@@ -13,6 +13,7 @@ var firebaseConfig = {
 firebase.initializeApp(firebaseConfig);
 firebase.analytics();
 var firestore = firebase.firestore();
+var storageRef = firebase.storage().ref();
 
 var user = null;
 
@@ -64,9 +65,7 @@ function escucharUsuario(email) {
             iconos : data.iconos,
             solicitudes : data.solicitudes,
         };
-        listaColores.innerHTML = "";
-        colores.forEach(cargarColores);
-		cargarMonedas();
+		cargarDatos();
     });
 }
 
@@ -82,42 +81,49 @@ async function signOut() {
     });
 }
 
+var nickname = document.getElementById('nickname');
+var correo = document.getElementById('correo');
+var foto = document.getElementById('foto');
+
 //-------------------------------------------------------------------
 
-// Funciones propias de la pantalla de inicio de sesion
+// Funciones propias de la pantalla de perfil
 
 //-------------------------------------------------------------------
 
-var colores = [{nombre:"Negro", color:"0XFF000000", imagen:"img/colores/negro.png"},
-{nombre:"Rojo", color:"0XFFFF2632", imagen:"img/colores/rojo.png"},
-{nombre:"Azul", color:"0XFF1E88E5", imagen:"img/colores/azul_oscuro.png"},
-{nombre:"Amarillo", color:"0XFFFFEB3B", imagen:"img/colores/amarillo.png"},
-{nombre:"Verde", color:"0XFF4CAF50", imagen:"img/colores/verde_claro.png"},];
+function cargarDatos(){
+	foto.innerHTML = '<div class="row"><div class="col-3"></div><div class="col-6"><label for="file-input"> <img class="aspect" src="' + usuario.photoUrl + '" style="width: 300px; height: 300px;"> </label> </div></div> <div class="row"><div class="col-3"></div><div class="col-6"> <input id="nuevafoto" type="file" /> </div></div></div>';
+	nickname.innerHTML = '<input id="nuevoapodo" type="text" class="form-control" value="' + usuario.apodo + '">';
+	console.log('hecargado');
+	correo.innerHTML = '<input type="text" class="form-control" value="' + usuario.email + '"disabled>';
+	
+}
 
-var listaColores = document.getElementById('listaColores');
-var numMonedas = document.getElementById('numMonedas');
-
-function comprarColor(color) {
-    if (usuario.monedas > 50) {
-        firestore.collection('usuarios').doc(usuario.email).update({
-            colores: firebase.firestore.FieldValue.arrayUnion(color),
-            monedas: firebase.firestore.FieldValue.increment(-50),
+function cambiarDatos(){
+	var nuevoapodo = document.getElementById('nuevoapodo');
+	var newnickname = nuevoapodo.value;
+	if (newnickname != "" && newnickname != usuario.apodo){
+		firestore.collection('usuarios').doc(usuario.email).update({
+			apodo: newnickname,
         });
-    }
+	}
+	var nuevafoto = document.getElementById('nuevafoto');
+	var newphoto = nuevafoto.value;
+	
+	
+	if (newphoto != "" && newphoto != usuario.photoUrl){
+		// Create a reference to 'perfil_images/newphoto.jpg'
+		var newImagesRef = storageRef.child('perfil_images/'+ newphoto);
+		var newfile = new File('"' + newphoto + '"','"'+ newImagesRef+ '"');
+		ref.put(file).then(function(snapshot) {
+			console.log('Uploaded a blob or file!');
+		});
+		firestore.collection('usuarios').doc(usuario.photoUrl).update({
+			photoUrl: newImagesRef,
+        });
+	}
 }
 
-function cargarColores(color) {
-    if (usuario.colores.includes(color.color)) {
-        listaColores.innerHTML += '<a class="btn btn-success btn-lg" role="button"><p style="float: left;" > &emsp;&emsp;' + color.nombre + '<img align="left" src="' + color.imagen + '" width="30px"></p><p style="float: right"><img src="img/check.svg" width="30px"></p></a>';
-    }
-    else {
-        listaColores.innerHTML += '<a class="btn btn-success btn-lg" role="button" onclick=comprarColor("' + color.color + '")><p style="float: left;" > &emsp;&emsp;' + color.nombre + '<img align="left" src="' + color.imagen + '" width="30px"></p><p style="float: right"> 50&nbsp; <img src="img/moneda.png" width="30px"></p></a>';
-    }
-}
-
-function cargarMonedas() {
-	numMonedas.innerHTML = '<h2  align="center">Monedas:  ' + usuario.monedas +  '<img src="img/moneda.png" width="30px" style="margin-left:15px">' + '</h2>';
-}
 
 
 escucharAuthentication();

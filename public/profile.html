@@ -48,6 +48,9 @@
 		
 	}
 	
+	.image-upload>input {
+		display: none;
+	}
 
 
     </style>
@@ -94,8 +97,7 @@
             <form class="form">
                 <div class="panel panel-default">
                     <div class="panel-body text-center">
-                        <img src="https://bootdey.com/img/Content/avatar/avatar6.png" class="img-circle profile-avatar"
-                             alt="User avatar">
+						<div id="foto"></div>
                     </div>
                 </div>
                 <br><br>
@@ -107,8 +109,8 @@
                             <div class="col-2"></div>
                             <div class="col-8">
                                 <div class="form-group">
-                                    <label class="col-sm-5 control-label">Nombre</label>
-                                    <input id="name" type="text" class="form-control">
+                                    <label class="col-sm-5 control-label">Nickname</label>
+                                    <div id="nickname"></div>
                                 </div>
                             </div>
                         </div>
@@ -117,13 +119,13 @@
                             <div class="col-8">
                                 <div class="form-group">
                                     <label class="col-sm-5 control-label">Email</label>
-                                    <input id="email" type="text" class="form-control">
+                                    <div id="correo"></div>
                                 </div>
                             </div>
                         </div>
                         <br><br>
                         <div class="panel text-center">
-                            <input type="button" onclick="" class="boton_basico" value="Ok">
+                            <input type="button" onclick="cambiarDatos()" class="boton_basico" value="Cambiar">
                         </div>
                     </div>
                 </div>
@@ -135,3 +137,16 @@
 <br><br>
 <br><br><br><br>
 </body>
+
+<!-- Scripts para poder usar Firebase, siempre que se quiera usar tiene que aparecer al final del archivo -->
+<!-- The core Firebase JS SDK is always required and must be listed first -->
+<script src="https://www.gstatic.com/firebasejs/7.14.0/firebase-app.js"></script>
+
+<!-- TODO: Add SDKs for Firebase products that you want to use
+     https://firebase.google.com/docs/web/setup#available-libraries -->
+<script src="https://www.gstatic.com/firebasejs/7.14.0/firebase-analytics.js"></script>
+<script src="https://www.gstatic.com/firebasejs/7.14.0/firebase-auth.js"></script>
+<script src="https://www.gstatic.com/firebasejs/7.14.0/firebase-firestore.js"></script>
+<script src="https://www.gstatic.com/firebasejs/7.14.0/firebase-storage.js"></script>
+
+<script src="js/dibujillo/perfil.js"></script>
