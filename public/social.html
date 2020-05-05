@@ -33,6 +33,7 @@
     <link rel="stylesheet" href="css/bootstrap.css">
     <link rel="stylesheet" href="css/main.css">
     <link rel="stylesheet" href="css/social.css">
+    <link rel="stylesheet" href="css/botones.css">
 
 
 </head>
@@ -68,9 +69,25 @@
 
 <h1 align="center" style="margin-top: 50px">SOCIAL</h1>
 
-<br/><br/>
+<br/>
 
-<div class="option-list">
+    <div align="center">
+        <a class="boton_basico2"  href="#popup1"> &nbsp + &nbsp  </a>
+    </div>
+
+    <div id="popup1" class="overlay">
+        <div class="popup">
+            <h2>Introduce el email de tu amigo</h2>
+            <a class="close" href="#">&times;</a>
+                <form name="signInForm" class="form-wrap">
+                    <input id="email" type="text" name="email" placeholder="Email">
+                    <input type="button" onclick="signIn()" class="boton_basico2" value="Add">
+                </form>
+        </div>
+    </div>
+    <br/>
+
+    <div class="option-list">
     <div>
         <ul class="topnav">
             <li class="amigos active">Amigos</li>
