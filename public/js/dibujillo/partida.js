@@ -64,6 +64,7 @@ function escucharUsuario(email) {
             iconos : data.iconos,
             solicitudes : data.solicitudes,
         };
+        escucharPartida('prueba');
     });
 }
 
@@ -97,6 +98,7 @@ var lienzo = document.querySelector('#canvas')
 var chat = document.getElementById('chat');
 
 var partidaActual;
+var estado = 0;
 
 function escucharPartida(id) {
 
@@ -119,7 +121,52 @@ function escucharPartida(id) {
         var puntos = partida.puntos;
         actualizarLienzo(puntos);
 
+        calcularEstado();
+
     });
+}
+
+function calcularEstado() {
+    if (partidaActual.jugadores.length < 2) {
+        console.log('Esperando jugadores');
+        estado = 0;
+    }
+    else {
+        if (partidaActual.ronda == 3 && partidaActual.turno == partidaActual.jugadores.length - 1 && contador == 0 && partidaActual.palabra != "") {
+            console.log('Fin partida');
+            estado = 1;
+        }
+        else {
+            if (usuario.email == partidaActual.jugadores[partidaActual.turno].usuario.email) {
+                if (partidaActual.palabra == "") {
+                    console.log('Toca elegir palabra');
+                    estado = 2;
+                }
+                else {
+                    console.log('Toca dibujar');
+                    contador = 60;
+                    cuentaAtras(false);
+                    cargarOpciones();
+                    estado = 3;
+                }
+            }
+            else {
+                if (partidaActual.palabra == "") {
+                    console.log('Toca esperar que elijan palabra');
+                    contador = 60;
+                    cuentaAtras(false);
+                    cargarOpciones();
+                    estado = 4;
+                }
+                else {
+                    console.log('Toca adivinar');
+                    contador = 60;
+                    cuentaAtras(false);
+                    estado = 5;
+                }
+            }
+        }
+    }
 }
 
 function actualizarJugadores(jugador) {
@@ -135,14 +182,14 @@ function actualizarLienzo(puntos) {
     // Estilo de la linea
     ctx.lineJoin = ctx.lineCap = 'round';
     ctx.lineWidth = 3;
-    // Color de la linea
-    ctx.strokeStyle = '#000000';
 
     var tocaSeparar = false;
 
     ctx.beginPath();
     ctx.clearRect(0, 0, 600, 600);
     puntos.forEach(function (punto) {
+        // Color de la linea
+        ctx.strokeStyle = '#' + punto.color.substring(punto.color.length - 6);
         if (punto.x > -1) {
             if (tocaSeparar) {
                 ctx.moveTo(punto.x, punto.y);
@@ -168,6 +215,43 @@ function mandarMensaje(mensaje) {
     });
 }
 
+var contador = 0;
+var timerCounter = document.getElementById('timerCounter');
+
+function cuentaAtras(fin) {
+    //console.log('Contador: ' + contador);
+    if (fin == true) {
+        contador = 0;
+        timerCounter.innerHTML = '<h3 align="center">Contador: ' + contador + '</h3>';
+    }
+    else {
+        timerCounter.innerHTML = '<h3 align="center">Contador: ' + contador + '</h3>';
+        if (contador > 0) {
+            contador -= 1;
+            setTimeout("cuentaAtras()", 1000);
+        }
+    }
+}
+
+var opcionesycolores = document.getElementById('opcionesycolores');
+
+function cargarOpciones() {
+    console.log('Cargo opciones');
+    opcionesycolores.style.padding = "20px 20px 20px 20px";
+    opcionesycolores.innerHTML = '<a class="btn btn-lg" role="button" onclick=borrarLienzo()><img class="aspect" src="img/trash.svg" alt="" style="margin:5px"></a>';
+    colores.forEach(cargarColor);
+}
+
+function cargarColor(color) {
+    if (usuario.colores.includes(color.color)) {
+        opcionesycolores.innerHTML += '<a class="btn btn-lg" role="button" onclick=seleccionarColor("' + color.color + '")><img align="left" src="' + color.imagen + '" width="30px"></a>';
+    }
+}
+
+function seleccionarColor(nuevocolor) {
+    color = nuevocolor;
+}
+
 var input = document.getElementById("chat-input");
 
 input.addEventListener("keyup", function (event) {
@@ -184,7 +268,7 @@ let lineas = [];
 let correccionX = 0;
 let correccionY = 0;
 let pintarLinea = false;
-var color = '#000000';
+var color = '0x00000000';
 
 let posicion = lienzo.getBoundingClientRect();
 correccionX = posicion.x;
@@ -205,12 +289,11 @@ function empezarDibujo() {
 function dibujarLinea (evento) {
     evento.preventDefault();
     if (pintarLinea) {
-        let ctx = lienzo.getContext('2d');
+        var ctx = lienzo.getContext('2d');
         // Estilo de la linea
-        ctx.lineJoin = ctx.lineCap = 'round';
+        ctx.lineJoin = 'round';
+        ctx.lineCap = 'round';
         ctx.lineWidth = 3;
-        // Color de la linea
-        ctx.strokeStyle = color;
 
         let nuevaPosicionX = 0;
         let nuevaPosicionY = 0;
@@ -225,13 +308,16 @@ function dibujarLinea (evento) {
         // Guardamos la linea
         lineas[lineas.length - 1].push({
             x: nuevaPosicionX,
-            y: nuevaPosicionY
+            y: nuevaPosicionY,
+            color: color,
         });
         // Redibujamos todas las lineas guardadas
-        ctx.beginPath();
         lineas.forEach(function (segmento) {
+            ctx.beginPath();
             ctx.moveTo(segmento[0].x, segmento[0].y);
             segmento.forEach(function (punto, index) {
+                // Color de la linea
+                ctx.strokeStyle = '#' + punto.color.substring(punto.color.length - 6);
                 ctx.lineTo(punto.x, punto.y);
             });
         });
@@ -242,10 +328,23 @@ function dibujarLinea (evento) {
 function dejarDibujo() {
     pintarLinea = false;
     console.log('Dejamos de pintar');
+    console.log(lineas[0]);
+    firestore.collection('partidas').doc(partidaActual.id).update({
+        puntos: firebase.firestore.FieldValue.arrayUnion.apply(null, lineas[0]),
+    });
 }
 
+function borrarLienzo() {
+    firestore.collection('partidas').doc(partidaActual.id).update({
+        puntos: [],
+    });
+}
+
+//---------------------------------------------------
+// Llamada a funciones generales al cargar la paguina
+//---------------------------------------------------
+
 escucharAuthentication();
-escucharPartida('prueba');
 
 lienzo.addEventListener('mousedown', empezarDibujo, false);
 lienzo.addEventListener('mousemove', dibujarLinea, false);
