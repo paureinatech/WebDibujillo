@@ -48,6 +48,9 @@
 		
 	}
 	
+	.image-upload>input {
+		display: none;
+	}
 
 
     </style>
@@ -94,7 +97,7 @@
             <form class="form">
                 <div class="panel panel-default">
                     <div class="panel-body text-center">
-                        <div id="foto"></div>
+						<div id="foto"></div>
                     </div>
                 </div>
                 <br><br>
@@ -122,7 +125,7 @@
                         </div>
                         <br><br>
                         <div class="panel text-center">
-                            <input type="button" onclick="" class="boton_basico" value="Ok">
+                            <input type="button" onclick="cambiarDatos()" class="boton_basico" value="Cambiar">
                         </div>
                     </div>
                 </div>
@@ -144,5 +147,6 @@
 <script src="https://www.gstatic.com/firebasejs/7.14.0/firebase-analytics.js"></script>
 <script src="https://www.gstatic.com/firebasejs/7.14.0/firebase-auth.js"></script>
 <script src="https://www.gstatic.com/firebasejs/7.14.0/firebase-firestore.js"></script>
+<script src="https://www.gstatic.com/firebasejs/7.14.0/firebase-storage.js"></script>
 
 <script src="js/dibujillo/perfil.js"></script>
