@@ -152,7 +152,11 @@ function enviarSolicitud(correo) {
 }
 
 async function signIn() {
-    enviarSolicitud(email.value);
+    if(email.value == usuario.email){
+    }
+    else{
+        enviarSolicitud(email.value);
+    }
 }
 
 escucharAuthentication();
