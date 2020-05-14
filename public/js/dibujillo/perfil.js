@@ -112,6 +112,7 @@ function cargarDatos(){
 }
 	
 function cambiarDatos(){
+  
 	var nuevoapodo = document.getElementById('nuevoapodo');
 	var newnickname = nuevoapodo.value;
 	if (newnickname != "" && newnickname != usuario.apodo){
@@ -140,9 +141,9 @@ function cambiarDatos(){
 				console.log('File available at', url);
 			});
 		  });
-	}
+  }
+  alert("Datos cambiados correctamente");
 }
-
 
 
 escucharAuthentication();
