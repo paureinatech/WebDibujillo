@@ -150,6 +150,7 @@ function calcularEstado() {
             if (usuario.email == partidaActual.jugadores[partidaActual.turno].usuario.email) {
                 if (partidaActual.palabra == "") {
                     console.log('Toca elegir palabra');
+                    
                     estado = 2;
                 }
                 else {
