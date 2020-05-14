@@ -17,6 +17,7 @@ var firestore = firebase.firestore();
 var user = null;
 
 var usuario;
+var email = document.getElementById('email');
 
 function escucharAuthentication() {
     firebase.auth().onAuthStateChanged(function(user) {
@@ -138,6 +139,20 @@ function denegarSolicitud(correo) {
     firestore.collection('usuarios').doc(usuario.email).update({
         solicitudes: firebase.firestore.FieldValue.arrayRemove(correo),
     });
+}
+
+function enviarSolicitud(correo) {
+    firestore.collection('usuarios').doc(correo).update({
+        solicitudes: firebase.firestore.FieldValue.arrayUnion(usuario.email)
+    }).catch(function(error){
+        alert("El usuario no existe");
+        console.log("Error al enviar solicitud");
+        console.log(error.message);
+    });
+}
+
+async function signIn() {
+    enviarSolicitud(email.value);
 }
 
 escucharAuthentication();
