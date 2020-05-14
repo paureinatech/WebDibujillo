@@ -151,7 +151,7 @@ function enviarSolicitud(correo) {
     });
 }
 
-async function signIn() {
+async function sendRequest() {
     if(email.value == usuario.email){
     }
     else{
