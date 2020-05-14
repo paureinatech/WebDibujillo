@@ -90,15 +90,27 @@ var foto = document.getElementById('foto');
 // Funciones propias de la pantalla de perfil
 
 //-------------------------------------------------------------------
+var archivofoto;
+var metadatafoto;
 
 function cargarDatos(){
 	foto.innerHTML = '<div class="row"><div class="col-3"></div><div class="col-6"><label for="file-input"> <img class="aspect" src="' + usuario.photoUrl + '" style="width: 300px; height: 300px;"> </label> </div></div> <div class="row"><div class="col-3"></div><div class="col-6"> <input id="nuevafoto" type="file" /> </div></div></div>';
 	nickname.innerHTML = '<input id="nuevoapodo" type="text" class="form-control" value="' + usuario.apodo + '">';
 	console.log('hecargado');
 	correo.innerHTML = '<input type="text" class="form-control" value="' + usuario.email + '"disabled>';
-	
+	document.getElementById('nuevafoto').addEventListener('change', handleFileSelect, false);
 }
 
+ function handleFileSelect(evt) {
+      evt.stopPropagation();
+      evt.preventDefault();
+      archivofoto =  evt.target.files[0];
+
+      metadatafoto = {
+        'contentType': archivofoto.type
+	};
+}
+	
 function cambiarDatos(){
 	var nuevoapodo = document.getElementById('nuevoapodo');
 	var newnickname = nuevoapodo.value;
@@ -107,20 +119,27 @@ function cambiarDatos(){
 			apodo: newnickname,
         });
 	}
-	var nuevafoto = document.getElementById('nuevafoto');
 	var newphoto = nuevafoto.value;
 	
 	
+	
 	if (newphoto != "" && newphoto != usuario.photoUrl){
+		
+		
+		
 		// Create a reference to 'perfil_images/newphoto.jpg'
-		var newImagesRef = storageRef.child('perfil_images/'+ newphoto);
-		var newfile = new File('"' + newphoto + '"','"'+ newImagesRef+ '"');
-		ref.put(file).then(function(snapshot) {
-			console.log('Uploaded a blob or file!');
-		});
-		firestore.collection('usuarios').doc(usuario.photoUrl).update({
-			photoUrl: newImagesRef,
-        });
+		var newImagesRef = storageRef.child('perfil_images/'+ newphoto).put(archivofoto, metadatafoto).then(function(snapshot) {
+			console.log('Uploaded', snapshot.totalBytes, 'bytes.');
+			console.log('File metadata:', snapshot.metadata);
+			// Let's get a download URL for the file.
+			snapshot.ref.getDownloadURL().then(function(url) {
+				firestore.collection('usuarios').doc(usuario.email).update({
+					photoUrl: url,
+				});
+			  
+				console.log('File available at', url);
+			});
+		  });
 	}
 }
 

@@ -98,7 +98,7 @@ var listaColores = document.getElementById('listaColores');
 var numMonedas = document.getElementById('numMonedas');
 
 function comprarColor(color) {
-    if (usuario.monedas > 50) {
+    if (usuario.monedas >= 50) {
         firestore.collection('usuarios').doc(usuario.email).update({
             colores: firebase.firestore.FieldValue.arrayUnion(color),
             monedas: firebase.firestore.FieldValue.increment(-50),

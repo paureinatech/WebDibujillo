@@ -51,7 +51,7 @@ function escucharAuthentication() {
 function escucharUsuario(email) {
     console.log("Comenzando a escuchar a " + email);
     firestore.collection("usuarios").doc(email).onSnapshot(function (doc) {
-        console.log("Current data", doc.data());
+        console.log("Current usuario data", doc.data());
         var data = doc.data();
         usuario = {
             email : data.email,
@@ -64,8 +64,16 @@ function escucharUsuario(email) {
             iconos : data.iconos,
             solicitudes : data.solicitudes,
         };
-        escucharPartida('prueba');
+        conseguirIdPartida();
     });
+}
+
+function conseguirIdPartida() {
+    var parameters = location.search.substring(1).split("&");
+    var temp = parameters[0].split("=");
+    var idPartida = unescape(temp[1]);
+    console.log("Id partida argumento: ", idPartida);
+    escucharPartida(idPartida);
 }
 
 async function signOut() {
@@ -103,7 +111,7 @@ var estado = 0;
 function escucharPartida(id) {
 
     firestore.collection('partidas').doc(id).onSnapshot(function(doc) {
-        console.log("Current data: ", doc.data());
+        console.log("Current partida data: ", doc.data());
 
         var partida = doc.data();
         partidaActual = partida;
@@ -116,7 +124,9 @@ function escucharPartida(id) {
         var mensajes = partida.chat;
         mensajes.forEach(actualizarChat);
         var lis = document.getElementById("chat").getElementsByTagName("li");
-        lis[lis.length-1].scrollIntoView();
+        if (lis.length > 0) {
+            lis[lis.length-1].scrollIntoView();
+        }
 
         var puntos = partida.puntos;
         actualizarLienzo(puntos);
@@ -129,6 +139,7 @@ function escucharPartida(id) {
 function calcularEstado() {
     if (partidaActual.jugadores.length < 2) {
         console.log('Esperando jugadores');
+        cargarOpciones();
         estado = 0;
     }
     else {
@@ -188,14 +199,15 @@ function actualizarLienzo(puntos) {
     ctx.beginPath();
     ctx.clearRect(0, 0, 600, 600);
     puntos.forEach(function (punto) {
-        // Color de la linea
-        ctx.strokeStyle = '#' + punto.color.substring(punto.color.length - 6);
+
         if (punto.x > -1) {
+            // Color de la linea
+            ctx.strokeStyle = '#' + punto.color.substring(punto.color.length - 6);
             if (tocaSeparar) {
-                ctx.moveTo(punto.x, punto.y);
+                ctx.moveTo(punto.x * 1.7, punto.y * 1.7);
                 tocaSeparar = false;
             }
-            ctx.lineTo(punto.x, punto.y);
+            ctx.lineTo(punto.x * 1.7, punto.y * 1.7);
         }
         else {
             tocaSeparar = true;
@@ -307,34 +319,48 @@ function dibujarLinea (evento) {
         }
         // Guardamos la linea
         lineas[lineas.length - 1].push({
-            x: nuevaPosicionX,
-            y: nuevaPosicionY,
+            x: nuevaPosicionX / 1.7 + 0.000001,
+            y: nuevaPosicionY / 1.7 + 0.000001,
             color: color,
         });
         // Redibujamos todas las lineas guardadas
         lineas.forEach(function (segmento) {
             ctx.beginPath();
-            ctx.moveTo(segmento[0].x, segmento[0].y);
+            ctx.moveTo(segmento[0].x * 1.7, segmento[0].y * 1.7);
             segmento.forEach(function (punto, index) {
-                // Color de la linea
-                ctx.strokeStyle = '#' + punto.color.substring(punto.color.length - 6);
-                ctx.lineTo(punto.x, punto.y);
+                if (punto.color == null) {
+                    //console.log('x: ' + punto.x + ' y: ' + punto.y);
+                }
+                else {
+                    // Color de la linea
+                    ctx.strokeStyle = '#' + punto.color.substring(punto.color.length - 6);
+                    ctx.lineTo(punto.x * 1.7, punto.y * 1.7);
+                }
             });
         });
         ctx.stroke();
     }
 }
 
+var separador = -1;
+
 function dejarDibujo() {
     pintarLinea = false;
     console.log('Dejamos de pintar');
     console.log(lineas[0]);
+    lineas[lineas.length - 1].push({
+        x: separador,
+        y: separador,
+        color: null,
+    });
+    separador = separador - 1;
     firestore.collection('partidas').doc(partidaActual.id).update({
         puntos: firebase.firestore.FieldValue.arrayUnion.apply(null, lineas[0]),
     });
 }
 
 function borrarLienzo() {
+    lineas[0] = [];
     firestore.collection('partidas').doc(partidaActual.id).update({
         puntos: [],
     });
@@ -346,9 +372,10 @@ function borrarLienzo() {
 
 escucharAuthentication();
 
+
 lienzo.addEventListener('mousedown', empezarDibujo, false);
 lienzo.addEventListener('mousemove', dibujarLinea, false);
 lienzo.addEventListener('mouseup', dejarDibujo, false);
 
-lienzo.addEventListener('touchstart', empezarDibujo, false);
-lienzo.addEventListener('touchmove', dibujarLinea, false);
+//lienzo.addEventListener('touchstart', empezarDibujo, false);
+//lienzo.addEventListener('touchmove', dibujarLinea, false);
