@@ -107,7 +107,6 @@ function comprarColor(color) {
         
         var opcion = confirm("¿Quieres comprar el color " + nom + "?");
         if (opcion == true) {
-            alert("Color comprado correctamente");
             firestore.collection('usuarios').doc(usuario.email).update({
                 colores: firebase.firestore.FieldValue.arrayUnion(color),
                 monedas: firebase.firestore.FieldValue.increment(-50),
