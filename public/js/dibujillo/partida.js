@@ -139,7 +139,6 @@ function escucharPartida(id) {
 function calcularEstado() {
     if (partidaActual.jugadores.length < 2) {
         console.log('Esperando jugadores');
-        cargarOpciones();
         estado = 0;
     }
     else {
