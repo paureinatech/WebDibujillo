@@ -15,7 +15,15 @@ a:hover {color:black;}
   border-radius: 8px;
   left: 20px;
 }
-
+.boton_basico_rojo{
+  padding: 10px;
+  font-weight: 600;
+  font-size: 20px;
+  color: #ffffff;
+  background-color: #e10a18;
+  border-radius: 8px;
+  left: 20px;
+}
 .boton_basico2{
   padding: 10px;
   font-weight: 600;
