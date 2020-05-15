@@ -184,7 +184,9 @@ function unirsePartida() {
                     transaction.update(partidaRef, {
                          jugadores: firebase.firestore.FieldValue.arrayUnion(
                              {
-                                 usuario: usuario,
+                                 apodo: usuario.apodo,
+                                 email: usuario.email,
+                                 photoUrl: usuario.photoURL,
                                  score: 0,
                              },
                          ),

@@ -86,7 +86,59 @@ async function signOut() {
 //-------------------------------------------------------------------
 
 function buscarPartida(){
-    // TODO: Debe buscar una partida entre las disponibles y publicas
+    firestore.collection('partidas').where('hay_hueco', '==', true)
+        .get().then(function(querySnapshot) {
+        console.log('Tamaño: ', querySnapshot.length);
+            if (querySnapshot.empty) {
+                console.log('No hay partidas publicas');
+            }
+            else {
+                console.log('Hay partidas publicas: ', querySnapshot.docs.length);
+                var doc = querySnapshot.docs[0];
+                var data = doc.data();
+                var id = data.id;
+                console.log('Id primera partida ', id);
+
+                unirsePartida(id);
+            }
+        });
+}
+
+function unirsePartida(idpartida) {
+    var partidaRef = firestore.collection("partidas").doc(idpartida);
+    firestore.runTransaction(function(transaction) {
+        return transaction.get(partidaRef).then(function(sfDoc) {
+            if (!sfDoc.exists) {
+                throw "Document does not exist!";
+            }
+
+            var hay_hueco = sfDoc.data().hay_hueco;
+            console.log(usuario.apodo + " " + usuario.email + " " + usuario.photoURL);
+            if (hay_hueco) {
+                transaction.update(partidaRef, {
+                     jugadores: firebase.firestore.FieldValue.arrayUnion(
+                         {
+                             apodo: usuario.apodo,
+                             email: usuario.email,
+                             photoUrl: usuario.photoUrl,
+                             score: 0,
+                         },
+                     ),
+                     activos: firebase.firestore.FieldValue.increment(1),
+                     hay_hueco: sfDoc.data().activos + 1 < sfDoc.data().num_jugadores,
+                 });
+                return "";
+            } else {
+                return Promise.reject("No hay hueco.");
+            }
+        });
+    }).then(function(newPopulation) {
+        console.log("Jugador añadido correctamente");
+        window.location.replace('partida.html?ref=' + idpartida);
+    }).catch(function(err) {
+        // This will be an "population is too big" error.
+        console.error(err);
+    });
 }
 
 escucharAuthentication();
