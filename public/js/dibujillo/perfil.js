@@ -118,6 +118,7 @@ function cambiarDatos(){
 		firestore.collection('usuarios').doc(usuario.email).update({
 			apodo: newnickname,
         });
+        alert("Apodo cambiados correctamente");
 	}
 	var newphoto = nuevafoto.value;
 	
@@ -139,8 +140,10 @@ function cambiarDatos(){
 			  
 				console.log('File available at', url);
 			});
-		  });
-	}
+      });
+      alert("Foto cambiados correctamente");
+  }
+
 }
 
 

@@ -70,8 +70,13 @@ function escucharUsuario(email) {
         };
     });
 }
+async function pruebita() {
+  alert("Holi");
+}
 
 async function signOut() {
+  var opcion = confirm("¿Quieres cerrar la sesión?");
+  if (opcion == true) {
     await firebase.auth().signOut().then(function() {
       // Sign-out successful.
       console.log("Sesion cerrada con exito");
@@ -81,6 +86,7 @@ async function signOut() {
       console.log("Error al cerrar sesion");
       console.log(error.message);
     });
+  }
 }
 
 //-------------------------------------------------------------------

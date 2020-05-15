@@ -43,7 +43,7 @@
 		<div class="container">
 			<div class="row">
 				<div class="col-1">
-					<a href="index.html"><img src="img/logo_sinfondo.png" style="margin-top:5px" width="70px"></a>
+					<a href="#" onclick="signOut();"><img src="img/logo_sinfondo.png" style="margin-top:5px" width="70px"></a>
 				</div>
 				<div class="col-6">
 					<div class="collapse navbar-collapse" id="navbarNav">
@@ -66,28 +66,27 @@
 			</div>
 		</div>
     </nav>
-
 <h1 align="center" style="margin-top: 50px">SOCIAL</h1>
 
 <br/>
 
-    <div align="center">
-        <a class="boton_basico2"  href="#popup1"> &nbsp + &nbsp  </a>
-    </div>
+<div align="center">
+    <a class="boton_basico2" href="#popup1"> &nbsp + &nbsp </a>
+</div>
 
-    <div id="popup1" class="overlay">
-        <div class="popup">
-            <h2>Introduce el email de tu amigo</h2>
-            <a class="close" href="#">&times;</a>
-                <form name="signInForm" class="form-wrap">
-                    <input id="email" type="text" name="email" placeholder="Email">
-                    <input type="button" onclick="signIn()" class="boton_basico2" value="Add">
-                </form>
-        </div>
+<div id="popup1" class="overlay">
+    <div class="popup">
+        <h2>Introduce el email de tu amigo</h2>
+        <a class="close" href="#">&times;</a>
+        <form name="signInForm" class="form-wrap">
+            <input id="email" type="text" name="email" placeholder="Email">
+            <input type="button" onclick="sendRequest()" class="boton_basico2" value="Add">
+        </form>
     </div>
-    <br/>
+</div>
+<br/>
 
-    <div class="option-list">
+<div class="option-list">
     <div>
         <ul class="topnav">
             <li class="amigos active">Amigos</li>
@@ -112,6 +111,7 @@
 <script src="https://www.gstatic.com/firebasejs/7.14.0/firebase-firestore.js"></script>
 
 <script src="js/dibujillo/social.js"></script>
+<script src="js/dibujillo/index.js"></script>
 
 </body>
 </html>

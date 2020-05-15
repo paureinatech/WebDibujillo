@@ -102,8 +102,8 @@ var colores = [{nombre:"Negro", color:"0XFF000000", imagen:"img/colores/negro.pn
 
 var listaJugadores = document.getElementById('listaJugadores');
 //var lienzo = document.getElementById('canvas');
-var lienzo = document.querySelector('#canvas')
-var chat = document.getElementById('chat');
+var lienzo = document.getElementById("canvas");
+var chat = document.getElementById("chat");
 
 var partidaActual;
 var estado = 0;
@@ -139,7 +139,6 @@ function escucharPartida(id) {
 function calcularEstado() {
     if (partidaActual.jugadores.length < 2) {
         console.log('Esperando jugadores');
-        cargarOpciones();
         estado = 0;
     }
     else {
@@ -148,9 +147,13 @@ function calcularEstado() {
             estado = 1;
         }
         else {
-            if (usuario.email == partidaActual.jugadores[partidaActual.turno].usuario.email) {
+            if (usuario.email == partidaActual.jugadores[partidaActual.turno].email) {
                 if (partidaActual.palabra == "") {
                     console.log('Toca elegir palabra');
+                    cargarOpciones();
+                    lienzo.addEventListener('mousedown', empezarDibujo, false);
+                    lienzo.addEventListener('mousemove', dibujarLinea, false);
+                    lienzo.addEventListener('mouseup', dejarDibujo, false);
                     estado = 2;
                 }
                 else {
@@ -158,6 +161,13 @@ function calcularEstado() {
                     contador = 60;
                     cuentaAtras(false);
                     cargarOpciones();
+                    lienzo.addEventListener('mousedown', empezarDibujo, false);
+                    lienzo.addEventListener('mousemove', dibujarLinea, false);
+                    lienzo.addEventListener('mouseup', dejarDibujo, false);
+
+                    //lienzo.addEventListener('touchstart', empezarDibujo, false);
+                    //lienzo.addEventListener('touchmove', dibujarLinea, false);
+
                     estado = 3;
                 }
             }
@@ -181,7 +191,7 @@ function calcularEstado() {
 }
 
 function actualizarJugadores(jugador) {
-    listaJugadores.innerHTML += '<tr><td><img class="aspect" src="' + jugador.usuario.photoUrl + '" alt=""><a class="user-link">' + jugador.usuario.apodo + '</a></td><td>' + jugador.score + '</td></tr>';
+    listaJugadores.innerHTML += '<tr><td><img class="aspect" src="' + jugador.photoUrl + '" alt=""><a class="user-link">' + jugador.apodo + '</a></td><td>' + jugador.score + '</td></tr>';
 }
 
 function actualizarChat(mensaje) {
@@ -194,23 +204,27 @@ function actualizarLienzo(puntos) {
     ctx.lineJoin = ctx.lineCap = 'round';
     ctx.lineWidth = 3;
 
-    var tocaSeparar = false;
+    var tocaSeparar = true;
 
-    ctx.beginPath();
+    //ctx.beginPath();
     ctx.clearRect(0, 0, 600, 600);
     puntos.forEach(function (punto) {
 
         if (punto.x > -1) {
             // Color de la linea
             ctx.strokeStyle = '#' + punto.color.substring(punto.color.length - 6);
+            //console.log('Color actual: ', ctx.strokeStyle);
             if (tocaSeparar) {
+                ctx.beginPath();
                 ctx.moveTo(punto.x * 1.7, punto.y * 1.7);
                 tocaSeparar = false;
             }
             ctx.lineTo(punto.x * 1.7, punto.y * 1.7);
+
         }
         else {
             tocaSeparar = true;
+            ctx.stroke();
         }
     });
     ctx.stroke();
@@ -280,7 +294,7 @@ let lineas = [];
 let correccionX = 0;
 let correccionY = 0;
 let pintarLinea = false;
-var color = '0x00000000';
+var color = '0xff000000';
 
 let posicion = lienzo.getBoundingClientRect();
 correccionX = posicion.x;
@@ -347,20 +361,23 @@ var separador = -1;
 function dejarDibujo() {
     pintarLinea = false;
     console.log('Dejamos de pintar');
-    console.log(lineas[0]);
     lineas[lineas.length - 1].push({
         x: separador,
         y: separador,
         color: null,
     });
     separador = separador - 1;
-    firestore.collection('partidas').doc(partidaActual.id).update({
-        puntos: firebase.firestore.FieldValue.arrayUnion.apply(null, lineas[0]),
+    lineas.forEach(function(linea) {
+        //console.log(linea);
+        firestore.collection('partidas').doc(partidaActual.id).update({
+            puntos: firebase.firestore.FieldValue.arrayUnion.apply(null, linea),
+        });
     });
+
 }
 
 function borrarLienzo() {
-    lineas[0] = [];
+    lineas = [];
     firestore.collection('partidas').doc(partidaActual.id).update({
         puntos: [],
     });
@@ -372,10 +389,3 @@ function borrarLienzo() {
 
 escucharAuthentication();
 
-
-lienzo.addEventListener('mousedown', empezarDibujo, false);
-lienzo.addEventListener('mousemove', dibujarLinea, false);
-lienzo.addEventListener('mouseup', dejarDibujo, false);
-
-//lienzo.addEventListener('touchstart', empezarDibujo, false);
-//lienzo.addEventListener('touchmove', dibujarLinea, false);

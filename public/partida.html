@@ -35,7 +35,7 @@
     <link rel="stylesheet" href="css/main.css">
     <link rel="stylesheet" href="css/botones.css">
     <link rel="stylesheet" href="css/partida.css">
-	<link rel="icon" href="img/logo_sinfondo.png" type="image/x-icon">
+    <link rel="icon" href="img/logo_sinfondo.png" type="image/x-icon">
 </head>
 
 <body style="background-color:#bdfccf;">
@@ -44,8 +44,8 @@
     <div class="container">
         <div class="row">
             <div class="col-1">
-                <a href="index.html"><img src="img/logo_sinfondo.png" style="margin-top:5px" width="70px"></a>
-            </div>
+                <a href="#" onclick="signOut();"><img src="img/logo_sinfondo.png" style="margin-top:5px" width="70px"></a>
+			</div>
             <div class="col-6">
                 <div class="collapse navbar-collapse" id="navbarNav">
                     <ul class="navbar-nav">
@@ -109,6 +109,16 @@
         </div>
     </div>
 </div>
+<div id="popup1" class="overlay" style="display: none; position:absolute; top:50%; left:50%;">
+    <div class="popup">
+        <h2>Introduce el email de tu amigo</h2>
+        <a class="close" href="#">&times;</a>
+        <form name="signInForm" class="form-wrap">
+            <input id="email" type="text" name="email" placeholder="Email">
+            <input type="button" onclick="sendRequest()" class="boton_basico2" value="Add">
+        </form>
+    </div>
+</div>
 
 <!-- Scripts para poder usar Firebase, siempre que se quiera usar tiene que aparecer al final del archivo -->
 <!-- The core Firebase JS SDK is always required and must be listed first -->
@@ -121,11 +131,14 @@
 <script src="https://www.gstatic.com/firebasejs/7.14.0/firebase-firestore.js"></script>
 
 <script src="js/dibujillo/partida.js"></script>
+<script src="js/dibujillo/index.js"></script>
 
 <script>
     $("form").submit(function( event ) {
         event.preventDefault();
     });
+
+
 </script>
 
 </body>

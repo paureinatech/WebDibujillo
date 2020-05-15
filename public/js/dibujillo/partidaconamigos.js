@@ -90,8 +90,8 @@ var nuevonumjugadores = 2;
 var nuevocodigo = document.getElementById('codigonuevo');
 
 // Datos unirse a partida
-var numpartida;
-var codigopartida;
+var numpartida = document.getElementById('nPartida');
+var codigopartida = document.getElementById('codigo');
 
 function seleccionarNumJugadores(num) {
     nuevonumjugadores = num;
@@ -162,6 +162,53 @@ function crearPartida() {
             console.error(err);
         });
     });
+}
+
+function unirsePartida() {
+    var idpartida = nPartida.value;
+    var codigo = codigopartida.value;
+    if (idpartida != '') {
+        var partidaRef = firestore.collection("partidas").doc(idpartida);
+        firestore.runTransaction(function(transaction) {
+            return transaction.get(partidaRef).then(function(sfDoc) {
+                if (!sfDoc.exists) {
+                    throw "Document does not exist!";
+                }
+
+                var hay_hueco = sfDoc.data().hay_hueco;
+                if (hay_hueco) {
+                    var a = {
+                        usuario: usuario.email,
+                        score: 0,
+                    };
+                    transaction.update(partidaRef, {
+                         jugadores: firebase.firestore.FieldValue.arrayUnion(
+                             {
+                                 apodo: usuario.apodo,
+                                 email: usuario.email,
+                                 photoUrl: usuario.photoURL,
+                                 score: 0,
+                             },
+                         ),
+                         activos: firebase.firestore.FieldValue.increment(1),
+                         hay_hueco: sfDoc.data().activos + 1 < sfDoc.data().num_jugadores,
+                     });
+                    return "";
+                } else {
+                    return Promise.reject("No hay hueco.");
+                }
+            });
+        }).then(function(newPopulation) {
+            console.log("Jugador añadido correctamente");
+            window.location.replace('partida.html?ref=' + idpartida);
+        }).catch(function(err) {
+            // This will be an "population is too big" error.
+            console.error(err);
+        });
+    }
+    else {
+        // Mostrar pop-up si no se introduce nada
+    }
 }
 
 //---------------------------------------------------

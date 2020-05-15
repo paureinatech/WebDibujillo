@@ -99,10 +99,19 @@ var numMonedas = document.getElementById('numMonedas');
 
 function comprarColor(color) {
     if (usuario.monedas >= 50) {
-        firestore.collection('usuarios').doc(usuario.email).update({
-            colores: firebase.firestore.FieldValue.arrayUnion(color),
-            monedas: firebase.firestore.FieldValue.increment(-50),
-        });
+        var nom;
+        if(color==0XFFFFEB3B){nom="amarillo";}
+        else if(color==0XFFFF2632){nom="rojo";}
+        else if(color==0XFF1E88E5){nom="azul";}
+        else if(color==0XFF4CAF50){nom="verde";}
+        
+        var opcion = confirm("¿Quieres comprar el color " + nom + "?");
+        if (opcion == true) {
+            firestore.collection('usuarios').doc(usuario.email).update({
+                colores: firebase.firestore.FieldValue.arrayUnion(color),
+                monedas: firebase.firestore.FieldValue.increment(-50),
+            });
+        } 
     }
 }
 
