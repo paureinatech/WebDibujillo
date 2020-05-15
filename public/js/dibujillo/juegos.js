@@ -141,4 +141,18 @@ function unirsePartida(idpartida) {
     });
 }
 
+async function signOut() {
+    var opcion = confirm("¿Quieres cerrar la sesión?");
+    if (opcion == true) {
+      await firebase.auth().signOut().then(function() {
+        // Sign-out successful.
+        console.log("Sesion cerrada con exito");
+        window.location.replace("index.html");
+      }).catch(function(error) {
+        // An error happened.
+        console.log("Error al cerrar sesion");
+        console.log(error.message);
+      });
+    }
+  }
 escucharAuthentication();

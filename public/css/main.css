@@ -4663,7 +4663,9 @@ body.mobile-nav-active #mobile-nav-toggle {
 .footer-text a, .footer-text i {
   color: #f8b600;
 }
-
+.aumentoLigeroArriba{
+  padding-top: 14px;
+}
 .aumentoArriba{
   padding-top: 1cm;
   padding-bottom: 1cm;
@@ -4724,4 +4726,12 @@ body.mobile-nav-active #mobile-nav-toggle {
     width: 50px;
     height: 50px;
     object-fit: cover;
+}
+
+.rectangulo {
+  width:335px;
+  height:50px;
+  position:relative;
+  background-color: #d3f7dd;
+  
 }
