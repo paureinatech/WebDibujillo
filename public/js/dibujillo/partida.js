@@ -107,6 +107,7 @@ var chat = document.getElementById("chat");
 
 var partidaActual;
 var estado = 0;
+var numeroAciertos = 0;
 
 function escucharPartida(id) {
 
@@ -137,8 +138,13 @@ function escucharPartida(id) {
 }
 
 function calcularEstado() {
-    if (partidaActual.jugadores.length < 2) {
+    quitarDialog();
+    lienzo.removeEventListener('mousedown', empezarDibujo, false);
+    lienzo.removeEventListener('mousemove', dibujarLinea, false);
+    lienzo.removeEventListener('mouseup', dejarDibujo, false);
+    if (partidaActual.activos < 2) {
         console.log('Esperando jugadores');
+        mostrarEsperandoJugadores();
         estado = 0;
     }
     else {
@@ -160,8 +166,12 @@ function calcularEstado() {
                 }
                 else {
                     console.log('Toca dibujar');
-                    contador = 60;
-                    cuentaAtras(false);
+                    contadorEleccion = 0;
+                    cuentaAtrasEleccion(true);
+                    if (!cuentaAtrasActivada) {
+                        contador = 60;
+                        cuentaAtras(false);
+                    }
                     cargarOpciones();
                     lienzo.addEventListener('mousedown', empezarDibujo, false);
                     lienzo.addEventListener('mousemove', dibujarLinea, false);
@@ -176,52 +186,79 @@ function calcularEstado() {
             else {
                 if (partidaActual.palabra == "") {
                     console.log('Toca esperar que elijan palabra');
+                    contadorEleccion = 0;
+                    cuentaAtrasEleccion(true);
+                    contador = 0;
                     cuentaAtras(true);
                     cargarOpciones();
                     estado = 4;
                 }
                 else {
                     console.log('Toca adivinar');
-                    contador = 60;
-                    cuentaAtras(false);
+                    contadorEleccion = 0;
+                    cuentaAtrasEleccion(true);
+                    if (!cuentaAtrasActivada) {
+                        contador = 60;
+                        cuentaAtras(false);
+                    }
                     estado = 5;
                 }
+            }
+            if (partidaActual.nAciertos == partidaActual.jugadores.length - 1) {
+                contador = 0;
             }
         }
     }
 }
 
 function pasarTurno() {
-    var partidaRef = firestore.collection("partidas").doc(idpartida);
+    var partidaRef = firestore.collection("partidas").doc(partidaActual.id);
     firestore.runTransaction(function(transaction) {
         return transaction.get(partidaRef).then(function(sfDoc) {
             if (!sfDoc.exists) {
                 throw "Document does not exist!";
             }
 
+            var jugadores = sfDoc.data().jugadores;
+            var numJugadores = jugadores.length;
+            var anterior = sfDoc.data().turno;
+            var turno = (turno + 1) % numJugadores;
+            var ronda = sfDoc.data().ronda;
+            var saveRonda = ronda;
 
+            var numComprobados = 0;
+            while (numComprobados < numJugadores) {
+                if (jugadores[turno].pause) {
+                    turno = (turno + 1) % numJugadores;
+                    if (ronda == saveRonda && turno <= anterior) {
+                        ronda++;
+                    }
+                }
+                else {
+                    numComprobados = numJugadores;
+                }
+            }
+
+            if (ronda == saveRonda && turno <= anterior) {
+                ronda++;
+            }
 
             transaction.update(partidaRef, {
-                 jugadores: firebase.firestore.FieldValue.arrayUnion(
-                     {
-                         apodo: usuario.apodo,
-                         email: usuario.email,
-                         photoUrl: usuario.photoUrl,
-                         score: 0,
-                     },
-                 ),
-                 activos: firebase.firestore.FieldValue.increment(1),
-                 hay_hueco: sfDoc.data().activos + 1 < sfDoc.data().num_jugadores,
-             });
+                turno: turno,
+                ronda: ronda,
+                palabra: '',
+                activos: numJugadores,
+                puntos: [],
+                chat: [],
+                nAciertos: 0,
+            });
             return "";
         });
-    }).then(function(newPopulation) {
-        console.log("Jugador añadido correctamente");
-        window.location.replace('partida.html?ref=' + idpartida);
     }).catch(function(err) {
         // This will be an "population is too big" error.
         console.error(err);
     });
+    borrarLienzo();
 }
 
 function actualizarJugadores(jugador) {
@@ -265,6 +302,10 @@ function actualizarLienzo(puntos) {
 }
 
 function mandarMensaje(mensaje) {
+    var aciertos = 0;
+    if (mensaje.toLowerCase().trim() == partidaActual.palabra.toLowerCase().trim()) {
+        aciertos = 1;
+    }
     var timestamp = firebase.firestore.Timestamp.fromDate(new Date());
     firestore.collection('partidas').doc(partidaActual.id).update({
         chat: firebase.firestore.FieldValue.arrayUnion({
@@ -272,6 +313,7 @@ function mandarMensaje(mensaje) {
             timestamp: timestamp,
             usuario: usuario,
         }),
+        nAciertos: firebase.firestore.FieldValue.increment(aciertos),
     });
 }
 
@@ -294,7 +336,12 @@ function cuentaAtras(fin) {
             setTimeout("cuentaAtras()", 1000);
         }
         else {
-            cuentaAtrasActivada = false;
+            if (cuentaAtrasActivada) {
+
+                mostrarFinTurno();
+
+                cuentaAtrasActivada = false;
+            }
         }
     }
 }
@@ -522,6 +569,38 @@ async function elegirPalabra(recargar){
             }
         }
     });
+}
+
+var dialog;
+
+function mostrarEsperandoJugadores() {
+    dialog = bootbox.dialog({
+        message: '<div class="row justify-content-center"><div class="spinner-grow text-success" role="status"></div><div class="text-center" style="margin: 5px 20px">Esperando jugadores...</div></div>',
+        closeButton: false
+    });
+}
+
+function mostrarFinTurno() {
+    dialog = bootbox.dialog({
+    title: 'Fin del turno',
+    message: '<p>Aqui tienen que ir las puntuaciones</p>',
+    size: 'large',
+    onEscape: true,
+    backdrop: true,
+    buttons: {
+        fee: {
+            label: 'Siguiente turno',
+            className: 'btn-success',
+            callback: function(){
+                pasarTurno();
+            }
+        },
+    }
+    });
+}
+
+function quitarDialog() {
+    bootbox.hideAll();
 }
 //---------------------------------------------------
 // Llamada a funciones generales al cargar la paguina

@@ -44,8 +44,9 @@
     <div class="container">
         <div class="row">
             <div class="col-1">
-                <a href="#" onclick="signOut();"><img src="img/logo_sinfondo.png" style="margin-top:5px" width="70px"></a>
-			</div>
+                <a href="#" onclick="signOut();"><img src="img/logo_sinfondo.png" style="margin-top:5px"
+                                                      width="70px"></a>
+            </div>
             <div class="col-6">
                 <div class="collapse navbar-collapse" id="navbarNav">
                     <ul class="navbar-nav">
@@ -68,17 +69,14 @@
     </div>
 </nav>
 <!-- Fin de Menú -->
-<div class="rectangulo aumentoLigeroArriba">
-    Código de la partida:
-</div>
-    <div class="container-fluid">
-        <a class="boton_basico2" onclick="elegirPalabra()" href="#"> &nbsp + &nbsp </a> 
-    <div class="row">
-        <div class="col-3">
-            <div id="timerCounter">
+
+<div class="container-fluid">
+    <div class="d-flex justify-content-between">
+        <div class="col">
+            <div id="timerCounter" style="max-width: 400px;">
 
             </div>
-            <div class="table-responsive-vertical">
+            <div class="table-responsive-vertical" style="max-width: 400px;">
                 <table class="table user-list ">
                     <thead>
                     <tr>
@@ -93,7 +91,7 @@
             </div>
         </div>
 
-        <div class="col-6">
+        <div class="col">
             <div id="opcionesycolores" class="row" style="">
 
             </div>
@@ -101,26 +99,26 @@
                     style="position:relative;border:2px solid;"></canvas>
         </div>
 
-        <div class="col-3">
-            <span class="chat-title">Chat</span>
-            <ul id="chat" class="chat-row">
+        <div class="col">
+            <ul class="chat-title">
+                <span style="max-width: 300px;">Chat</span>
+            </ul>
+            <ul id="chat" class="chat-row" style="max-width: 400px;">
 
             </ul>
+            <ul class="chat-window" style="max-width: 400px;">
+                <form id="form" >
+                    <input id="chat-input" class="chat-window-message" type="text" autocomplete="off" autofocus/>
+                </form>
+            </ul>
 
-            <form id="form" class="chat-window">
-                <input id="chat-input" class="chat-window-message" type="text" autocomplete="off" autofocus/>
-            </form>
         </div>
     </div>
 </div>
-<div id="popup1" class="overlay" style="display: none; position:absolute; top:50%; left:50%;">
-    <div class="popup">
-        <h2>Introduce el email de tu amigo</h2>
-        <a class="close" href="#">&times;</a>
-        <form name="signInForm" class="form-wrap">
-            <input id="email" type="text" name="email" placeholder="Email">
-            <input type="button" onclick="sendRequest()" class="boton_basico2" value="Add">
-        </form>
+<div id="popup1" class="overlay"
+     style="display: none; position:absolute; top:50%; left:50%; transform: translate(-50%, -50%); background-color: #65faa6;">
+    <div class="popup" style="position:absolute; top:50%; left:50%; transform: translate(-50%, -50%);">
+        <h3>Esperando a más jugadores</h3>
     </div>
 </div>
 
@@ -145,6 +143,8 @@
     $("form").submit(function( event ) {
         event.preventDefault();
     });
+
+
 
 
 </script>

@@ -37,10 +37,9 @@ body {
 }
 
 .chat-title {
-    position: relative;
-    clear: both;
-    display: inline-block;
-    margin: 20px 0px 0px 10px;
+    width: 400px;
+    margin: auto;
+    padding: 10px 10px 10px 10px;
     font:24px/28px'Noto Sans',sans-serif;
     color:#000000;
 }
@@ -74,6 +73,9 @@ body {
 }
 
 .chat-window {
+    width: 400px;
+    margin: auto;
+    padding: 5px 0px 0px 0px;
     bottom: 18px;
 }
 
