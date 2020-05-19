@@ -142,7 +142,7 @@ function calcularEstado() {
         estado = 0;
     }
     else {
-        if (partidaActual.ronda == 3 && partidaActual.turno == partidaActual.jugadores.length - 1 && contador == 0 && partidaActual.palabra != "") {
+        if (partidaActual.ronda >= 4) {
             console.log('Fin partida');
             estado = 1;
         }
@@ -150,10 +150,12 @@ function calcularEstado() {
             if (usuario.email == partidaActual.jugadores[partidaActual.turno].email) {
                 if (partidaActual.palabra == "") {
                     console.log('Toca elegir palabra');
-                    cargarOpciones();
-                    lienzo.addEventListener('mousedown', empezarDibujo, false);
-                    lienzo.addEventListener('mousemove', dibujarLinea, false);
-                    lienzo.addEventListener('mouseup', dejarDibujo, false);
+                    if (!cuentaAtrasEleccionActivada) {
+                        contadorEleccion = 10;
+                        cuentaAtrasEleccionActivada = true;
+                        cuentaAtrasEleccion(false);
+                    }
+                    elegirPalabra(true);
                     estado = 2;
                 }
                 else {
@@ -174,8 +176,7 @@ function calcularEstado() {
             else {
                 if (partidaActual.palabra == "") {
                     console.log('Toca esperar que elijan palabra');
-                    contador = 60;
-                    cuentaAtras(false);
+                    cuentaAtras(true);
                     cargarOpciones();
                     estado = 4;
                 }
@@ -188,6 +189,39 @@ function calcularEstado() {
             }
         }
     }
+}
+
+function pasarTurno() {
+    var partidaRef = firestore.collection("partidas").doc(idpartida);
+    firestore.runTransaction(function(transaction) {
+        return transaction.get(partidaRef).then(function(sfDoc) {
+            if (!sfDoc.exists) {
+                throw "Document does not exist!";
+            }
+
+
+
+            transaction.update(partidaRef, {
+                 jugadores: firebase.firestore.FieldValue.arrayUnion(
+                     {
+                         apodo: usuario.apodo,
+                         email: usuario.email,
+                         photoUrl: usuario.photoUrl,
+                         score: 0,
+                     },
+                 ),
+                 activos: firebase.firestore.FieldValue.increment(1),
+                 hay_hueco: sfDoc.data().activos + 1 < sfDoc.data().num_jugadores,
+             });
+            return "";
+        });
+    }).then(function(newPopulation) {
+        console.log("Jugador añadido correctamente");
+        window.location.replace('partida.html?ref=' + idpartida);
+    }).catch(function(err) {
+        // This will be an "population is too big" error.
+        console.error(err);
+    });
 }
 
 function actualizarJugadores(jugador) {
@@ -243,18 +277,52 @@ function mandarMensaje(mensaje) {
 
 var contador = 0;
 var timerCounter = document.getElementById('timerCounter');
+var cuentaAtrasActivada = false;
 
 function cuentaAtras(fin) {
     //console.log('Contador: ' + contador);
     if (fin == true) {
         contador = 0;
+        cuentaAtrasActivada = false;
         timerCounter.innerHTML = '<h3 align="center">Contador: ' + contador + '</h3>';
     }
     else {
+        cuentaAtrasActivada = true;
         timerCounter.innerHTML = '<h3 align="center">Contador: ' + contador + '</h3>';
         if (contador > 0) {
             contador -= 1;
             setTimeout("cuentaAtras()", 1000);
+        }
+        else {
+            cuentaAtrasActivada = false;
+        }
+    }
+}
+
+var contadorEleccion = 0;
+var cuentaAtrasEleccionActivada = false;
+
+function cuentaAtrasEleccion(fin) {
+    if (fin == true) {
+        contadorEleccion = 0;
+        cuentaAtrasEleccionActivada = false;
+        //console.log('Contador Eleccion parado');
+    }
+    else {
+        //console.log('ContadorEleccion: ' + contadorEleccion);
+        if (contadorEleccion > 0) {
+            contadorEleccion -= 1;
+            setTimeout("cuentaAtrasEleccion()", 1000);
+        }
+        else {
+            if (cuentaAtrasEleccionActivada) {
+                // Pasar turno
+                console.log('Hay que pasar turno');
+
+                pasarTurno();
+
+                cuentaAtrasEleccionActivada = false;
+            }
         }
     }
 }
@@ -377,10 +445,14 @@ function dejarDibujo() {
 }
 
 function borrarLienzo() {
-    lineas = [];
     firestore.collection('partidas').doc(partidaActual.id).update({
         puntos: [],
     });
+    lineas = [];
+    let ctx = lienzo.getContext('2d');
+    ctx.beginPath();
+    ctx.clearRect(0, 0, 600, 600);
+    ctx.stroke();
 }
 
 async function signOut() {
@@ -395,28 +467,59 @@ async function signOut() {
         console.log("Error al cerrar sesion");
         console.log(error.message);
       });
-    } 
-} 
-  
-function elegirPalabra(){
-    bootbox.prompt({
-        title: "This is a prompt with a set of checkbox inputs!",
-        value: ['1', '3'],
-        inputType: 'checkbox',
-        inputOptions: [{
-            text: 'Choice One',
-            value: '1',
-        },
-        {
-            text: 'Choice Two',
-            value: '2',
-        },
-        {
-            text: 'Choice Three',
-            value: '3',
-        }],
+    }
+}
+
+var palabras = [
+    {text: 'manzana', value: '1',},
+    {text: 'pera', value: '2',},
+    {text: 'melocoton', value: '3',},
+    {text: 'sandia', value: '4',},
+    {text: 'melon', value: '5',},
+    {text: 'Apple', value: '6',},
+    {text: 'Microsoft', value: '7',},
+    {text: 'Google', value: '8',},
+    {text: 'Unizar', value: '9',},
+    {text: 'dibujillo', value: '10',},];
+
+function randomNum(min, max) {
+    var n = [];
+    var nums = [];
+    for(var i=0;i<3;i++){
+        var aux = Math.floor(Math.random() * max) + min;
+        while(nums.includes(aux)) {
+            aux = Math.floor(Math.random() * max) + min;
+        }
+        nums[i] = aux;
+        n.push(palabras[nums[i]]);
+    }
+    return n;
+}
+
+var palabrasElegidas;
+
+async function elegirPalabra(recargar){
+    if (recargar) {
+        palabrasElegidas = randomNum(0, 9);
+    }
+    await bootbox.prompt({
+        title: "Elige una palabra:",
+        inputType: 'radio',
+        inputOptions: palabrasElegidas,
+        required: true,
+        closeButton: false,
+        onEscape: false,
         callback: function (result) {
-            console.log(result);
+            if (result == undefined) {
+                elegirPalabra(false);
+            }
+            else {
+                console.log('Palabra elegida' + palabras[result - 1]);
+                firestore.collection('partidas').doc(partidaActual.id).update({
+                    palabra: palabras[result - 1].text,
+                });
+                cuentaAtrasEleccion(true);
+            }
         }
     });
 }
