@@ -32,22 +32,47 @@
 	<link rel="icon" href="img/logo_sinfondo.png" type="image/x-icon">
 
     <style type="text/css">
-	.cuadrado_relleno{
-		
+	.cuadrado{
+		position: absolute;
 		padding-top:10px;
 		padding-bottom:10px;
 		margin:0px 10px 15px;
 		background-color: #ffffff;
 		color: white;
-		border-radius: 50px;
+		padding: 50px 5px;
+		border-radius: 20%;
+		top: 0;
+		z-index:-1;
+		left: 12em;
+		right: 12em;
+		bottom: 0;
+		border: 1px solid black;
 	}
-	.cuadro_texto{
-	  padding: 20px;
-	  font-weight: 600;
-	  font-size: 20px;
-	  color: #000000;
-	  background-color: #ffffff;
-	  left: 20px;
+	
+	.buttonN{
+		font-weight: 600;
+		font-size: 20px;
+		font: #ffffff;
+		background-color: #65faa6;
+		margin-top: 30px;
+		border: 1px solid black;
+		line-height: 20px;
+		padding: 30px 200px;
+	}
+	
+	button:hover {color:white;}
+	a:hover {color:white;}
+	
+	.buttonA{
+		font-weight: 600;
+		font-size: 20px;
+		font-color: #000000;
+		color: #000000;
+		background-color: #65faa6;
+		margin-top: 30px;
+		border: 1px solid black;
+		line-height: 20px;
+		padding: 30px 200px;
 	}
 
     </style>
@@ -85,17 +110,17 @@
 		</div>
     </nav>
 
-<div class="container">
-    <div class="row fullscreen align-items-center justify-content-between aumentoArriba">
-        <div class="col-lg-8 col-md-2 banner-center margenAuto">
-            <div class="form-wrap">
-                <h1>JUEGOS</h1>
-                <br><br><br><br>
-                <div class="cuadrado_relleno">
-                    <a href="partida.html" class="boton_grande">PARTIDA</a>
+<div class="container text-center">
+    <h1 align="center" style="margin-top: 50px">JUGAR</h1>
+    <br/><br/>
+    <div class="row">
+        <div class="col-2"></div>
+        <div class="col-8">
+            <a class="cuadrado"></a>
+                    <button onclick="buscarPartida()" id="botonesBuscarPartida" class="buttonN">PARTIDA</button>
                     <br><br><br><br><br><br>
-                    <a href="partidaconamigos.html" class="boton_grande boton_menosancho">JUEGA CON AMIGOS</a>
-                </div>
+                    <a href="partidaconamigos.html" class="buttonA">AMIGOS</a>
+					<br><br><br><br><br>
             </div>
         </div>
     </div>
@@ -112,6 +137,5 @@
 <script src="https://www.gstatic.com/firebasejs/7.14.0/firebase-firestore.js"></script>
 
 <script src="js/dibujillo/juegos.js"></script>
-<script src="js/dibujillo/index.js"></script>
 </body>
 </html>

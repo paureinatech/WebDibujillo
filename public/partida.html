@@ -68,7 +68,11 @@
     </div>
 </nav>
 <!-- Fin de Menú -->
-<div class="container-fluid">
+<div class="rectangulo aumentoLigeroArriba">
+    Código de la partida:
+</div>
+    <div class="container-fluid">
+        <a class="boton_basico2" onclick="elegirPalabra()" href="#"> &nbsp + &nbsp </a> 
     <div class="row">
         <div class="col-3">
             <div id="timerCounter">
@@ -129,9 +133,13 @@
 <script src="https://www.gstatic.com/firebasejs/7.14.0/firebase-analytics.js"></script>
 <script src="https://www.gstatic.com/firebasejs/7.14.0/firebase-auth.js"></script>
 <script src="https://www.gstatic.com/firebasejs/7.14.0/firebase-firestore.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/bootbox.js/5.4.0/bootbox.min.js"></script>
+
+<script src="js/bootbox/bootbox.all.js"></script>
+<script src="js/bootbox/bootbox.js"></script>
+<script src="js/bootbox/bootbox.locales.js"></script>
 
 <script src="js/dibujillo/partida.js"></script>
-<script src="js/dibujillo/index.js"></script>
 
 <script>
     $("form").submit(function( event ) {
