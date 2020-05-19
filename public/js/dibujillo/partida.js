@@ -395,9 +395,31 @@ async function signOut() {
         console.log("Error al cerrar sesion");
         console.log(error.message);
       });
-    }
-  } 
+    } 
+} 
   
+function elegirPalabra(){
+    bootbox.prompt({
+        title: "This is a prompt with a set of checkbox inputs!",
+        value: ['1', '3'],
+        inputType: 'checkbox',
+        inputOptions: [{
+            text: 'Choice One',
+            value: '1',
+        },
+        {
+            text: 'Choice Two',
+            value: '2',
+        },
+        {
+            text: 'Choice Three',
+            value: '3',
+        }],
+        callback: function (result) {
+            console.log(result);
+        }
+    });
+}
 //---------------------------------------------------
 // Llamada a funciones generales al cargar la paguina
 //---------------------------------------------------
