@@ -201,6 +201,7 @@ function pasarTurno() {
 
 
 
+
             transaction.update(partidaRef, {
                  jugadores: firebase.firestore.FieldValue.arrayUnion(
                      {
