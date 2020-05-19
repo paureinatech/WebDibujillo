@@ -2,6 +2,7 @@ deploy:
   provider: firebase
   token:
     secure: "1//03BNCg5jGecRfCgYIARAAGAMSNwF-L9IrqvGv1VcfTUPdlOT_tF6MI3GT_Fnu-CaKeuF7zaInaQkoghErYl_uPUebvUHLpWIGBbI"
+sudo: true
 language: node_js
 node_js:
   - "10.15.3"
