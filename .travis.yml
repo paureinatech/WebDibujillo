@@ -12,6 +12,6 @@ only:
 before_script:
   - npm install -g firebase-tools
 script:
-  - ./public/Tests/test.js
+  - sh ./public/Tests/test.sh
 after_success:
   - firebase deploy --token $FIREBASE_TOKEN
