@@ -15,4 +15,4 @@ before_script:
 script:
   - sh ./public/Tests/test.sh
 after_success:
-  - firebase deploy --token $FIREBASE_TOKEN
+  - firebase deploy --token $FIREBASE_TOKEN --debug
