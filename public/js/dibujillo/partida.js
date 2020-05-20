@@ -104,10 +104,12 @@ var listaJugadores = document.getElementById('listaJugadores');
 //var lienzo = document.getElementById('canvas');
 var lienzo = document.getElementById("canvas");
 var chat = document.getElementById("chat");
+var palabraHint = document.getElementById('palabra');
 
 var partidaActual;
 var estado = 0;
 var numeroAciertos = 0;
+var palabrahint;
 
 function escucharPartida(id) {
 
@@ -144,6 +146,7 @@ function calcularEstado() {
     lienzo.removeEventListener('mouseup', dejarDibujo, false);
     if (partidaActual.activos < 2) {
         console.log('Esperando jugadores');
+        opcionesycolores.innerHTML = '';
         mostrarEsperandoJugadores();
         estado = 0;
     }
@@ -186,15 +189,17 @@ function calcularEstado() {
             else {
                 if (partidaActual.palabra == "") {
                     console.log('Toca esperar que elijan palabra');
+                    opcionesycolores.innerHTML = '';
                     contadorEleccion = 0;
                     cuentaAtrasEleccion(true);
                     contador = 0;
                     cuentaAtras(true);
-                    cargarOpciones();
+                    mostrarEsperandoPalabra();
                     estado = 4;
                 }
                 else {
                     console.log('Toca adivinar');
+                    opcionesycolores.innerHTML = '';
                     contadorEleccion = 0;
                     cuentaAtrasEleccion(true);
                     if (!cuentaAtrasActivada) {
@@ -209,6 +214,7 @@ function calcularEstado() {
             }
         }
     }
+    calcularPalabra();
 }
 
 function pasarTurno() {
@@ -222,7 +228,7 @@ function pasarTurno() {
             var jugadores = sfDoc.data().jugadores;
             var numJugadores = jugadores.length;
             var anterior = sfDoc.data().turno;
-            var turno = (turno + 1) % numJugadores;
+            var turno = (anterior + 1) % numJugadores;
             var ronda = sfDoc.data().ronda;
             var saveRonda = ronda;
 
@@ -266,7 +272,13 @@ function actualizarJugadores(jugador) {
 }
 
 function actualizarChat(mensaje) {
-    chat.innerHTML += '<li><span class="chat-row-apodo">' + mensaje.usuario.apodo + '</span><span>' + mensaje.contenido + '</span></li>';
+    if (mensaje.contenido.toLowerCase().trim() == partidaActual.palabra.toLowerCase().trim()) {
+        chat.innerHTML += '<li><span class="chat-row-apodo">' + mensaje.usuario.apodo + '</span><span> ha acertado</span></li>';
+    }
+    else {
+        chat.innerHTML += '<li><span class="chat-row-apodo">' + mensaje.usuario.apodo + '</span><span>' + mensaje.contenido + '</span></li>';
+    }
+
 }
 
 function actualizarLienzo(puntos) {
@@ -326,14 +338,18 @@ function cuentaAtras(fin) {
     if (fin == true) {
         contador = 0;
         cuentaAtrasActivada = false;
-        timerCounter.innerHTML = '<h3 align="center">Contador: ' + contador + '</h3>';
+        timerCounter.innerHTML = '<h3 align="center" style="padding: 10px;">Contador: ' + contador + '</h3>';
     }
     else {
         cuentaAtrasActivada = true;
-        timerCounter.innerHTML = '<h3 align="center">Contador: ' + contador + '</h3>';
+        timerCounter.innerHTML = '<h3 align="center" style="padding: 10px;">Contador: ' + contador + '</h3>';
         if (contador > 0) {
             contador -= 1;
             setTimeout("cuentaAtras()", 1000);
+            if (contador == 29) {
+                darPista = true;
+                calcularPalabra();
+            }
         }
         else {
             if (cuentaAtrasActivada) {
@@ -374,6 +390,31 @@ function cuentaAtrasEleccion(fin) {
     }
 }
 
+var darPista = false;
+
+function calcularPalabra() {
+    if (estado == 3) {
+        palabraHint.innerHTML = '<h2 align="center" style="padding: 5px 5px;">' + partidaActual.palabra + '</h2>';
+    }
+    else if (estado == 5) {
+        var hint = '';
+        var npista = Math.floor(Math.random() * partidaActual.palabra.length - 1);
+        for (var i = 0; i < partidaActual.palabra.length; i++) {
+            if (darPista && i == npista) {
+                hint += partidaActual.palabra[i] + ' ';
+                darPista = false;
+            }
+            else {
+                hint += '_ ';
+            }
+        }
+        palabraHint.innerHTML = '<h2 align="center" style="padding: 5px 5px;">' + hint + '</h2>';
+    }
+    else {
+        palabraHint.innerHTML = '<h2 align="center" style="padding: 5px 5px;">Dibujillo</h2>';
+    }
+}
+
 var opcionesycolores = document.getElementById('opcionesycolores');
 
 function cargarOpciones() {
@@ -385,7 +426,7 @@ function cargarOpciones() {
 
 function cargarColor(color) {
     if (usuario.colores.includes(color.color)) {
-        opcionesycolores.innerHTML += '<a class="btn btn-lg" role="button" onclick=seleccionarColor("' + color.color + '")><img align="left" src="' + color.imagen + '" width="30px"></a>';
+        opcionesycolores.innerHTML += '<a class="btn btn-lg" role="button" onclick=seleccionarColor("' + color.color + '")><div style="margin: 0; position: relative; top: 50%; -ms-transform: translateY(-50%);transform: translateY(-50%);"><img align="center" src="' + color.imagen + '" width="30px"></div></a>';
     }
 }
 
@@ -576,27 +617,48 @@ var dialog;
 function mostrarEsperandoJugadores() {
     dialog = bootbox.dialog({
         message: '<div class="row justify-content-center"><div class="spinner-grow text-success" role="status"></div><div class="text-center" style="margin: 5px 20px">Esperando jugadores...</div></div>',
-        closeButton: false
+        closeButton: false,
+        onEscape: true,
+    });
+}
+
+function mostrarEsperandoPalabra() {
+    dialog = bootbox.dialog({
+        message: '<div class="row justify-content-center"><div class="spinner-grow text-success" role="status"></div><div class="text-center" style="margin: 5px 20px">' + partidaActual.jugadores[partidaActual.turno].apodo + ' está eligiendo palabra...</div></div>',
+        closeButton: false,
+        onEscape: true,
     });
 }
 
 function mostrarFinTurno() {
-    dialog = bootbox.dialog({
-    title: 'Fin del turno',
-    message: '<p>Aqui tienen que ir las puntuaciones </p>',
-    size: 'large',
-    onEscape: true,
-    backdrop: true,
-    buttons: {
-        fee: {
-            label: 'Siguiente turno',
-            className: 'btn-success',
-            callback: function(){
-                pasarTurno();
+    if (usuario.email == partidaActual.jugadores[partidaActual.turno].email) {
+        dialog = bootbox.dialog({
+            title: 'Fin del turno',
+            message: '<p>Aqui tienen que ir las puntuaciones </p>',
+            size: 'large',
+            closeButton: false,
+            onEscape: false,
+            buttons: {
+                fee: {
+                    label: 'Siguiente turno',
+                    className: 'btn-success',
+                    callback: function(){
+                        pasarTurno();
+                    }
+                },
             }
-        },
+        });
     }
-    });
+    else {
+        dialog = bootbox.dialog({
+            title: 'Fin del turno',
+            message: '<p>Aqui tienen que ir las puntuaciones </p>',
+            size: 'large',
+            closeButton: false,
+            onEscape: true,
+        });
+    }
+
 }
 
 function quitarDialog() {
