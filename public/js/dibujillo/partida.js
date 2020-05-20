@@ -583,7 +583,7 @@ function mostrarEsperandoJugadores() {
 function mostrarFinTurno() {
     dialog = bootbox.dialog({
     title: 'Fin del turno',
-    message: '<p>Aqui tienen que ir las puntuaciones</p>',
+    message: '<p>Aqui tienen que ir las puntuaciones </p>',
     size: 'large',
     onEscape: true,
     backdrop: true,

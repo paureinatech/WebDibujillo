@@ -122,6 +122,7 @@ function unirsePartida(idpartida) {
                              email: usuario.email,
                              photoUrl: usuario.photoUrl,
                              score: 0,
+                             pause: false,
                          },
                      ),
                      activos: firebase.firestore.FieldValue.increment(1),
