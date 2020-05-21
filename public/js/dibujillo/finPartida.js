@@ -64,6 +64,7 @@ function escucharUsuario(email) {
             iconos : data.iconos,
             solicitudes : data.solicitudes,
         };
+        conseguirIdPartida();
     });
 }
 
@@ -105,6 +106,10 @@ function escucharPartida(id) {
         var partida = doc.data();
         partidaActual = partida;
 
+        if (partidaActual.ronda < 4) {
+            window.location.replace('partida.html?ref=' + partidaActual.id);
+        }
+
         listaJugadores.innerHTML = "";
         var jugadores = partida.jugadores;
         jugadores.forEach(actualizarJugadores);
@@ -114,6 +119,39 @@ function escucharPartida(id) {
 
 function actualizarJugadores(jugador) {
     listaJugadores.innerHTML += '<tr><td><img class="aspect" src="' + jugador.photoUrl + '" alt=""><a class="user-link">' + jugador.apodo + '</a></td><td>' + jugador.score + '</td></tr>';
+}
+
+function canjearPuntos() {
+    var jugador;
+    for (jug in partidaActual) {
+        if (jug.email == usuario.email) {
+            jugador = jug;
+        }
+    }
+    firestore.collection('usuarios').doc(jugador.email).update({
+        total_puntos: firebase.firestore.FieldValue.increment(jugador.score),
+        // habra que añadirle monedas
+    });
+    abandonarPartida();
+}
+
+function abandonarPartida(jugador) {
+    firestore.collection('partidas').doc(partidaActual.id).update({
+        jugadores: firebase.firestore.FieldValue.arrayRemove({
+            email: jugador.email,
+            apodo: jugador.apodo,
+            photoUrl: jugador.photoUrl,
+            score: jugador.score,
+            pause: jugador.pause,
+        }),
+        activos: firebase.firestore.FieldValue.increment(-1),
+        hay_hueco: false,
+    }).then(function () {
+        if (partidaActual.activos == 1) {
+            firestore.collection('partidas').doc(partidaActual.id).delete();
+        }
+        window.location.replace("juegos.html");
+    });
 }
 
 escucharAuthentication();
