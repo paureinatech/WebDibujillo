@@ -123,7 +123,7 @@ function actualizarJugadores(jugador) {
 
 function canjearPuntos() {
     var jugador;
-    for (jug in partidaActual) {
+    for (jug in partidaActual.jugadores) {
         if (jug.email == usuario.email) {
             jugador = jug;
         }
