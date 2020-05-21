@@ -110,17 +110,18 @@
 </nav>
 
 <div class="container text-center">
-    <h1 align="center" style="margin-top: 50px">JUGAR</h1>
-    <br/><br/>
-    <div class="row">
-        <div class="col-2"></div>
-        <div class="col-8">
-            <a class="cuadrado"></a>
-            <button onclick="buscarPartida()" id="botonesBuscarPartida" class="buttonN">PARTIDA</button>
-            <br><br><br><br><br><br>
-            <a href="partidaconamigos.html" class="buttonA">AMIGOS</a>
-            <br><br><br><br><br>
-        </div>
+    <div class="table-responsive-vertical" style="max-width: 400px;">
+        <table class="table user-list ">
+            <thead>
+            <tr>
+                <th><span>Nick</span></th>
+                <th><span>Puntos</span></th>
+                <th>&nbsp;</th>
+            </tr>
+            </thead>
+            <tbody id="listaJugadores">
+            </tbody>
+        </table>
     </div>
 </div>
 

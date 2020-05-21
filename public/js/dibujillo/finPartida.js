@@ -93,6 +93,10 @@ async function signOut() {
 
 //-------------------------------------------------------------------
 
+var partidaActual;
+
+var listaJugadores = document.getElementById('listaJugadores');
+
 function escucharPartida(id) {
 
     firestore.collection('partidas').doc(id).onSnapshot(function(doc) {
@@ -105,20 +109,11 @@ function escucharPartida(id) {
         var jugadores = partida.jugadores;
         jugadores.forEach(actualizarJugadores);
 
-        chat.innerHTML = "";
-        var mensajes = partida.chat;
-        mensajes.forEach(actualizarChat);
-        var lis = document.getElementById("chat").getElementsByTagName("li");
-        if (lis.length > 0) {
-            lis[lis.length-1].scrollIntoView();
-        }
-
-        var puntos = partida.puntos;
-        actualizarLienzo(puntos);
-
-        calcularEstado();
-
     });
+}
+
+function actualizarJugadores(jugador) {
+    listaJugadores.innerHTML += '<tr><td><img class="aspect" src="' + jugador.photoUrl + '" alt=""><a class="user-link">' + jugador.apodo + '</a></td><td>' + jugador.score + '</td></tr>';
 }
 
 escucharAuthentication();
