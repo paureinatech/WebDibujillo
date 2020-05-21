@@ -153,6 +153,7 @@ function calcularEstado() {
     else {
         if (partidaActual.ronda >= 4) {
             console.log('Fin partida');
+            window.location.replace('finPartida.html?ref=' + partidaActual.id);
             estado = 1;
         }
         else {
