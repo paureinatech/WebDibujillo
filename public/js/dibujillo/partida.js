@@ -632,10 +632,17 @@ function mostrarEsperandoPalabra() {
 }
 
 function mostrarFinTurno() {
+    var puntuaciones = '<table class="table user-list"><tbody>';
+    var players = partidaActual.jugadores;
+    var jug;
+    for (jug in players) {
+        puntuaciones += '<tr><td><img class="aspect" src="' + players[jug].photoUrl + '" alt=""><a class="user-link">' + players[jug].apodo + '</a></td><td>' + players[jug].score + ' puntos</td></tr>';
+    }
+    puntuaciones += '</tbody></table>';
     if (usuario.email == partidaActual.jugadores[partidaActual.turno].email) {
         dialog = bootbox.dialog({
             title: 'Fin del turno',
-            message: '<p>Aqui tienen que ir las puntuaciones </p>',
+            message: puntuaciones,
             size: 'large',
             closeButton: false,
             onEscape: false,
@@ -653,7 +660,7 @@ function mostrarFinTurno() {
     else {
         dialog = bootbox.dialog({
             title: 'Fin del turno',
-            message: '<p>Aqui tienen que ir las puntuaciones </p>',
+            message: puntuaciones,
             size: 'large',
             closeButton: false,
             onEscape: true,
