@@ -8,6 +8,6 @@ before_script:
   - npm install -g firebase-tools
   - npm install jshint --save-dev
 script:
-  - jshint ./public/Tests/test.js
+  - npm test
 after_success:
   - firebase deploy --only hosting --token $FIREBASE_TOKEN
