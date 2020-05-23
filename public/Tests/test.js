@@ -18,7 +18,7 @@ var email = "jorgeiliarte15@gmail.com";
 var password = "123456";
 
 // main.js:
-const signIn = require('../js/index.js').signIn;
+var signIn = require('../js/index.js').signIn;
 signIn();
 
 // main.js:
