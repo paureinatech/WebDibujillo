@@ -124,8 +124,8 @@ function actualizarJugadores(jugador) {
 function canjearPuntos() {
     var jugador;
     for (jug in partidaActual.jugadores) {
-        if (jug.email == usuario.email) {
-            jugador = jug;
+        if (partidaActual.jugadores[jug].email == usuario.email) {
+            jugador = partidaActual.jugadores[jug];
         }
     }
     firestore.collection('usuarios').doc(jugador.email).update({
