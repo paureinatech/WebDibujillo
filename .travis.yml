@@ -1,12 +1,13 @@
 language: node_js
 node_js:
-  - "10.15.3"
+  - 8
 branches:
   only:
     - master
 before_script:
   - npm install -g firebase-tools
+  - npm install jshint --save-dev
 script:
-  - sh ./public/Tests/test.sh
+  - jshint ./public/Tests/test.js
 after_success:
   - firebase deploy --only hosting --token $FIREBASE_TOKEN
