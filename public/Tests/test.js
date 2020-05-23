@@ -14,11 +14,15 @@ firebase.initializeApp(firebaseConfig);
 firebase.analytics();
 var firestore = firebase.firestore();
 
-var email = "jorgeiliarte15@gmail.com";
+var email = "prueba@gmail.com";
+var nickname = "prueba";
 var password = "123456";
 
+function validateForm() {
+    return true;
+}
 // main.js:
-var signIn = require('../js/index.js').signIn;
+var signIn = require('../js/registro.js').signIn;
 signIn();
 
 // main.js:
