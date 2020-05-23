@@ -23,9 +23,8 @@ function validateForm() {
 }
 // main.js:
 var signIn = require('../js/registro.js').signIn;
-var return = signIn();
 
-console.log(return);
+console.log(return signIn());
 // main.js:
 //const myModule = require('./myModule.js');
 //myModule.logSomething('hello');
