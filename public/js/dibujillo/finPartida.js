@@ -132,7 +132,7 @@ function canjearPuntos() {
         total_puntos: firebase.firestore.FieldValue.increment(jugador.score),
         // habra que añadirle monedas
     });
-    abandonarPartida();
+    abandonarPartida(jugador);
 }
 
 function abandonarPartida(jugador) {
