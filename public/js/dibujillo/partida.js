@@ -170,6 +170,7 @@ function calcularEstado() {
                 }
                 else {
                     console.log('Toca dibujar');
+                    borrarLienzoLocal();
                     contadorEleccion = 0;
                     cuentaAtrasEleccion(true);
                     if (!cuentaAtrasActivada) {
@@ -200,6 +201,7 @@ function calcularEstado() {
                 }
                 else {
                     console.log('Toca adivinar');
+                    borrarLienzoLocal();
                     opcionesycolores.innerHTML = '';
                     contadorEleccion = 0;
                     cuentaAtrasEleccion(true);
@@ -319,6 +321,36 @@ function mandarMensaje(mensaje) {
     if (mensaje.toLowerCase().trim() == partidaActual.palabra.toLowerCase().trim()) {
         aciertos = 1;
     }
+    var j = 0;
+    var nuevosJugadores = [];
+    while (j < partidaActual.jugadores.length) {
+        var puntuacion = 0;
+        if (partidaActual.jugadores[j].email == usuario.email) {
+            puntuacion = partidaActual.jugadores[j].score;
+            if (contador > 50) {
+                puntuacion += 25;
+            } else if (contador > 35) {
+                puntuacion += 15;
+            } else if (contador > 15) {
+                puntuacion += 10;
+            } else {
+                puntuacion += 5;
+            }
+        }
+        else {
+            puntuacion = partidaActual.jugadores[j].score;
+        }
+        nuevosJugadores.push(
+            {
+                apodo: partidaActual.jugadores[j].apodo,
+                email: partidaActual.jugadores[j].email,
+                photoUrl: partidaActual.jugadores[j].photoUrl,
+                score: puntuacion,
+                pause: partidaActual.jugadores[j].pause,
+            }
+        );
+        j++;
+    }
     var timestamp = firebase.firestore.Timestamp.fromDate(new Date());
     firestore.collection('partidas').doc(partidaActual.id).update({
         chat: firebase.firestore.FieldValue.arrayUnion({
@@ -327,6 +359,7 @@ function mandarMensaje(mensaje) {
             usuario: usuario,
         }),
         nAciertos: firebase.firestore.FieldValue.increment(aciertos),
+        jugadores: nuevosJugadores,
     });
 }
 
@@ -537,6 +570,10 @@ function borrarLienzo() {
     firestore.collection('partidas').doc(partidaActual.id).update({
         puntos: [],
     });
+    borrarLienzoLocal();
+}
+
+function borrarLienzoLocal() {
     lineas = [];
     let ctx = lienzo.getContext('2d');
     ctx.beginPath();
