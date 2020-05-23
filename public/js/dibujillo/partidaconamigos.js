@@ -51,7 +51,7 @@ function escucharAuthentication() {
 function escucharUsuario(email) {
     console.log("Comenzando a escuchar a " + email);
     firestore.collection("usuarios").doc(email).onSnapshot(function (doc) {
-        console.log("Current data", doc.data());
+        console.log("Current usuario", doc.data());
         var data = doc.data();
         usuario = {
             email : data.email,
@@ -135,16 +135,12 @@ function crearPartida() {
 
                 var hay_hueco = sfDoc.data().hay_hueco;
                 if (hay_hueco) {
-                    var a = {
-                        usuario: usuario.email,
-                        score: 0,
-                    };
                     transaction.update(partidaRef, {
                          jugadores: firebase.firestore.FieldValue.arrayUnion(
                              {
                                  apodo: usuario.apodo,
                                  email: usuario.email,
-                                 photoUrl: usuario.photoURL,
+                                 photoUrl: usuario.photoUrl,
                                  score: 0,
                                  pause: false,
                              },
@@ -189,7 +185,7 @@ function unirsePartida() {
                              {
                                  apodo: usuario.apodo,
                                  email: usuario.email,
-                                 photoUrl: usuario.photoURL,
+                                 photoUrl: usuario.photoUrl,
                                  score: 0,
                                  pause: false,
                              },
