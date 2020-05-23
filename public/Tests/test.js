@@ -1,5 +1,5 @@
 // Your web app's Firebase configuration
-/*var firebaseConfig = {
+var firebaseConfig = {
     apiKey: "AIzaSyDzJ50PyRubhuR2I3dSBUcS70rYpi5FV9M",
     authDomain: "dibujillo.firebaseapp.com",
     databaseURL: "https://dibujillo.firebaseio.com",
@@ -23,9 +23,8 @@ function validateForm() {
 }
 // main.js:
 var signIn = require('../js/registro.js').signIn;
-signIn();
-*/
-console.log('HEY MAAAAAANNNNNNNNNNNN');
+
+console.log(return signIn());
 // main.js:
 //const myModule = require('./myModule.js');
 //myModule.logSomething('hello');
