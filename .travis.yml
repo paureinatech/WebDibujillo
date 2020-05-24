@@ -5,11 +5,13 @@ branches:
   only:
     - master
 before_script:
+  - cd functions
   - npm install firebase-functions@latest firebase-admin@latest --save
   - npm install -g firebase-tools
   - npm install --save-dev firebase-functions-test
   - npm install --save-dev mocha
 script:
+  - cd functions
   - npm test
 after_success:
   - firebase deploy --token $FIREBASE_TOKEN
