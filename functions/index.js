@@ -6,3 +6,10 @@ const functions = require('firebase-functions');
 // exports.helloWorld = functions.https.onRequest((request, response) => {
 //  response.send("Hello from Firebase!");
 // });
+
+exports.comprobarUsuario = functions.firebase.ref('/usuarios/{user}')
+    .onCreate((snapshot, context) => {
+      const original = snapshot.val();
+      console.log('Usuario creado con ID: ', context.params.user, original.email);
+      return snapshot.ref.parent.child('uppercase').set(uppercase);
+    });
