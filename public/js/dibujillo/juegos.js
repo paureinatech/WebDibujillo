@@ -91,6 +91,7 @@ function buscarPartida(){
         console.log('Tamaño: ', querySnapshot.length);
             if (querySnapshot.empty) {
                 console.log('No hay partidas publicas');
+                alert("No hay iniciada ninguna partida pública en este momento");
             }
             else {
                 console.log('Hay partidas publicas: ', querySnapshot.docs.length);

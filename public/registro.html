@@ -19,6 +19,8 @@
     <!--
     CSS
     ============================================= -->
+    <link rel="stylesheet" href="css/font-awesome.min.css">
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css">
     <link rel="stylesheet" href="css/bootstrap.css">
     <link rel="stylesheet" href="css/main.css">
     <link rel="stylesheet" href="css/botones.css">
@@ -43,11 +45,12 @@
             <div class="form-wrap">
                 <div class="cuadrado_relleno2">
                     <form name="signInForm" class="form-wrap">
-                        <input id="email" type="text" name="email" placeholder="Email">
+                        <input class="textoAncho" id="email" type="text" name="email" placeholder="Email">
                         <br><br>
-                        <input id="nickname" type="text" name="nickname" placeholder="Nickname">
+                        <input class="textoAncho" id="nickname" type="text" name="nickname" placeholder="Nickname">
                         <br><br>
-                        <input id="password" type="text" name="password" placeholder="Contraseña">
+                        <input id="password" type="password" name="password" placeholder="Contraseña">
+                        <button id="show_password" class="btn btn-primary" type="button" onclick="mostrarPassword()"> <span class="fa fa-eye-slash icon"></span> </button>
                         <br><br>
                         <input type="button" onclick="signIn()" class="boton_basico2" value="Go">
                     </form>
@@ -76,6 +79,7 @@
 <!-- The core Firebase JS SDK is always required and must be listed first -->
 <script src="https://www.gstatic.com/firebasejs/7.14.0/firebase-app.js"></script>
 
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
 <!-- TODO: Add SDKs for Firebase products that you want to use
      https://firebase.google.com/docs/web/setup#available-libraries -->
 <script src="https://www.gstatic.com/firebasejs/7.14.0/firebase-analytics.js"></script>
