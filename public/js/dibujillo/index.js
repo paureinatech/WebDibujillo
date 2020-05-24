@@ -70,9 +70,24 @@ function escucharUsuario(email) {
         };
     });
 }
-async function pruebita() {
-  alert("Holi");
-}
+
+function mostrarPassword(){
+  var cambio = document.getElementById("password");
+  if(cambio.type == "password"){
+    cambio.type = "text";
+    $('.icon').removeClass('fa fa-eye-slash').addClass('fa fa-eye');
+  }else{
+    cambio.type = "password";
+    $('.icon').removeClass('fa fa-eye').addClass('fa fa-eye-slash');
+  }
+} 
+
+$(document).ready(function () {
+//CheckBox mostrar contraseña
+$('#ShowPassword').click(function () {
+  $('#Password').attr('type', $(this).is(':checked') ? 'text' : 'password');
+});
+});
 
 async function signOut() {
   var opcion = confirm("¿Quieres cerrar la sesión?");
@@ -124,6 +139,7 @@ async function signIn() {
     }
     else {
         console.log('No se ha podido iniciar sesion');
+        alert("Error al iniciar sesión");
         document.signInForm.password.focus();
     }
 

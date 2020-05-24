@@ -57,6 +57,10 @@ a:hover {color:black;}
   background-color: #ffffff;
   left: 20px;
 }
+.masPeque{
+  weight: 70%;
+  padding-right: 20%;
+}
 .logoIni {
 
 }

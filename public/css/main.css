@@ -4735,3 +4735,14 @@ body.mobile-nav-active #mobile-nav-toggle {
   background-color: #d3f7dd;
   
 }
+.textoAncho{
+  width:200%
+  padding:200%;
+  width:320px;
+}
+ input[type=text] {
+  height:37px;
+} 
+input[type=password] {
+   height:37px;
+} 

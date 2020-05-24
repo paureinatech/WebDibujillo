@@ -141,18 +141,24 @@ function denegarSolicitud(correo) {
     });
 }
 
-function enviarSolicitud(correo) {
-    firestore.collection('usuarios').doc(correo).update({
+async function enviarSolicitud(correo) {
+    var error = 0;
+    await firestore.collection('usuarios').doc(correo).update({
         solicitudes: firebase.firestore.FieldValue.arrayUnion(usuario.email)
     }).catch(function(error){
+        error=1;
         alert("El usuario no existe");
         console.log("Error al enviar solicitud");
         console.log(error.message);
     });
+    if(error=0){
+        alert("Solicitud enviada");
+    }
 }
 
 async function sendRequest() {
     if(email.value == usuario.email){
+        alert("Ese es tu nombre de usuario");
     }
     else{
         enviarSolicitud(email.value);
