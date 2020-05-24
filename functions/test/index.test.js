@@ -5,8 +5,8 @@ const test = require('firebase-functions-test')({
     projectId: 'dibujillo'
 }, '../../dibujillo-a9ae5eb0eef8.json');
 
-const myTest = require('../../Tests/test.js');
+const myTest = require('../index.js');
 
-const wrapped = test.wrap(myTest.testFunctions);
+const wrapped = test.wrap(myTest.test);
 
 wrapped();
