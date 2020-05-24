@@ -9,6 +9,7 @@ const myTest = require('../index.js');
 
 myTest.test();
 
-//const wrapped = test.wrap(myTest.test);
+const myRegistro = require('../../public/js/dibujillo/registro.js');
 
-//wrapped();
+
+
