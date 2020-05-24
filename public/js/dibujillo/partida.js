@@ -170,11 +170,11 @@ function calcularEstado() {
                 }
                 else {
                     console.log('Toca dibujar');
-                    borrarLienzoLocal();
                     contadorEleccion = 0;
                     cuentaAtrasEleccion(true);
                     if (!cuentaAtrasActivada) {
-                        contador = 60;
+                        borrarLienzoLocal();
+                        contador = 30;
                         cuentaAtras(false);
                     }
                     cargarOpciones();
@@ -201,12 +201,12 @@ function calcularEstado() {
                 }
                 else {
                     console.log('Toca adivinar');
-                    borrarLienzoLocal();
                     opcionesycolores.innerHTML = '';
                     contadorEleccion = 0;
                     cuentaAtrasEleccion(true);
                     if (!cuentaAtrasActivada) {
-                        contador = 60;
+                        borrarLienzoLocal();
+                        contador = 30;
                         cuentaAtras(false);
                     }
                     estado = 5;
