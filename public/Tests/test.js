@@ -25,7 +25,7 @@ function validateForm() {
 var signIn = require('../js/registro.js').signIn;
 signIn();
 */
-const test = require('firebase-functions-test')();
+//const test = require('firebase-functions-test')();
 /*
 const test = require('firebase-functions-test')({
   databaseURL: 'https://dibujillo.firebaseio.com',
