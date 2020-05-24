@@ -25,10 +25,13 @@ function validateForm() {
 var signIn = require('../js/registro.js').signIn;
 signIn();
 */
-const test = require('firebase-functions-test'){
+const test = require('firebase-functions-test')();
+/*
+const test = require('firebase-functions-test')({
   databaseURL: 'https://dibujillo.firebaseio.com',
   storageBucket: 'dibujillo.appspot.com',
   projectId: 'dibujillo'
-};
+}, );
 
 const myFunctions = require('../js/registro.js');
+*/
