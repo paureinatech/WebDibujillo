@@ -10,7 +10,7 @@ var firebaseConfig = {
     measurementId: "G-9700NMW0BJ"
 };
 // Initialize Firebase
-firebase.initializeApp(firebaseConfig);
+var firebase = firebase.initializeApp(firebaseConfig);
 firebase.analytics();
 var firestore = firebase.firestore();
 
