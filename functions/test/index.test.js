@@ -7,6 +7,8 @@ const test = require('firebase-functions-test')({
 
 const myTest = require('../index.js');
 
-const wrapped = test.wrap(myTest.test);
+myTest.test();
 
-wrapped();
+//const wrapped = test.wrap(myTest.test);
+
+//wrapped();
