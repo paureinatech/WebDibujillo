@@ -11,6 +11,6 @@ before_script:
   - npm install --save-dev firebase-functions-test
   - npm install --save-dev mocha
 script:
-  - node ./public/Tests/test.js
+  - node ../public/Tests/test.js
 after_success:
   - firebase deploy --token $FIREBASE_TOKEN
