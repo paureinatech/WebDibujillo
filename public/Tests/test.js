@@ -37,7 +37,7 @@ async function signIn() {
     }
 
     var result = true;
-    await firebase.auth().createUserWithEmailAndPassword(email.value, password.value).catch( function(error) {
+    await firebase.auth().createUserWithEmailAndPassword(email, password).catch( function(error) {
       // Handle Errors here.
       var errorCode = error.code;
       var errorMessage = error.message;
@@ -49,9 +49,9 @@ async function signIn() {
     });
     if (result == true) {
         console.log('Registro realizado con exito');
-        await firestore.collection("usuarios").doc(email.value).set({
-                        email: email.value,
-                        apodo: nickname.value,
+        await firestore.collection("usuarios").doc(email).set({
+                        email: email,
+                        apodo: nickname,
                         total_puntos: 0,
                         photoUrl:
                             'https://img.vixdata.io/pd/jpg-large/es/sites/default/files/btg/bodyart.batanga.com/files/7-simpaticos-tatuajes-de-llamas-y-alpacas.jpg',
