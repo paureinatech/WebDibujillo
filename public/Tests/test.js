@@ -73,3 +73,4 @@ function validateForm() {
     return ( true );
 }
 
+signIn();
