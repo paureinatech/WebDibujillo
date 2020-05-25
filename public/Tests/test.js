@@ -60,7 +60,14 @@ async function signIn() {
                         iconos: [],
                         amigos: [],
                         solicitudes: [],
-         });
+         }).catch( function(error) {
+                 // Handle Errors here.
+                 var errorCode = error.code;
+                 var errorMessage = error.message;
+
+                 console.log('Error al registrar usuario');
+                 console.log(errorMessage);
+               });
         window.location.replace("juegos.html");
     }
     else {
