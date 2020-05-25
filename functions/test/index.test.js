@@ -1,4 +1,5 @@
 const admin = require('firebase-admin');
+const firebase = require('firebase');
 
 // At the top of test/index.test.js
 const test = require('firebase-functions-test')({
