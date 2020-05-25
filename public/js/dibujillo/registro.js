@@ -24,7 +24,7 @@ var email = document.getElementById('email');
 var nickname = document.getElementById('nickname');
 var password = document.getElementById('password');
 
-async function signIn() {
+exports.registerIn = async function signIn() {
 
     if (!validateForm()) {
         return;
