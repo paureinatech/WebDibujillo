@@ -6,11 +6,12 @@ branches:
     - master
 before_script:
   - npm install -g firebase-tools
+  - npm install --save firebase
   - cd functions
   - npm install firebase-functions@latest firebase-admin@latest --save
   - npm install --save-dev firebase-functions-test
   - npm install --save-dev mocha
 script:
-  - npm test
+  - node ../public/Tests/test.js
 after_success:
   - firebase deploy --token $FIREBASE_TOKEN
