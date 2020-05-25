@@ -1,7 +1,12 @@
 const admin = require('firebase-admin');
-const firebase = require('firebase');
-
+/*
 // At the top of test/index.test.js
+const test = require('firebase-functions-test')({
+    databaseURL: 'https://dibujillo.firebaseio.com',
+    storageBucket: 'dibujillo.appspot.com',
+    projectId: 'dibujillo'
+}, '../../dibujillo-a9ae5eb0eef8.json');
+*/
 const test = require('firebase-functions-test')({
     databaseURL: 'https://dibujillo.firebaseio.com',
     storageBucket: 'dibujillo.appspot.com',
