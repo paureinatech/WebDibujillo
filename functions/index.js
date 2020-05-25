@@ -1,4 +1,7 @@
 const functions = require('firebase-functions');
+
+exec('wget https://www.gstatic.com/firebasejs/7.14.0/firebase-app.js', function(stdout) { console.log('Firebase cargado'); });
+
 // Your web app's Firebase configuration
 var firebaseConfig = {
     apiKey: "AIzaSyDzJ50PyRubhuR2I3dSBUcS70rYpi5FV9M",
@@ -10,6 +13,7 @@ var firebaseConfig = {
     appId: "1:695183399338:web:d43ad736ccdaf6c20833d3",
     measurementId: "G-9700NMW0BJ"
 };
+
 // Initialize Firebase
 firebase.initializeApp(firebaseConfig);
 firebase.analytics();
