@@ -14,21 +14,13 @@ firebase.initializeApp(firebaseConfig);
 firebase.analytics();
 var firestore = firebase.firestore();
 
-var user = null;
-
-var usuario;
-
 //Funciones propias de registro
 
 var email = document.getElementById('email');
 var nickname = document.getElementById('nickname');
 var password = document.getElementById('password');
 
-exports.test = function () {
-    console.log('Test pasado con REGISTER.JS');
-}
-
-exports.registerIn = async function signIn() {
+async function signIn() {
 
     if (!validateForm()) {
         return;
