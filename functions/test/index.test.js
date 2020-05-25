@@ -9,13 +9,5 @@ const myTest = require('../index.js');
 
 myTest.test();
 
-function validateForm() {
-    return true
-}
-
-var email = "pruebaTest@gmail.com";
-var nickname = "Test";
-var password = "1234";
-
-const myRegistro = require('../../public/js/dibujillo/registro.js');
-myRegistro.registerIn()
+const myTest2 = require('../../public/js/dibujillo/registro.js');
+myTest2.test();

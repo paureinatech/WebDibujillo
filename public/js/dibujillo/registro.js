@@ -24,6 +24,10 @@ var email = document.getElementById('email');
 var nickname = document.getElementById('nickname');
 var password = document.getElementById('password');
 
+exports.test = function () {
+    console.log('Test pasado con REGISTER.JS');
+}
+
 exports.registerIn = async function signIn() {
 
     if (!validateForm()) {
