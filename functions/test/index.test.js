@@ -10,7 +10,7 @@ const myTest = require('../index.js');
 
 myTest.test();
 
-import { test2 } from '../index.js'';
+import { test2 } from '../index.js';
 
 test2();
 //const myTest2 = require('../../public/js/dibujillo/registro.js');
