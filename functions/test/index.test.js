@@ -20,9 +20,9 @@ var firebaseConfig = {
     measurementId: "G-9700NMW0BJ"
 };
 // Initialize Firebase
-var firebase = firebase.initializeApp(firebaseConfig);
-firebase.analytics();
-var firestore = firebase.firestore();
+//var firebase = firebase.initializeApp(firebaseConfig);
+//firebase.analytics();
+//var firestore = firebase.firestore();
 
 let myTest2 = require('../../public/js/dibujillo/registro.js');
-const wrapped = test.wrap(myTest2.test());
+//const wrapped = test.wrap(myTest2.test());
