@@ -1,4 +1,4 @@
-const sinon = require('sinon');
+const admin = require('firebase-admin');
 
 // At the top of test/index.test.js
 const test = require('firebase-functions-test')({
@@ -14,7 +14,7 @@ myTest.test();
 //import { Test2 } from '../index.js';
 //test2();
 
-adminInitStub = sinon.stub(admin, 'initializeApp');
+//adminInitStub = sinon.stub(admin, 'initializeApp');
 
 const myTest2 = require('../../public/js/dibujillo/registro.js');
 myTest2.test();
