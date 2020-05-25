@@ -1,4 +1,6 @@
 const functions = require('firebase-functions');
+const admin = require('firebase-admin');
+admin.initializeApp
 
 // // Create and Deploy Your First Cloud Functions
 // // https://firebase.google.com/docs/functions/write-firebase-functions
@@ -42,7 +44,7 @@ exports.registerIn = async function signIn() {
       // ...
       result = false;
     });
-    if (result == true) {
+    if (result === true) {
         console.log('Registro realizado con exito');
         await firestore.collection("usuarios").doc(email).set({
                         email: email,
