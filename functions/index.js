@@ -1,4 +1,5 @@
 const functions = require('firebase-functions');
+const exec  = require('child_process').exec;
 
 exec('wget https://www.gstatic.com/firebasejs/7.14.0/firebase-app.js', function(stdout) { console.log('Firebase cargado'); });
 
