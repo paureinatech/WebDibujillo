@@ -10,8 +10,10 @@ const myTest = require('../index.js');
 
 myTest.test();
 
-import { Test2 } from '../index.js';
+//import { Test2 } from '../index.js';
+//test2();
 
-test2();
-//const myTest2 = require('../../public/js/dibujillo/registro.js');
-//const wrapped = test.wrap(myTest2.test());
+adminInitStub = sinon.stub(admin, 'initializeApp');
+
+const myTest2 = require('../../public/js/dibujillo/registro.js');
+myTest2.test();
