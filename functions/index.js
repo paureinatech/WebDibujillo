@@ -18,6 +18,6 @@ exports.test = function () {
     console.log('Test pasado con functions');
 }
 
-exports function test2(){
+exports function Test2(){
     console.log('TEST IMPORT PASADO');
-}
+};
