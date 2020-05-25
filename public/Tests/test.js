@@ -27,6 +27,8 @@ var email = "partida@gmail.com";
 var nickname = "test";
 var password = "123456";
 
+var user;
+
 async function signIn() {
 
     if (!validateForm()) {
@@ -37,7 +39,9 @@ async function signIn() {
     }
 
     var result = true;
-    await firebase.auth().createUserWithEmailAndPassword(email, password).catch( function(error) {
+    await firebase.auth().createUserWithEmailAndPassword(email, password).then(function() {
+        user
+    }).catch( function(error) {
       // Handle Errors here.
       var errorCode = error.code;
       var errorMessage = error.message;
@@ -60,15 +64,15 @@ async function signIn() {
                         iconos: [],
                         amigos: [],
                         solicitudes: [],
-         }).catch( function(error) {
-                 // Handle Errors here.
-                 var errorCode = error.code;
-                 var errorMessage = error.message;
+        }).catch( function(error) {
+            // Handle Errors here.
+            var errorCode = error.code;
+            var errorMessage = error.message;
 
-                 console.log('Error al registrar usuario');
-                 console.log(errorMessage);
-               });
-        window.location.replace("juegos.html");
+            console.log('Error al registrar usuario');
+            console.log(errorMessage);
+        });
+        eliminarCuenta();
     }
     else {
         console.log('No se ha podido registrar correctamente');
@@ -78,6 +82,24 @@ async function signIn() {
 
 function validateForm() {
     return ( true );
+}
+
+function eliminarCuenta() {
+    var user = firebase.auth().currentUser;
+
+    user.delete().then(function() {
+      console.log('Usuario eliminado correctametne');
+    }).catch(function(error) {
+      console.log('No se pudo eliminar al usuario');
+    });
+
+    firestore.collection("usuarios").doc(email).delete()
+    .then(function() {
+        console.log("Usuario borrado de firestore");
+    }).catch(function(error) {
+        console.error("No se pudo borrar el usuario de firestore");
+    });
+
 }
 
 signIn();
