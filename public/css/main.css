@@ -4683,6 +4683,7 @@ body.mobile-nav-active #mobile-nav-toggle {
   background-color: #ffffff;
   border: solid 1px #3b4652;
   color: white;
+  border-radius: 15px;
 }
 
 .cuadradoIzq{
@@ -4706,7 +4707,7 @@ body.mobile-nav-active #mobile-nav-toggle {
   background-color: #bdfccf;
   border: solid 1px #3b4652;
   color: white;
-  border-radius: 10px;
+  border-radius: 30px;
 }
 
 .cuadrado_relleno2{
@@ -4715,7 +4716,7 @@ body.mobile-nav-active #mobile-nav-toggle {
   background-color: #FFFECE;
   border: solid 1px #3b4652;
   color: white;
-  border-radius: 10px;
+  border-radius: 15px;
 }
 
 .margenAuto{
@@ -4742,8 +4743,10 @@ body.mobile-nav-active #mobile-nav-toggle {
 }
  input[type=text] {
   height:37px;
+  width:274px;
+  
 } 
 input[type=password] {
    height:37px;
-   width:274px;
+   width:228px;
 } 

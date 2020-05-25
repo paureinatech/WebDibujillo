@@ -655,7 +655,7 @@ var dialog;
 function mostrarEsperandoJugadores() {
     dialog = bootbox.dialog({
         message: '<div class="row justify-content-center"><div class="spinner-grow text-success" role="status"></div><div class="text-center" style="margin: 5px 20px">Esperando jugadores...</div></div>',
-        closeButton: false,
+        closeButton: true,
         onEscape: true,
     });
 }
