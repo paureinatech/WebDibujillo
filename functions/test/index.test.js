@@ -7,6 +7,8 @@ const test = require('firebase-functions-test')({
     projectId: 'dibujillo'
 }, '../../dibujillo-a9ae5eb0eef8.json');
 
+test.mockConfig({ stripe: { key: '23wr42ewr34' }});
+
 const myTest = require('../index.js');
 
 myTest.test();
