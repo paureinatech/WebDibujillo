@@ -1,6 +1,18 @@
 const functions = require('firebase-functions');
-const admin = require('firebase-admin');
-admin.initializeApp
+// Your web app's Firebase configuration
+var firebaseConfig = {
+    apiKey: "AIzaSyDzJ50PyRubhuR2I3dSBUcS70rYpi5FV9M",
+    authDomain: "dibujillo.firebaseapp.com",
+    databaseURL: "https://dibujillo.firebaseio.com",
+    projectId: "dibujillo",
+    storageBucket: "dibujillo.appspot.com",
+    messagingSenderId: "695183399338",
+    appId: "1:695183399338:web:d43ad736ccdaf6c20833d3",
+    measurementId: "G-9700NMW0BJ"
+};
+// Initialize Firebase
+firebase.initializeApp(firebaseConfig);
+firebase.analytics();
 
 // // Create and Deploy Your First Cloud Functions
 // // https://firebase.google.com/docs/functions/write-firebase-functions
