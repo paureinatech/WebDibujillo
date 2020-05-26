@@ -62,13 +62,6 @@ async function signIn() {
                         iconos: [],
                         amigos: [],
                         solicitudes: [],
-        }).then(async function() {
-            await escucharUsuario(email);
-
-            await addMonedas(500);
-
-            await comprarColor("0XFFE53935");
-
         }).catch( function(error) {
             // Handle Errors here.
             var errorCode = error.code;
@@ -77,9 +70,6 @@ async function signIn() {
             console.log('Error al registrar usuario');
             console.log(errorMessage);
         });
-    }
-    else {
-        console.log('No se ha podido registrar correctamente');
     }
     return result;
 }
@@ -141,7 +131,17 @@ async function addMonedas(coins) {
     });
 }
 
-signIn();
+async function main() {
+    var result = await signIn();
+    if (result) {
+        await escucharUsuario(email);
 
-//eliminarCuenta()
-//probando el test
+        await addMonedas(500);
+
+        await comprarColor("0XFFE53935");
+
+        eliminarCuenta();
+    }
+}
+
+main();
