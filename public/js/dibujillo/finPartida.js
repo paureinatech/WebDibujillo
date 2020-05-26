@@ -121,17 +121,41 @@ function actualizarJugadores(jugador) {
     listaJugadores.innerHTML += '<tr><td><img class="aspect" src="' + jugador.photoUrl + '" alt=""><a class="user-link">' + jugador.apodo + '</a></td><td>' + jugador.score + '</td></tr>';
 }
 
-function canjearPuntos() {
+async function canjearPuntos() {
     var jugador;
     for (jug in partidaActual.jugadores) {
         if (partidaActual.jugadores[jug].email == usuario.email) {
             jugador = partidaActual.jugadores[jug];
         }
     }
-    firestore.collection('usuarios').doc(jugador.email).update({
+    await firestore.collection('usuarios').doc(jugador.email).update({
         total_puntos: firebase.firestore.FieldValue.increment(jugador.score),
-        // habra que añadirle monedas
     });
+    canjearMonedas();
+}
+
+async function canjearMonedas() {
+
+    var jugadores = partidaActual.jugadores;
+
+    jugadores.sort((a,b) => (a.score > b.score) ? -1 : ((b.score > a.score) ? 1 : 0));
+
+    var ganadas = 0;
+    var numComprobados = 0;
+    while(numComprobados < jugadores.length) {
+        if (jugadores[numComprobados].email == usuario.email) {
+            ganadas = jugadores.length - numComprobados;
+            console.log('Monedas ganadas por ' + jugadores[numComprobados].apodo + ': ' + ganadas);
+        }
+        numComprobados++;
+    }
+
+    //console.log(jugadores);
+
+    await firestore.collection('usuarios').doc(jugador.email).update({
+        monedas: firebase.firestore.FieldValue.increment(ganadas),
+    });
+
     abandonarPartida(jugador);
 }
 
