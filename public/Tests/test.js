@@ -72,6 +72,11 @@ async function signIn() {
             console.log('Error al registrar usuario');
             console.log(errorMessage);
         });
+        await escucharUsuario(email);
+
+        await addMonedas(500);
+
+        await comprarColor("0XFFE53935");
     }
     else {
         console.log('No se ha podido registrar correctamente');
@@ -100,9 +105,9 @@ function eliminarCuenta() {
 
 }
 
-function escucharUsuario(email) {
+async function escucharUsuario(email) {
 console.log("Comenzando a escuchar a " + email);
-firestore.collection("usuarios").doc(email).onSnapshot(function (doc) {
+await firestore.collection("usuarios").doc(email).onSnapshot(function (doc) {
     console.log("Current data", doc.data());
             var data = doc.data();
             user = {
@@ -121,28 +126,22 @@ firestore.collection("usuarios").doc(email).onSnapshot(function (doc) {
 
 }
 
-function comprarColor(color) {
+async function comprarColor(color) {
     if (user.monedas >= 50) {
-        firestore.collection('usuarios').doc(user.email).update({
+        await firestore.collection('usuarios').doc(user.email).update({
         colores: firebase.firestore.FieldValue.arrayUnion(color),
         monedas: firebase.firestore.FieldValue.increment(-50),
         });
     }
 }
 
-function addMonedas(coins) {
-    firestore.collection('usuarios').doc(user.email).update({
+async function addMonedas(coins) {
+    await firestore.collection('usuarios').doc(user.email).update({
         monedas: firebase.firestore.FieldValue.increment(coins),
     });
 }
 
-await signIn();
-
-await escucharUsuario(email);
-
-await addMonedas(500);
-
-await comprarColor("0XFFE53935");
+signIn();
 
 //eliminarCuenta();
 //probando el test
