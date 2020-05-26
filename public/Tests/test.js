@@ -97,14 +97,14 @@ async function eliminarCuenta() {
 
     var user = firebase.auth().currentUser;
 
-    firestore.collection("usuarios").doc(email).delete()
+    await firestore.collection("usuarios").doc(email).delete()
     .then(function() {
         console.log("Usuario borrado de firestore");
     }).catch(function(error) {
         console.error("No se pudo borrar el usuario de firestore");
     });
 
-    user.delete().then(function() {
+    await user.delete().then(function() {
       console.log('Usuario eliminado correctamente');
     }).catch(function(error) {
       console.log('No se pudo eliminar al usuario');
@@ -116,7 +116,7 @@ async function escucharUsuario(email) {
     await firestore.collection("usuarios").doc(email).get()
     .then(async function(doc) {
         if (doc.exists) {
-            console.log("Current data", doc.data());
+            //console.log("Current data", doc.data());
             var data = doc.data();
             usuario = {
                 email : data.email,
