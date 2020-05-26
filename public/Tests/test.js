@@ -101,6 +101,7 @@ function eliminarCuenta() {
 }
 
 function escucharUsuario(email) {
+console.log("Comenzando a escuchar a " + email);
 firestore.collection("usuarios").doc(email).onSnapshot(function (doc) {
     console.log("Current data", doc.data());
             var data = doc.data();
@@ -116,6 +117,8 @@ firestore.collection("usuarios").doc(email).onSnapshot(function (doc) {
                 solicitudes : data.solicitudes,
             };
     });
+    addMonedas(500);
+    comprarColor("0XFFE53935");
 }
 
 function comprarColor(color) {
@@ -129,19 +132,13 @@ function comprarColor(color) {
 
 function addMonedas(coins) {
     firestore.collection('usuarios').doc(user.email).update({
-                    monedas: firebase.firestore.FieldValue.increment(coins),
+        monedas: firebase.firestore.FieldValue.increment(coins),
     });
 }
 
-signIn();
-
-console.log("Comenzando a escuchar a " + email);
+//signIn();
 
 escucharUsuario(email);
-
-addMonedas(500);
-
-comprarColor("0XFFE53935");
 
 //eliminarCuenta();
 //probando el test
