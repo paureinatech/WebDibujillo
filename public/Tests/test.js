@@ -44,7 +44,7 @@ async function signIn() {
       var errorCode = error.code;
       var errorMessage = error.message;
 
-      console.log('Error al registrar usuario');
+      console.log('Error al crear usuario');
       console.log(errorMessage);
       // ...
       result = false;
