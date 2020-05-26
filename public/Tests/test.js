@@ -39,9 +39,7 @@ async function signIn() {
     }
 
     var result = true;
-    await firebase.auth().createUserWithEmailAndPassword(email, password).then(function() {
-        user
-    }).catch( function(error) {
+    await firebase.auth().createUserWithEmailAndPassword(email, password).catch( function(error) {
       // Handle Errors here.
       var errorCode = error.code;
       var errorMessage = error.message;
