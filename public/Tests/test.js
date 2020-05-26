@@ -23,7 +23,7 @@ var firestore = firebase.firestore();
 
 //Funciones propias de registro
 
-var email = "partida@gmail.com";
+var email = "pruebaweb@gmail.com";
 var nickname = "test";
 var password = "123456";
 
@@ -100,9 +100,30 @@ function eliminarCuenta() {
 
 }
 
+function escucharUsuario(email) {
+console.log("Comenzando a escuchar a " + email);
+firestore.collection("usuarios").doc(email).onSnapshot(function (doc) {
+    console.log("Current data", doc.data());
+            var data = doc.data();
+            user = {
+                email : data.email,
+                apodo : data.apodo,
+                photoUrl : data.photoUrl,
+                monedas : data.monedas,
+                total_puntos : data.total_puntos,
+                amigos : data.amigos,
+                colores : data.colores,
+                iconos : data.iconos,
+                solicitudes : data.solicitudes,
+            };
+    });
+
+
+}
+
 function comprarColor(color) {
-    if (usuario.monedas >= 50) {
-        firestore.collection('usuarios').doc(usuario.email).update({
+    if (user.monedas >= 50) {
+        firestore.collection('usuarios').doc(user.email).update({
         colores: firebase.firestore.FieldValue.arrayUnion(color),
         monedas: firebase.firestore.FieldValue.increment(-50),
         });
@@ -110,34 +131,18 @@ function comprarColor(color) {
 }
 
 function addMonedas(coins) {
-    firestore.collection('usuarios').doc(usuario.email).update({
-                    monedas: firebase.firestore.FieldValue.increment(coins),
+    firestore.collection('usuarios').doc(user.email).update({
+        monedas: firebase.firestore.FieldValue.increment(coins),
     });
 }
 
-signIn();
+await signIn();
 
-console.log("Comenzando a escuchar a " + email);
+await escucharUsuario(email);
 
-firestore.collection("usuarios").doc(email).onSnapshot(function (doc) {
-console.log("Current data", doc.data());
-        var data = doc.data();
-        usuario = {
-            email : data.email,
-            apodo : data.apodo,
-            photoUrl : data.photoUrl,
-            monedas : data.monedas,
-            total_puntos : data.total_puntos,
-            amigos : data.amigos,
-            colores : data.colores,
-            iconos : data.iconos,
-            solicitudes : data.solicitudes,
-        };
-});
+await addMonedas(500);
 
-addMonedas(500);
-
-comprarColor("0XFFE53935");
+await comprarColor("0XFFE53935");
 
 //eliminarCuenta();
 //probando el test
