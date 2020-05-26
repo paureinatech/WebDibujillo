@@ -101,10 +101,20 @@ var colores = [{nombre:"Negro", color:"0XFF000000", imagen:"img/colores/negro.pn
 {nombre:"Verde", color:"0XFF4CAF50", imagen:"img/colores/verde_claro.png"},
 {nombre:"Naranja", color:"0XFFEF6C00", imagen:"img/colores/naranja.png"},
 {nombre:"Rosa", color:"0XFFF50057", imagen:"img/colores/rosa.png"},
-{nombre:"Morado", color:"0X0FF8E24AA", imagen:"img/colores/morado.png"},
+{nombre:"Morado", color:"0XFF8E24AA", imagen:"img/colores/morado.png"},
 {nombre:"Marron", color:"0XFF6D4C41", imagen:"img/colores/marron.png"},
-{nombre:"Gris", color:"0XFF757575", imagen:"img/colores/plateado.png"}
+{nombre:"Mar", color:"0xFF00E5FF", imagen:"img/colores/mar.png"},
+{nombre:"Cesped", color:"0xFF76FF03", imagen:"img/colores/cesped.png"},
+{nombre:"Algodon", color:"0xFFF8BBD0", imagen:"img/colores/algodon.png"},
+{nombre:"Lila", color:"0xFFB39DDB", imagen:"img/colores/lila.png"},
+{nombre:"Gris", color:"0XFF757575", imagen:"img/colores/plateado.png"},
+{nombre:"Dibujillo", color:"0xFF00E676", imagen:"img/colores/dibujillo.png"}
+{nombre:"Mandarina", color:"0xFFFFAB40", imagen:"img/colores/mandarina.png"}
+{nombre:"Oceano", color:"0xFF3F51B5", imagen:"img/colores/oceano.png"},
+{nombre:"Bosque", color:"0xFF009688", imagen:"img/colores/bosque.png"}
+{nombre:"Salmon", color:"0xFFFA8072", imagen:"img/colores/salmon.png"}
 ];
+
 
 var listaJugadores = document.getElementById('listaJugadores');
 //var lienzo = document.getElementById('canvas');
