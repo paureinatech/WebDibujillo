@@ -51,31 +51,38 @@ async function signIn() {
     });
     if (result == true) {
         console.log('Registro realizado con exito');
-        await firestore.collection("usuarios").doc(email).set({
-                        email: email,
-                        apodo: nickname,
-                        total_puntos: 0,
-                        photoUrl:
-                            'https://img.vixdata.io/pd/jpg-large/es/sites/default/files/btg/bodyart.batanga.com/files/7-simpaticos-tatuajes-de-llamas-y-alpacas.jpg',
-                        monedas: 50,
-                        colores: ["0XFF000000"],
-                        iconos: [],
-                        amigos: [],
-                        solicitudes: [],
-        }).catch( function(error) {
-            // Handle Errors here.
-            var errorCode = error.code;
-            var errorMessage = error.message;
-
-            console.log('Error al registrar usuario');
-            console.log(errorMessage);
-        });
     }
     return result;
 }
 
 function validateForm() {
     return ( true );
+}
+
+async function registrarUsuario() {
+    var result = true;
+    await firestore.collection("usuarios").doc(email).set({
+        email: email,
+        apodo: nickname,
+        total_puntos: 0,
+        photoUrl:
+            'https://img.vixdata.io/pd/jpg-large/es/sites/default/files/btg/bodyart.batanga.com/files/7-simpaticos-tatuajes-de-llamas-y-alpacas.jpg',
+        monedas: 50,
+        colores: ["0XFF000000"],
+        iconos: [],
+        amigos: [],
+        solicitudes: [],
+    }).catch( function(error) {
+        // Handle Errors here.
+        var errorCode = error.code;
+        var errorMessage = error.message;
+
+        console.log('Error al registrar usuario');
+        console.log(errorMessage);
+
+        result = false;
+    });
+    return result;
 }
 
 function eliminarCuenta() {
@@ -134,19 +141,20 @@ async function addMonedas(coins) {
 async function main() {
     var result = await signIn();
     if (result) {
-        await escucharUsuario(email);
+        var result2 = registrarUsuario();
+        if (result2) {
+            await escucharUsuario(email);
 
-        await addMonedas(500);
+            await addMonedas(500);
 
-        await comprarColor("0XFFE53935");
-
-
+            await comprarColor("0XFFE53935");
+        }
+        eliminarCuenta();
     }
     else {
         console.log('Fallo en los test');
     }
 
-    eliminarCuenta();
 }
 
 main();
