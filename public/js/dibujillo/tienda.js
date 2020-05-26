@@ -89,7 +89,7 @@ async function signOut() {
 //-------------------------------------------------------------------
 
 var colores = [{nombre:"Negro", color:"0XFF000000", imagen:"img/colores/negro.png"},
-{nombre:"Rojo", color:"0XFFFF2632", imagen:"img/colores/rojo.png"},
+{nombre:"Rojo", color:"0XFFE53935", imagen:"img/colores/rojo.png"},
 {nombre:"Azul", color:"0XFF1E88E5", imagen:"img/colores/azul_oscuro.png"},
 {nombre:"Amarillo", color:"0XFFFFEB3B", imagen:"img/colores/amarillo.png"},
 {nombre:"Verde", color:"0XFF4CAF50", imagen:"img/colores/verde_claro.png"},
@@ -107,7 +107,6 @@ var colores = [{nombre:"Negro", color:"0XFF000000", imagen:"img/colores/negro.pn
 {nombre:"Oceano", color:"0xFF3F51B5", imagen:"img/colores/oceano.png"},
 {nombre:"Bosque", color:"0xFF009688", imagen:"img/colores/bosque.png"}
 {nombre:"Salmon", color:"0xFFFA8072", imagen:"img/colores/salmon.png"}
-
 ];
 
 var listaColores = document.getElementById('listaColores');

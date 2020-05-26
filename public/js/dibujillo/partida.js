@@ -95,7 +95,7 @@ async function signOut() {
 //-------------------------------------------------------------------
 
 var colores = [{nombre:"Negro", color:"0XFF000000", imagen:"img/colores/negro.png"},
-{nombre:"Rojo", color:"0XFFFF2632", imagen:"img/colores/rojo.png"},
+{nombre:"Rojo", color:"0XFFE53935", imagen:"img/colores/rojo.png"},
 {nombre:"Azul", color:"0XFF1E88E5", imagen:"img/colores/azul_oscuro.png"},
 {nombre:"Amarillo", color:"0XFFFFEB3B", imagen:"img/colores/amarillo.png"},
 {nombre:"Verde", color:"0XFF4CAF50", imagen:"img/colores/verde_claro.png"},
