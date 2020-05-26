@@ -136,7 +136,7 @@ function addMonedas(coins) {
     });
 }
 
-//signIn();
+signIn();
 
 escucharUsuario(email);
 
