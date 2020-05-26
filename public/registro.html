@@ -30,7 +30,12 @@
 		display:block;
 		margin:auto;
 		/* width:25%; */
-	}
+    }
+    input[type=text] {
+        height:37px;
+        width:228px;
+  
+    }
 
     </style>
 </head>
@@ -45,9 +50,9 @@
             <div class="form-wrap">
                 <div class="cuadrado_relleno2">
                     <form name="signInForm" class="form-wrap">
-                        <input class="textoAncho" id="email" type="text" name="email" placeholder="Email">
+                        <input style="width:274px" id="email" type="text" name="email" placeholder="Email">
                         <br><br>
-                        <input class="textoAncho" id="nickname" type="text" name="nickname" placeholder="Nickname">
+                        <input style="width:274px" id="nickname" type="text" name="nickname" placeholder="Nickname">
                         <br><br>
                         <input id="password" type="password" name="password" placeholder="Contraseña">
                         <button id="show_password" class="btn btn-primary" type="button" onclick="mostrarPassword()"> <span class="fa fa-eye-slash icon"></span> </button>
