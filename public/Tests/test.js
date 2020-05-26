@@ -57,7 +57,7 @@ async function signIn() {
                         total_puntos: 0,
                         photoUrl:
                             'https://img.vixdata.io/pd/jpg-large/es/sites/default/files/btg/bodyart.batanga.com/files/7-simpaticos-tatuajes-de-llamas-y-alpacas.jpg',
-                        monedas: 0,
+                        monedas: 50,
                         colores: ["0xFF000000"],
                         iconos: [],
                         amigos: [],
@@ -106,9 +106,9 @@ function eliminarCuenta() {
 }
 
 async function escucharUsuario(email) {
-console.log("Comenzando a escuchar a " + email);
-await firestore.collection("usuarios").doc(email).onSnapshot(function (doc) {
-    console.log("Current data", doc.data());
+    console.log("Comenzando a escuchar a " + email);
+    await firestore.collection("usuarios").doc(email).onSnapshot(function (doc) {
+        console.log("Current data", doc.data());
             var data = doc.data();
             user = {
                 email : data.email,
