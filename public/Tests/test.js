@@ -86,9 +86,9 @@ async function registrarUsuario() {
     return result;
 }
 
-function eliminarCuenta() {
+async function eliminarCuenta() {
 
-    firebase.auth().onAuthStateChanged(function(user) {
+    await firebase.auth().onAuthStateChanged(function(user) {
         console.log('Cambios en el usuario');
         if (user) {
             // User is signed in.
@@ -123,7 +123,6 @@ function eliminarCuenta() {
             // User is signed out.
             // ...
             console.log("No hay usuario logueado, volviendo al inicio");
-            window.location.replace("index.html");
         }
     });
 }
@@ -156,8 +155,8 @@ async function escucharUsuario(email) {
 async function comprarColor(color) {
     if (usuario.monedas >= 50) {
         await firestore.collection('usuarios').doc(usuario.email).update({
-        colores: firebase.firestore.FieldValue.arrayUnion(color),
-        monedas: firebase.firestore.FieldValue.increment(-50),
+            colores: firebase.firestore.FieldValue.arrayUnion(color),
+            monedas: firebase.firestore.FieldValue.increment(-50),
         });
     }
 }
@@ -169,7 +168,7 @@ async function addMonedas(coins) {
 }
 
 async function main() {
-    eliminarCuenta();
+    await eliminarCuenta();
     var result = await signIn();
     if (result) {
         var result2 = registrarUsuario();
