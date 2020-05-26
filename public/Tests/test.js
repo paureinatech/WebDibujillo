@@ -109,9 +109,35 @@ function comprarColor(color) {
     }
 }
 
+function addMonedas(coins) {
+    firestore.collection('usuarios').doc(usuario.email).update({
+                    monedas: firebase.firestore.FieldValue.increment(coins),
+    });
+}
+
+function escucharUsuario(email) {
+    console.log("Comenzando a escuchar a " + email);
+    firestore.collection("usuarios").doc(email).onSnapshot(function (doc) {
+        console.log("Current data", doc.data());
+        var data = doc.data();
+        usuario = {
+            email : data.email,
+            apodo : data.apodo,
+            photoUrl : data.photoUrl,
+            monedas : data.monedas,
+            total_puntos : data.total_puntos,
+            amigos : data.amigos,
+            colores : data.colores,
+            iconos : data.iconos,
+            solicitudes : data.solicitudes,
+        };
+    });
+}
 signIn();
 
-var usuario = firebase.auth().currentUser;
+escucharUsuario(email);
+
+addMonedas(coins);
 
 comprarColor("0XFFE53935");
 
