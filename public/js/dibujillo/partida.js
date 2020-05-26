@@ -188,6 +188,7 @@ function calcularEstado() {
                 }
                 else {
                     console.log('Toca dibujar');
+                    cuentaAtrasEleccionActivada = false;
                     contadorEleccion = 0;
                     cuentaAtrasEleccion(true);
                     if (!cuentaAtrasActivada) {
@@ -212,6 +213,7 @@ function calcularEstado() {
                 if (partidaActual.palabra == "") {
                     console.log('Toca esperar que elijan palabra');
                     opcionesycolores.innerHTML = '';
+                    cuentaAtrasEleccionActivada = false;
                     contadorEleccion = 0;
                     cuentaAtrasEleccion(true);
                     contador = 0;
@@ -222,6 +224,7 @@ function calcularEstado() {
                 else {
                     console.log('Toca adivinar');
                     opcionesycolores.innerHTML = '';
+                    cuentaAtrasEleccionActivada = false;
                     contadorEleccion = 0;
                     cuentaAtrasEleccion(true);
                     if (!cuentaAtrasActivada) {
@@ -413,9 +416,9 @@ function mandarMensaje(mensaje) {
         var puntuacion = 0;
         if (partidaActual.jugadores[j].email == usuario.email && aciertos == 1) {
             puntuacion = partidaActual.jugadores[j].score;
-            if (contador > 50) {
+            if (contador > 25) {
                 puntuacion += 25;
-            } else if (contador > 35) {
+            } else if (contador > 20) {
                 puntuacion += 15;
             } else if (contador > 15) {
                 puntuacion += 10;
@@ -487,8 +490,8 @@ var cuentaAtrasEleccionActivada = false;
 
 function cuentaAtrasEleccion(fin) {
     if (fin == true) {
-        contadorEleccion = 0;
         cuentaAtrasEleccionActivada = false;
+        contadorEleccion = 0;
         //console.log('Contador Eleccion parado');
     }
     else {
