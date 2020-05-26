@@ -28,6 +28,7 @@ var nickname = "test";
 var password = "123456";
 
 var user;
+var usuario;
 
 async function signIn() {
 
@@ -51,6 +52,34 @@ async function signIn() {
     });
     if (result == true) {
         console.log('Registro realizado con exito');
+
+        firebase.auth().onAuthStateChanged(function(user) {
+            console.log('Cambios en el usuario');
+            if (user) {
+                // User is signed in.
+                var displayName = user.displayName;
+                var email = user.email;
+                var photoURL = user.photoURL;
+                var uid = user.uid;
+
+                user = {
+                    uid: user.uid,
+                    email: user.email,
+                    displayName: user.displayName,
+                    photoURL: user.photoURL,
+                };
+
+                escucharUsuario(user.email);
+
+                console.log('Sesion iniciada con exito');
+
+            } else {
+                // User is signed out.
+                // ...
+                console.log("No hay usuario logueado, volviendo al inicio");
+                window.location.replace("index.html");
+            }
+        });
     }
     return result;
 }
@@ -87,17 +116,17 @@ async function registrarUsuario() {
 
 function eliminarCuenta() {
 
-    user.delete().then(function() {
-      console.log('Usuario eliminado correctametne');
-    }).catch(function(error) {
-      console.log('No se pudo eliminar al usuario');
-    });
-
     firestore.collection("usuarios").doc(email).delete()
     .then(function() {
         console.log("Usuario borrado de firestore");
     }).catch(function(error) {
         console.error("No se pudo borrar el usuario de firestore");
+    });
+
+    user.delete().then(function() {
+      console.log('Usuario eliminado correctametne');
+    }).catch(function(error) {
+      console.log('No se pudo eliminar al usuario');
     });
 
 }
@@ -107,7 +136,7 @@ async function escucharUsuario(email) {
     await firestore.collection("usuarios").doc(email).onSnapshot(async function (doc) {
         console.log("Current data", doc.data());
             var data = doc.data();
-            user = {
+            usuario = {
                 email : data.email,
                 apodo : data.apodo,
                 photoUrl : data.photoUrl,
@@ -119,17 +148,17 @@ async function escucharUsuario(email) {
                 solicitudes : data.solicitudes,
             };
 
-            await addMonedas(500);
 
-            await comprarColor("0XFFE53935");
     });
 
+    await addMonedas(500);
 
+    await comprarColor("0XFFE53935");
 }
 
 async function comprarColor(color) {
-    if (user.monedas >= 50) {
-        await firestore.collection('usuarios').doc(user.email).update({
+    if (usuario.monedas >= 50) {
+        await firestore.collection('usuarios').doc(usuario.email).update({
         colores: firebase.firestore.FieldValue.arrayUnion(color),
         monedas: firebase.firestore.FieldValue.increment(-50),
         });
@@ -137,7 +166,7 @@ async function comprarColor(color) {
 }
 
 async function addMonedas(coins) {
-    await firestore.collection('usuarios').doc(user.email).update({
+    await firestore.collection('usuarios').doc(usuario.email).update({
         monedas: firebase.firestore.FieldValue.increment(coins),
     });
 }
@@ -155,7 +184,6 @@ async function main() {
     else {
         console.log('Fallo en los test');
     }
-
 }
 
 main();
