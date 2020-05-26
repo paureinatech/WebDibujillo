@@ -143,5 +143,5 @@ async function addMonedas(coins) {
 
 signIn();
 
-//eliminarCuenta();
+//eliminarCuenta()
 //probando el test
