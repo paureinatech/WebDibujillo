@@ -138,7 +138,7 @@ function addMonedas(coins) {
 
 signIn();
 
-escucharUsuario(email);
+//escucharUsuario(email);
 
 //eliminarCuenta();
 //probando el test
