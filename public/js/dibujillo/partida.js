@@ -351,7 +351,13 @@ function pausar() {
 }
 
 function actualizarJugadores(jugador) {
-    listaJugadores.innerHTML += '<tr><td><img class="aspect" src="' + jugador.photoUrl + '" alt=""><a class="user-link">' + jugador.apodo + '</a></td><td>' + jugador.score + '</td></tr>';
+    if (partidaActual.jugadores[turno].email == usuario.email) {
+        listaJugadores.innerHTML += '<tr><td><img class="aspect" src="' + jugador.photoUrl + '" alt=""><a class="user-link" style="font-weight: 600;">' + jugador.apodo + '</a></td><td>' + jugador.score + '</td></tr>';
+    }
+    else {
+        listaJugadores.innerHTML += '<tr><td><img class="aspect" src="' + jugador.photoUrl + '" alt=""><a class="user-link">' + jugador.apodo + '</a></td><td>' + jugador.score + '</td></tr>';
+    }
+
 }
 
 function actualizarChat(mensaje) {
