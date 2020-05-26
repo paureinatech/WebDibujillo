@@ -97,10 +97,6 @@ async function eliminarCuenta() {
 
     var user = firebase.auth().currentUser;
 
-    if (user) {
-        console.log(user);
-    }
-
     firestore.collection("usuarios").doc(email).delete()
     .then(function() {
         console.log("Usuario borrado de firestore");
