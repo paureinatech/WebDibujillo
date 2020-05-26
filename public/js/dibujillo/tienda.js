@@ -95,7 +95,7 @@ var colores = [{nombre:"Negro", color:"0XFF000000", imagen:"img/colores/negro.pn
 {nombre:"Verde", color:"0XFF4CAF50", imagen:"img/colores/verde_claro.png"},
 {nombre:"Naranja", color:"0XFFEF6C00", imagen:"img/colores/naranja.png"},
 {nombre:"Rosa", color:"0XFFF50057", imagen:"img/colores/rosa.png"},
-{nombre:"Morado", color:"0x0FF8E24AA", imagen:"img/colores/morado.png"},
+{nombre:"Morado", color:"0X0FF8E24AA", imagen:"img/colores/morado.png"},
 {nombre:"Marron", color:"0XFF6D4C41", imagen:"img/colores/marron.png"},
 {nombre:"Gris", color:"0XFF757575", imagen:"img/colores/plateado.png"}
 ];
