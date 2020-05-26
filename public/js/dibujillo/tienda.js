@@ -106,15 +106,17 @@ var colores = [{nombre:"Negro", color:"0XFF000000", imagen:"img/colores/negro.pn
 {nombre:"Mandarina", color:"0xFFFFAB40", imagen:"img/colores/mandarina.png"},
 {nombre:"Oceano", color:"0xFF3F51B5", imagen:"img/colores/oceano.png"},
 {nombre:"Bosque", color:"0xFF009688", imagen:"img/colores/bosque.png"},
-{nombre:"Salmon", color:"0xFFFA8072", imagen:"img/colores/salmon.png"}];
+{nombre:"Salmon", color:"0xFFFA8072", imagen:"img/colores/salmon.png"}
+];
 
 var listaColores = document.getElementById('listaColores');
 var numMonedas = document.getElementById('numMonedas');
 
-function comprarColor(color) {
+function comprarColor(nombre,color) {
     if (usuario.monedas >= 50) {
         
-        var opcion = confirm("¿Quieres comprar el color " + color.nombre + "?");
+		var mensaje = '¿Quieres comprar el color ' + nombre  + '?'
+        var opcion = confirm(mensaje);
         if (opcion == true) {
             firestore.collection('usuarios').doc(usuario.email).update({
                 colores: firebase.firestore.FieldValue.arrayUnion(color),
@@ -122,6 +124,9 @@ function comprarColor(color) {
             });
         } 
     }
+	else{
+		alert('No tienes monedas suficientes para comprar este color')
+	}
 }
 
 function cargarColores(color) {
@@ -129,7 +134,7 @@ function cargarColores(color) {
         listaColores.innerHTML += '<a class="btn btn-success btn-lg" role="button"><p style="float: left;" > &emsp;&emsp;' + color.nombre + '<img align="left" src="' + color.imagen + '" width="30px"></p><p style="float: right"><img src="img/check.svg" width="30px"></p></a>';
     }
     else {
-        listaColores.innerHTML += '<a class="btn btn-success btn-lg" role="button" onclick=comprarColor("' + color.color + '")><p style="float: left;" > &emsp;&emsp;' + color.nombre + '<img align="left" src="' + color.imagen + '" width="30px"></p><p style="float: right"> 50&nbsp; <img src="img/moneda.png" width="30px"></p></a>';
+        listaColores.innerHTML += '<a class="btn btn-success btn-lg" role="button" onclick=comprarColor("' + color.nombre + '","' + color.color + '")><p style="float: left;" > &emsp;&emsp;' + color.nombre + '<img align="left" src="' + color.imagen + '" width="30px"></p><p style="float: right"> 50&nbsp; <img src="img/moneda.png" width="30px"></p></a>';
     }
 }
 
