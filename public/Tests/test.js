@@ -111,7 +111,7 @@ async function eliminarCuenta() {
 async function escucharUsuario(email) {
     console.log("Comenzando a escuchar a " + email);
     await firestore.collection("usuarios").doc(email).get()
-    .then(function(doc) {
+    .then(async function(doc) {
         if (doc.exists) {
             console.log("Current data", doc.data());
             var data = doc.data();
