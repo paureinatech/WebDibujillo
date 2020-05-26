@@ -136,9 +136,9 @@ function addMonedas(coins) {
     });
 }
 
-signIn();
+//signIn();
 
-//escucharUsuario(email);
+escucharUsuario(email);
 
 //eliminarCuenta();
 //probando el test
