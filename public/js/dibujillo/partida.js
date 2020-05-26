@@ -105,6 +105,7 @@ var listaJugadores = document.getElementById('listaJugadores');
 var lienzo = document.getElementById("canvas");
 var chat = document.getElementById("chat");
 var palabraHint = document.getElementById('palabra');
+var imagenPause = document.getElementById('imagePause');
 
 var partidaActual;
 var estado = 0;
@@ -219,12 +220,13 @@ function calcularEstado() {
             while(numComprobados < partidaActual.jugadores.length) {
                 if (partidaActual.jugadores[numComprobados].email == usuario.email) {
                     if (partidaActual.jugadores[numComprobados].pause) {
-
+                        imagenPause.innerHTML = '<img title="Vuelve a la partida" style="width:50px; height:50px;"src="img/pausa.png" onclick="pausar()">';
                     }
                     else {
-
+                        imagenPause.innerHTML = '<img title="Pausa la partida para que salte tu turno si no estás jugando" style="width:50px; height:50px;"src="img/pausa.png" onclick="pausar()">';
                     }
                 }
+                numComprobados++;
             }
         }
     }
