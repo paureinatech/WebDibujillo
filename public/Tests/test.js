@@ -143,6 +143,7 @@ async function addMonedas(coins) {
 }
 
 async function main() {
+    eliminarCuenta();
     var result = await signIn();
     if (result) {
         var result2 = registrarUsuario();
