@@ -142,19 +142,19 @@ function denegarSolicitud(correo) {
 }
 
 async function enviarSolicitud(correo) {
-    var error = 0;
     await firestore.collection('usuarios').doc(correo).update({
-        solicitudes: firebase.firestore.FieldValue.arrayUnion(usuario.email)
-    }).catch(function(error){
-        error=1;
+        solicitudes: firebase.firestore.FieldValue.arrayUnion(usuario.email),
+    })
+    .then(function(){
+        alert("Solicitud enviada");
+    })
+    .catch(function(error){
         alert("El usuario no existe");
         console.log("Error al enviar solicitud");
         console.log(error.message);
     });
-    if(error=0){
-        alert("Solicitud enviada");
-    }
 }
+
 
 async function sendRequest() {
     if(email.value == usuario.email){
