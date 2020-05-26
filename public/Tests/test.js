@@ -137,7 +137,7 @@ signIn();
 
 escucharUsuario(email);
 
-addMonedas(coins);
+addMonedas(500);
 
 comprarColor("0XFFE53935");
 
