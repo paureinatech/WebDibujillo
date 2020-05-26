@@ -140,11 +140,13 @@ async function main() {
 
         await comprarColor("0XFFE53935");
 
-        eliminarCuenta();
+
     }
     else {
         console.log('Fallo en los test');
     }
+
+    eliminarCuenta();
 }
 
 main();
