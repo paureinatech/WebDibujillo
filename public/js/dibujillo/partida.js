@@ -411,7 +411,7 @@ function mandarMensaje(mensaje) {
     var nuevosJugadores = [];
     while (j < partidaActual.jugadores.length) {
         var puntuacion = 0;
-        if (partidaActual.jugadores[j].email == usuario.email) {
+        if (partidaActual.jugadores[j].email == usuario.email && aciertos == 1) {
             puntuacion = partidaActual.jugadores[j].score;
             if (contador > 50) {
                 puntuacion += 25;
