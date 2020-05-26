@@ -68,7 +68,7 @@ async function registrarUsuario() {
         total_puntos: 0,
         photoUrl:
             'https://img.vixdata.io/pd/jpg-large/es/sites/default/files/btg/bodyart.batanga.com/files/7-simpaticos-tatuajes-de-llamas-y-alpacas.jpg',
-        monedas: 50,
+        monedas: 0,
         colores: ["0XFF000000"],
         iconos: [],
         amigos: [],
@@ -87,47 +87,6 @@ async function registrarUsuario() {
 }
 
 async function eliminarCuenta() {
-
-//    await firebase.auth().onAuthStateChanged(function(user) {
-//        //console.log('Cambios en el usuario');
-//        if (user) {
-//            // User is signed in.
-//            var displayName = user.displayName;
-//            var email = user.email;
-//            var photoURL = user.photoURL;
-//            var uid = user.uid;
-//
-//            user = {
-//                uid: user.uid,
-//                email: user.email,
-//                displayName: user.displayName,
-//                photoURL: user.photoURL,
-//            };
-//
-//            //console.log('Sesion iniciada con exito');
-//
-//            firestore.collection("usuarios").doc(email).delete()
-//            .then(function() {
-//                console.log("Usuario borrado de firestore");
-//            }).catch(function(error) {
-//                console.error("No se pudo borrar el usuario de firestore");
-//            });
-//
-//            user.delete().then(function() {
-//              console.log('Usuario eliminado correctametne');
-//            }).catch(function(error) {
-//              console.log('No se pudo eliminar al usuario');
-//            });
-//
-//        } else {
-//            // User is signed out.
-//            // ...
-//            console.log("No hay usuario logueado");
-//
-//            fierbase.auth().
-//        }
-//    });
-
     await firebase.auth().signInWithEmailAndPassword(email, password).catch(function(error) {
       var errorCode = error.code;
       var errorMessage = error.message;
@@ -151,8 +110,10 @@ async function eliminarCuenta() {
 
 async function escucharUsuario(email) {
     console.log("Comenzando a escuchar a " + email);
-    await firestore.collection("usuarios").doc(email).onSnapshot(async function (doc) {
-        console.log("Current data", doc.data());
+    await firestore.collection("usuarios").doc(email).get()
+    .then(function(doc) {
+        if (doc.exists) {
+            console.log("Current data", doc.data());
             var data = doc.data();
             usuario = {
                 email : data.email,
@@ -166,12 +127,18 @@ async function escucharUsuario(email) {
                 solicitudes : data.solicitudes,
             };
 
+            await addMonedas(500);
 
+            await comprarColor("0XFFE53935");
+
+        } else {
+            // doc.data() will be undefined in this case
+            console.log("No such document!");
+        }
+    })
+    .catch(function(error) {
+        console.log("Error getting documents: ", error);
     });
-
-    await addMonedas(500);
-
-    await comprarColor("0XFFE53935");
 }
 
 async function comprarColor(color) {
