@@ -133,10 +133,10 @@ async function canjearPuntos() {
     await firestore.collection('usuarios').doc(jugador.email).update({
         total_puntos: firebase.firestore.FieldValue.increment(jugador.score),
     });
-    canjearMonedas();
+    canjearMonedas(jugador);
 }
 
-async function canjearMonedas() {
+async function canjearMonedas(jugador) {
 
     var jugadores = partidaActual.jugadores;
 

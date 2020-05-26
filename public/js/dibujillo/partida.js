@@ -161,6 +161,7 @@ function calcularEstado() {
     lienzo.removeEventListener('mousedown', empezarDibujo, false);
     lienzo.removeEventListener('mousemove', dibujarLinea, false);
     lienzo.removeEventListener('mouseup', dejarDibujo, false);
+    document.getElementById("chat-input").disabled = false;
     if (partidaActual.activos < 2) {
         console.log('Esperando jugadores');
         opcionesycolores.innerHTML = '';
@@ -198,6 +199,8 @@ function calcularEstado() {
                     lienzo.addEventListener('mousedown', empezarDibujo, false);
                     lienzo.addEventListener('mousemove', dibujarLinea, false);
                     lienzo.addEventListener('mouseup', dejarDibujo, false);
+
+                    document.getElementById("chat-input").disabled = true;
 
                     //lienzo.addEventListener('touchstart', empezarDibujo, false);
                     //lienzo.addEventListener('touchmove', dibujarLinea, false);
@@ -457,7 +460,7 @@ function cuentaAtras(fin) {
         if (contador > 0) {
             contador -= 1;
             setTimeout("cuentaAtras()", 1000);
-            if (contador == 29) {
+            if (contador == 14) {
                 darPista = true;
                 calcularPalabra();
             }
