@@ -146,10 +146,10 @@ async function enviarSolicitud(correo) {
         solicitudes: firebase.firestore.FieldValue.arrayUnion(usuario.email),
     })
     .then(function(){
-        alert("Solicitud enviada");
+        bootbox.alert("Solicitud enviada");
     })
     .catch(function(error){
-        alert("El usuario no existe");
+        bootbox.alert("El usuario no existe");
         console.log("Error al enviar solicitud");
         console.log(error.message);
     });
@@ -158,7 +158,7 @@ async function enviarSolicitud(correo) {
 
 async function sendRequest() {
     if(email.value == usuario.email){
-        alert("Ese es tu nombre de usuario");
+        bootbox.alert("Ese es tu nombre de usuario");
     }
     else{
         enviarSolicitud(email.value);

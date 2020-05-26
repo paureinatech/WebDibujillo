@@ -172,6 +172,7 @@ function unirsePartida() {
             return transaction.get(partidaRef).then(function(sfDoc) {
                 if (!sfDoc.exists) {
                     throw "Document does not exist!";
+                    bootbox.alert("No existe una partida con esas características");
                 }
 
                 var hay_hueco = sfDoc.data().hay_hueco;
@@ -196,6 +197,7 @@ function unirsePartida() {
                     return "";
                 } else {
                     return Promise.reject("No hay hueco.");
+                    bootbox.alert("No hay más hueco en la partida");
                 }
             });
         }).then(function(newPopulation) {
@@ -203,11 +205,14 @@ function unirsePartida() {
             window.location.replace('partida.html?ref=' + idpartida);
         }).catch(function(err) {
             // This will be an "population is too big" error.
+            bootbox.alert("No hay más hueco en la partida");
             console.error(err);
+
         });
     }
     else {
         // Mostrar pop-up si no se introduce nada
+        bootbox.alert("Introduzca todos los datos");
     }
 }
 async function signOut() {

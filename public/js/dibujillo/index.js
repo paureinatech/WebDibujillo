@@ -139,7 +139,7 @@ async function signIn() {
     }
     else {
         console.log('No se ha podido iniciar sesion');
-        alert("Error al iniciar sesión");
+        bootbox.alert("Error al iniciar sesión");
         document.signInForm.password.focus();
     }
 
@@ -149,12 +149,12 @@ async function signIn() {
 function validateForm() {
     console.log('Comprobando campos');
     if (document.signInForm.email.value == "") {
-        alert("Por favor introduzca su email");
+        bootbox.alert("Por favor introduzca su email");
         document.signInForm.email.focus();
         return false;
     }
     if (document.signInForm.password.value == "") {
-        alert("Por favor introduzca su contraseña");
+        bootbox.alert("Por favor introduzca su contraseña");
         document.signInForm.password.focus();
         return false;
     }
