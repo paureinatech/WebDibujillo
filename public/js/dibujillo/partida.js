@@ -108,10 +108,10 @@ var colores = [{nombre:"Negro", color:"0XFF000000", imagen:"img/colores/negro.pn
 {nombre:"Algodon", color:"0xFFF8BBD0", imagen:"img/colores/algodon.png"},
 {nombre:"Lila", color:"0xFFB39DDB", imagen:"img/colores/lila.png"},
 {nombre:"Gris", color:"0XFF757575", imagen:"img/colores/plateado.png"},
-{nombre:"Dibujillo", color:"0xFF00E676", imagen:"img/colores/dibujillo.png"}
-{nombre:"Mandarina", color:"0xFFFFAB40", imagen:"img/colores/mandarina.png"}
+{nombre:"Dibujillo", color:"0xFF00E676", imagen:"img/colores/dibujillo.png"},
+{nombre:"Mandarina", color:"0xFFFFAB40", imagen:"img/colores/mandarina.png"},
 {nombre:"Oceano", color:"0xFF3F51B5", imagen:"img/colores/oceano.png"},
-{nombre:"Bosque", color:"0xFF009688", imagen:"img/colores/bosque.png"}
+{nombre:"Bosque", color:"0xFF009688", imagen:"img/colores/bosque.png"},
 {nombre:"Salmon", color:"0xFFFA8072", imagen:"img/colores/salmon.png"}
 ];
 
