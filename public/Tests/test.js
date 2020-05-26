@@ -88,42 +88,64 @@ async function registrarUsuario() {
 
 async function eliminarCuenta() {
 
-    await firebase.auth().onAuthStateChanged(function(user) {
-        console.log('Cambios en el usuario');
-        if (user) {
-            // User is signed in.
-            var displayName = user.displayName;
-            var email = user.email;
-            var photoURL = user.photoURL;
-            var uid = user.uid;
+//    await firebase.auth().onAuthStateChanged(function(user) {
+//        //console.log('Cambios en el usuario');
+//        if (user) {
+//            // User is signed in.
+//            var displayName = user.displayName;
+//            var email = user.email;
+//            var photoURL = user.photoURL;
+//            var uid = user.uid;
+//
+//            user = {
+//                uid: user.uid,
+//                email: user.email,
+//                displayName: user.displayName,
+//                photoURL: user.photoURL,
+//            };
+//
+//            //console.log('Sesion iniciada con exito');
+//
+//            firestore.collection("usuarios").doc(email).delete()
+//            .then(function() {
+//                console.log("Usuario borrado de firestore");
+//            }).catch(function(error) {
+//                console.error("No se pudo borrar el usuario de firestore");
+//            });
+//
+//            user.delete().then(function() {
+//              console.log('Usuario eliminado correctametne');
+//            }).catch(function(error) {
+//              console.log('No se pudo eliminar al usuario');
+//            });
+//
+//        } else {
+//            // User is signed out.
+//            // ...
+//            console.log("No hay usuario logueado");
+//
+//            fierbase.auth().
+//        }
+//    });
 
-            user = {
-                uid: user.uid,
-                email: user.email,
-                displayName: user.displayName,
-                photoURL: user.photoURL,
-            };
+    await firebase.auth().signInWithEmailAndPassword(email, password).catch(function(error) {
+      var errorCode = error.code;
+      var errorMessage = error.message;
+    });
 
-            console.log('Sesion iniciada con exito');
+    var user = firebase.auth().currentUser;
 
-            firestore.collection("usuarios").doc(email).delete()
-            .then(function() {
-                console.log("Usuario borrado de firestore");
-            }).catch(function(error) {
-                console.error("No se pudo borrar el usuario de firestore");
-            });
+    firestore.collection("usuarios").doc(email).delete()
+    .then(function() {
+        console.log("Usuario borrado de firestore");
+    }).catch(function(error) {
+        console.error("No se pudo borrar el usuario de firestore");
+    });
 
-            user.delete().then(function() {
-              console.log('Usuario eliminado correctametne');
-            }).catch(function(error) {
-              console.log('No se pudo eliminar al usuario');
-            });
-
-        } else {
-            // User is signed out.
-            // ...
-            console.log("No hay usuario logueado, volviendo al inicio");
-        }
+    user.delete().then(function() {
+      console.log('Usuario eliminado correctametne');
+    }).catch(function(error) {
+      console.log('No se pudo eliminar al usuario');
     });
 }
 
