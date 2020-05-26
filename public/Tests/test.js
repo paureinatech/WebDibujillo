@@ -100,9 +100,27 @@ function eliminarCuenta() {
 
 }
 
+function escucharUsuario(email) {
+firestore.collection("usuarios").doc(email).onSnapshot(function (doc) {
+    console.log("Current data", doc.data());
+            var data = doc.data();
+            user = {
+                email : data.email,
+                apodo : data.apodo,
+                photoUrl : data.photoUrl,
+                monedas : data.monedas,
+                total_puntos : data.total_puntos,
+                amigos : data.amigos,
+                colores : data.colores,
+                iconos : data.iconos,
+                solicitudes : data.solicitudes,
+            };
+    });
+}
+
 function comprarColor(color) {
-    if (usuario.monedas >= 50) {
-        firestore.collection('usuarios').doc(usuario.email).update({
+    if (user.monedas >= 50) {
+        firestore.collection('usuarios').doc(user.email).update({
         colores: firebase.firestore.FieldValue.arrayUnion(color),
         monedas: firebase.firestore.FieldValue.increment(-50),
         });
@@ -110,7 +128,7 @@ function comprarColor(color) {
 }
 
 function addMonedas(coins) {
-    firestore.collection('usuarios').doc(usuario.email).update({
+    firestore.collection('usuarios').doc(user.email).update({
                     monedas: firebase.firestore.FieldValue.increment(coins),
     });
 }
@@ -119,21 +137,7 @@ signIn();
 
 console.log("Comenzando a escuchar a " + email);
 
-firestore.collection("usuarios").doc(email).onSnapshot(function (doc) {
-console.log("Current data", doc.data());
-        var data = doc.data();
-        usuario = {
-            email : data.email,
-            apodo : data.apodo,
-            photoUrl : data.photoUrl,
-            monedas : data.monedas,
-            total_puntos : data.total_puntos,
-            amigos : data.amigos,
-            colores : data.colores,
-            iconos : data.iconos,
-            solicitudes : data.solicitudes,
-        };
-});
+escucharUsuario(email);
 
 addMonedas(500);
 
