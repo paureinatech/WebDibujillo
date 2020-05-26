@@ -104,7 +104,7 @@ function eliminarCuenta() {
 
 async function escucharUsuario(email) {
     console.log("Comenzando a escuchar a " + email);
-    await firestore.collection("usuarios").doc(email).onSnapshot(function (doc) {
+    await firestore.collection("usuarios").doc(email).onSnapshot(async function (doc) {
         console.log("Current data", doc.data());
             var data = doc.data();
             user = {
@@ -118,6 +118,10 @@ async function escucharUsuario(email) {
                 iconos : data.iconos,
                 solicitudes : data.solicitudes,
             };
+
+            await addMonedas(500);
+
+            await comprarColor("0XFFE53935");
     });
 
 
@@ -144,10 +148,6 @@ async function main() {
         var result2 = registrarUsuario();
         if (result2) {
             await escucharUsuario(email);
-
-            await addMonedas(500);
-
-            await comprarColor("0XFFE53935");
         }
         eliminarCuenta();
     }
