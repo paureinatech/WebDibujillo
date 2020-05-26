@@ -215,6 +215,17 @@ function calcularEstado() {
             if (partidaActual.nAciertos == partidaActual.jugadores.length - 1) {
                 contador = 0;
             }
+            var numComprobados = 0;
+            while(numComprobados < partidaActual.jugadores.length) {
+                if (partidaActual.jugadores[numComprobados].email == usuario.email) {
+                    if (partidaActual.jugadores[numComprobados].pause) {
+
+                    }
+                    else {
+
+                    }
+                }
+            }
         }
     }
     calcularPalabra();
@@ -264,10 +275,58 @@ function pasarTurno() {
             return "";
         });
     }).catch(function(err) {
-        // This will be an "population is too big" error.
         console.error(err);
     });
     borrarLienzo();
+}
+
+function pausar() {
+    var partidaRef = firestore.collection("partidas").doc(partidaActual.id);
+    firestore.runTransaction(function(transaction) {
+        return transaction.get(partidaRef).then(function(sfDoc) {
+            if (!sfDoc.exists) {
+                throw "Document does not exist!";
+            }
+
+            var jugadores = sfDoc.data().jugadores;
+            var numJugadores = jugadores.length;
+            var newJugadores = [];
+
+            var numComprobados = 0;
+            while (numComprobados < numJugadores) {
+                if (jugadores[numComprobados].email == usuario.email) {
+                    newJugadores.push(
+                        {
+                            apodo: jugadores[numComprobados].apodo,
+                            email: jugadores[numComprobados].email,
+                            photoUrl: jugadores[numComprobados].photoUrl,
+                            score: jugadores[numComprobados].score,
+                            pause: !jugadores[numComprobados].pause,
+                        }
+                    );
+                }
+                else {
+                    newJugadores.push(
+                        {
+                            apodo: jugadores[numComprobados].apodo,
+                            email: jugadores[numComprobados].email,
+                            photoUrl: jugadores[numComprobados].photoUrl,
+                            score: jugadores[numComprobados].score,
+                            pause: jugadores[numComprobados].pause,
+                        }
+                    );
+                }
+                numComprobados++;
+            }
+
+            transaction.update(partidaRef, {
+                jugadores: newJugadores,
+            });
+            return "";
+        });
+    }).catch(function(err) {
+        console.error(err);
+    });
 }
 
 function actualizarJugadores(jugador) {
@@ -655,7 +714,7 @@ var dialog;
 function mostrarEsperandoJugadores() {
     dialog = bootbox.dialog({
         message: '<div class="row justify-content-center"><div class="spinner-grow text-success" role="status"></div><div class="text-center" style="margin: 5px 20px">Esperando jugadores...</div></div>',
-        closeButton: true,
+        closeButton: false,
         onEscape: true,
     });
 }
