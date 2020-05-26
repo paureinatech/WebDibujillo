@@ -87,12 +87,19 @@ async function registrarUsuario() {
 }
 
 async function eliminarCuenta() {
+
+    console.log('Comprobando si hay sesion iniciada');
+
     await firebase.auth().signInWithEmailAndPassword(email, password).catch(function(error) {
       var errorCode = error.code;
       var errorMessage = error.message;
     });
 
     var user = firebase.auth().currentUser;
+
+    if (user) {
+        console.log(user);
+    }
 
     firestore.collection("usuarios").doc(email).delete()
     .then(function() {
@@ -102,7 +109,7 @@ async function eliminarCuenta() {
     });
 
     user.delete().then(function() {
-      console.log('Usuario eliminado correctametne');
+      console.log('Usuario eliminado correctamente');
     }).catch(function(error) {
       console.log('No se pudo eliminar al usuario');
     });
