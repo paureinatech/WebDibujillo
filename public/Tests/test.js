@@ -72,7 +72,6 @@ async function signIn() {
             console.log('Error al registrar usuario');
             console.log(errorMessage);
         });
-        eliminarCuenta();
     }
     else {
         console.log('No se ha podido registrar correctamente');
@@ -85,7 +84,6 @@ function validateForm() {
 }
 
 function eliminarCuenta() {
-    var user = firebase.auth().currentUser;
 
     user.delete().then(function() {
       console.log('Usuario eliminado correctametne');
@@ -102,5 +100,20 @@ function eliminarCuenta() {
 
 }
 
+function comprarColor(color) {
+    if (usuario.monedas >= 50) {
+        firestore.collection('usuarios').doc(usuario.email).update({
+        colores: firebase.firestore.FieldValue.arrayUnion(color),
+        monedas: firebase.firestore.FieldValue.increment(-50),
+        });
+    }
+}
+
 signIn();
+
+var usuario = firebase.auth().currentUser;
+
+comprarColor("0XFFE53935");
+
+//eliminarCuenta();
 //probando el test
