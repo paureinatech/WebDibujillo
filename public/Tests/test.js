@@ -149,6 +149,9 @@ async function comprarColor(color) {
         await firestore.collection('usuarios').doc(usuario.email).update({
             colores: firebase.firestore.FieldValue.arrayUnion(color),
             monedas: firebase.firestore.FieldValue.increment(-50),
+        })
+        .then(function() {
+            console.log('Color rojo comprado');
         });
     }
 }
@@ -156,6 +159,9 @@ async function comprarColor(color) {
 async function addMonedas(coins) {
     await firestore.collection('usuarios').doc(usuario.email).update({
         monedas: firebase.firestore.FieldValue.increment(coins),
+    })
+    .then(function() {
+        console.log('500 monedas añadidas')
     });
 }
 
