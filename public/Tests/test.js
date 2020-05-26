@@ -23,7 +23,7 @@ var firestore = firebase.firestore();
 
 //Funciones propias de registro
 
-var email = "partida@gmail.com";
+var email = "pruebaweb@gmail.com";
 var nickname = "test";
 var password = "123456";
 
@@ -117,8 +117,8 @@ firestore.collection("usuarios").doc(email).onSnapshot(function (doc) {
                 solicitudes : data.solicitudes,
             };
     });
-    addMonedas(500);
-    comprarColor("0XFFE53935");
+
+
 }
 
 function comprarColor(color) {
@@ -136,9 +136,13 @@ function addMonedas(coins) {
     });
 }
 
-//signIn();
+await signIn();
 
-escucharUsuario(email);
+await escucharUsuario(email);
+
+await addMonedas(500);
+
+await comprarColor("0XFFE53935");
 
 //eliminarCuenta();
 //probando el test
