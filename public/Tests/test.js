@@ -190,7 +190,9 @@ async function addMonedas(coins) {
 }
 
 async function main() {
-    await eliminarCuenta();
+    await eliminarCuenta().catch(function(error) {
+        console.log('No ha hecho falta borrar la cuenta');
+    });
     var result = await signIn();
     if (result) {
         var result2 = registrarUsuario();
