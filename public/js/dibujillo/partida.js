@@ -220,7 +220,7 @@ function calcularEstado() {
             while(numComprobados < partidaActual.jugadores.length) {
                 if (partidaActual.jugadores[numComprobados].email == usuario.email) {
                     if (partidaActual.jugadores[numComprobados].pause) {
-                        imagenPause.innerHTML = '<img title="Vuelve a la partida" style="width:50px; height:50px;"src="img/pausa.png" onclick="pausar()">';
+                        imagenPause.innerHTML = '<img title="Vuelve a la partida" style="width:50px; height:50px;"src="img/play.png" onclick="pausar()">';
                     }
                     else {
                         imagenPause.innerHTML = '<img title="Pausa la partida para que salte tu turno si no estás jugando" style="width:50px; height:50px;"src="img/pausa.png" onclick="pausar()">';
