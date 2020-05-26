@@ -28,6 +28,7 @@ var nickname = "test";
 var password = "123456";
 
 var user;
+var usuario;
 
 async function signIn() {
 
@@ -51,25 +52,6 @@ async function signIn() {
     });
     if (result == true) {
         console.log('Registro realizado con exito');
-        await firestore.collection("usuarios").doc(email).set({
-                        email: email,
-                        apodo: nickname,
-                        total_puntos: 0,
-                        photoUrl:
-                            'https://img.vixdata.io/pd/jpg-large/es/sites/default/files/btg/bodyart.batanga.com/files/7-simpaticos-tatuajes-de-llamas-y-alpacas.jpg',
-                        monedas: 50,
-                        colores: ["0xFF000000"],
-                        iconos: [],
-                        amigos: [],
-                        solicitudes: [],
-        }).catch( function(error) {
-            // Handle Errors here.
-            var errorCode = error.code;
-            var errorMessage = error.message;
-
-            console.log('Error al registrar usuario');
-            console.log(errorMessage);
-        });
     }
     return result;
 }
@@ -78,13 +60,80 @@ function validateForm() {
     return ( true );
 }
 
-function eliminarCuenta() {
+async function registrarUsuario() {
+    var result = true;
+    await firestore.collection("usuarios").doc(email).set({
+        email: email,
+        apodo: nickname,
+        total_puntos: 0,
+        photoUrl:
+            'https://img.vixdata.io/pd/jpg-large/es/sites/default/files/btg/bodyart.batanga.com/files/7-simpaticos-tatuajes-de-llamas-y-alpacas.jpg',
+        monedas: 50,
+        colores: ["0XFF000000"],
+        iconos: [],
+        amigos: [],
+        solicitudes: [],
+    }).catch( function(error) {
+        // Handle Errors here.
+        var errorCode = error.code;
+        var errorMessage = error.message;
 
-    user.delete().then(function() {
-      console.log('Usuario eliminado correctametne');
-    }).catch(function(error) {
-      console.log('No se pudo eliminar al usuario');
+        console.log('Error al registrar usuario');
+        console.log(errorMessage);
+
+        result = false;
     });
+    return result;
+}
+
+async function eliminarCuenta() {
+
+//    await firebase.auth().onAuthStateChanged(function(user) {
+//        //console.log('Cambios en el usuario');
+//        if (user) {
+//            // User is signed in.
+//            var displayName = user.displayName;
+//            var email = user.email;
+//            var photoURL = user.photoURL;
+//            var uid = user.uid;
+//
+//            user = {
+//                uid: user.uid,
+//                email: user.email,
+//                displayName: user.displayName,
+//                photoURL: user.photoURL,
+//            };
+//
+//            //console.log('Sesion iniciada con exito');
+//
+//            firestore.collection("usuarios").doc(email).delete()
+//            .then(function() {
+//                console.log("Usuario borrado de firestore");
+//            }).catch(function(error) {
+//                console.error("No se pudo borrar el usuario de firestore");
+//            });
+//
+//            user.delete().then(function() {
+//              console.log('Usuario eliminado correctametne');
+//            }).catch(function(error) {
+//              console.log('No se pudo eliminar al usuario');
+//            });
+//
+//        } else {
+//            // User is signed out.
+//            // ...
+//            console.log("No hay usuario logueado");
+//
+//            fierbase.auth().
+//        }
+//    });
+
+    await firebase.auth().signInWithEmailAndPassword(email, password).catch(function(error) {
+      var errorCode = error.code;
+      var errorMessage = error.message;
+    });
+
+    var user = firebase.auth().currentUser;
 
     firestore.collection("usuarios").doc(email).delete()
     .then(function() {
@@ -93,14 +142,19 @@ function eliminarCuenta() {
         console.error("No se pudo borrar el usuario de firestore");
     });
 
+    user.delete().then(function() {
+      console.log('Usuario eliminado correctametne');
+    }).catch(function(error) {
+      console.log('No se pudo eliminar al usuario');
+    });
 }
 
 async function escucharUsuario(email) {
     console.log("Comenzando a escuchar a " + email);
-    await firestore.collection("usuarios").doc(email).onSnapshot(function (doc) {
+    await firestore.collection("usuarios").doc(email).onSnapshot(async function (doc) {
         console.log("Current data", doc.data());
             var data = doc.data();
-            user = {
+            usuario = {
                 email : data.email,
                 apodo : data.apodo,
                 photoUrl : data.photoUrl,
@@ -111,36 +165,42 @@ async function escucharUsuario(email) {
                 iconos : data.iconos,
                 solicitudes : data.solicitudes,
             };
+
+
     });
 
+    await addMonedas(500);
 
+    await comprarColor("0XFFE53935");
 }
 
 async function comprarColor(color) {
-    if (user.monedas >= 50) {
-        await firestore.collection('usuarios').doc(user.email).update({
-        colores: firebase.firestore.FieldValue.arrayUnion(color),
-        monedas: firebase.firestore.FieldValue.increment(-50),
+    if (usuario.monedas >= 50) {
+        await firestore.collection('usuarios').doc(usuario.email).update({
+            colores: firebase.firestore.FieldValue.arrayUnion(color),
+            monedas: firebase.firestore.FieldValue.increment(-50),
         });
     }
 }
 
 async function addMonedas(coins) {
-    await firestore.collection('usuarios').doc(user.email).update({
+    await firestore.collection('usuarios').doc(usuario.email).update({
         monedas: firebase.firestore.FieldValue.increment(coins),
     });
 }
 
 async function main() {
+    await eliminarCuenta();
     var result = await signIn();
     if (result) {
-        await escucharUsuario(email);
-
-        await addMonedas(500);
-
-        await comprarColor("0XFFE53935");
-
+        var result2 = registrarUsuario();
+        if (result2) {
+            await escucharUsuario(email);
+        }
         eliminarCuenta();
+    }
+    else {
+        console.log('Fallo en los test');
     }
 }
 

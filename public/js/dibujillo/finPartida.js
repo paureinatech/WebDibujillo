@@ -112,7 +112,9 @@ function escucharPartida(id) {
 
         listaJugadores.innerHTML = "";
         var jugadores = partida.jugadores;
-        jugadores.forEach(actualizarJugadores);
+        var jugadoresA = partida.jugadores;
+        jugadoresA.sort((a,b) => (a.score > b.score) ? -1 : ((b.score > a.score) ? 1 : 0));
+        jugadoresA.forEach(actualizarJugadores);
 
     });
 }
