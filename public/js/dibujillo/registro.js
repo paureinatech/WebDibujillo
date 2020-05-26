@@ -49,7 +49,7 @@ async function signIn() {
                         photoUrl:
                             'https://img.vixdata.io/pd/jpg-large/es/sites/default/files/btg/bodyart.batanga.com/files/7-simpaticos-tatuajes-de-llamas-y-alpacas.jpg',
                         monedas: 0,
-                        colores: ["0xFF000000"],
+                        colores: ["0XFF000000"],
                         iconos: [],
                         amigos: [],
                         solicitudes: [],
