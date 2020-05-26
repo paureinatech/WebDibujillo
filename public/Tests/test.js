@@ -115,10 +115,12 @@ function addMonedas(coins) {
     });
 }
 
-function escucharUsuario(email) {
-    console.log("Comenzando a escuchar a " + email);
-    firestore.collection("usuarios").doc(email).onSnapshot(function (doc) {
-        console.log("Current data", doc.data());
+signIn();
+
+console.log("Comenzando a escuchar a " + email);
+
+firestore.collection("usuarios").doc(email).onSnapshot(function (doc) {
+console.log("Current data", doc.data());
         var data = doc.data();
         usuario = {
             email : data.email,
@@ -131,11 +133,7 @@ function escucharUsuario(email) {
             iconos : data.iconos,
             solicitudes : data.solicitudes,
         };
-    });
-}
-signIn();
-
-escucharUsuario(email);
+});
 
 addMonedas(500);
 
