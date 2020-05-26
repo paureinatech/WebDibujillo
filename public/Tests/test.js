@@ -64,6 +64,13 @@ async function signIn() {
                         iconos: [],
                         amigos: [],
                         solicitudes: [],
+        }).then(function() {
+            await escucharUsuario(email);
+
+            await addMonedas(500);
+
+            await comprarColor("0XFFE53935");
+
         }).catch( function(error) {
             // Handle Errors here.
             var errorCode = error.code;
@@ -72,11 +79,6 @@ async function signIn() {
             console.log('Error al registrar usuario');
             console.log(errorMessage);
         });
-        await escucharUsuario(email);
-
-        await addMonedas(500);
-
-        await comprarColor("0XFFE53935");
     }
     else {
         console.log('No se ha podido registrar correctamente');
