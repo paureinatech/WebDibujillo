@@ -64,7 +64,7 @@ async function signIn() {
                         iconos: [],
                         amigos: [],
                         solicitudes: [],
-        }).then(function() {
+        }).then(async function() {
             await escucharUsuario(email);
 
             await addMonedas(500);
