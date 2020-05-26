@@ -52,34 +52,6 @@ async function signIn() {
     });
     if (result == true) {
         console.log('Registro realizado con exito');
-
-        firebase.auth().onAuthStateChanged(function(user) {
-            console.log('Cambios en el usuario');
-            if (user) {
-                // User is signed in.
-                var displayName = user.displayName;
-                var email = user.email;
-                var photoURL = user.photoURL;
-                var uid = user.uid;
-
-                user = {
-                    uid: user.uid,
-                    email: user.email,
-                    displayName: user.displayName,
-                    photoURL: user.photoURL,
-                };
-
-                escucharUsuario(user.email);
-
-                console.log('Sesion iniciada con exito');
-
-            } else {
-                // User is signed out.
-                // ...
-                console.log("No hay usuario logueado, volviendo al inicio");
-                window.location.replace("index.html");
-            }
-        });
     }
     return result;
 }
@@ -116,19 +88,44 @@ async function registrarUsuario() {
 
 function eliminarCuenta() {
 
-    firestore.collection("usuarios").doc(email).delete()
-    .then(function() {
-        console.log("Usuario borrado de firestore");
-    }).catch(function(error) {
-        console.error("No se pudo borrar el usuario de firestore");
-    });
+    firebase.auth().onAuthStateChanged(function(user) {
+        console.log('Cambios en el usuario');
+        if (user) {
+            // User is signed in.
+            var displayName = user.displayName;
+            var email = user.email;
+            var photoURL = user.photoURL;
+            var uid = user.uid;
 
-    user.delete().then(function() {
-      console.log('Usuario eliminado correctametne');
-    }).catch(function(error) {
-      console.log('No se pudo eliminar al usuario');
-    });
+            user = {
+                uid: user.uid,
+                email: user.email,
+                displayName: user.displayName,
+                photoURL: user.photoURL,
+            };
 
+            console.log('Sesion iniciada con exito');
+
+            firestore.collection("usuarios").doc(email).delete()
+            .then(function() {
+                console.log("Usuario borrado de firestore");
+            }).catch(function(error) {
+                console.error("No se pudo borrar el usuario de firestore");
+            });
+
+            user.delete().then(function() {
+              console.log('Usuario eliminado correctametne');
+            }).catch(function(error) {
+              console.log('No se pudo eliminar al usuario');
+            });
+
+        } else {
+            // User is signed out.
+            // ...
+            console.log("No hay usuario logueado, volviendo al inicio");
+            window.location.replace("index.html");
+        }
+    });
 }
 
 async function escucharUsuario(email) {
