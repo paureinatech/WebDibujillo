@@ -351,7 +351,7 @@ function pausar() {
 }
 
 function actualizarJugadores(jugador) {
-    if (partidaActual.jugadores[turno].email == usuario.email) {
+    if (partidaActual.jugadores[partidaActual.turno].email == usuario.email) {
         listaJugadores.innerHTML += '<tr><td><img class="aspect" src="' + jugador.photoUrl + '" alt=""><a class="user-link" style="font-weight: 600;">' + jugador.apodo + '</a></td><td>' + jugador.score + '</td></tr>';
     }
     else {
