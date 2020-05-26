@@ -458,11 +458,11 @@ function cuentaAtras(fin) {
     if (fin == true) {
         contador = 0;
         cuentaAtrasActivada = false;
-        timerCounter.innerHTML = '<h3 align="center" style="padding: 10px;">Contador: ' + contador + '</h3>';
+        timerCounter.innerHTML = '<h3 align="center" style="padding: 10px;">Ronda: ' + partidaActual.ronda + '   Contador: ' + contador + '</h3>';
     }
     else {
         cuentaAtrasActivada = true;
-        timerCounter.innerHTML = '<h3 align="center" style="padding: 10px;">Contador: ' + contador + '</h3>';
+        timerCounter.innerHTML = '<h3 align="center" style="padding: 10px;">Ronda: ' + partidaActual.ronda + '   Contador: ' + contador + '</h3>';
         if (contador > 0) {
             contador -= 1;
             setTimeout("cuentaAtras()", 1000);
