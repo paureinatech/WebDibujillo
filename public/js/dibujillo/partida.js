@@ -143,7 +143,7 @@ var lienzo = document.getElementById("canvas");
 var chat = document.getElementById("chat");
 var palabraHint = document.getElementById('palabra');
 var imagenPause = document.getElementById('imagePause');
-var cabecerachat = document.getElementById('cabecera-chat');
+var cabecerachat = document.getElementById('cabecerachat');
 
 var partidaActual;
 var estado = 0;
