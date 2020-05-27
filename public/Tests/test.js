@@ -162,6 +162,7 @@ async function addMonedas(coins) {
     })
     .then(function() {
         console.log('500 monedas añadidas')
+        usuario.monedas += 500;
     });
 }
 

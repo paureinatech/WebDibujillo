@@ -209,6 +209,7 @@ function calcularEstado() {
                 }
                 else {
                     console.log('Toca dibujar');
+                    cuentaAtrasEleccionActivada = false;
                     contadorEleccion = 0;
                     cuentaAtrasEleccion(true);
                     if (!cuentaAtrasActivada) {
@@ -233,6 +234,7 @@ function calcularEstado() {
                 if (partidaActual.palabra == "") {
                     console.log('Toca esperar que elijan palabra');
                     opcionesycolores.innerHTML = '';
+                    cuentaAtrasEleccionActivada = false;
                     contadorEleccion = 0;
                     cuentaAtrasEleccion(true);
                     contador = 0;
@@ -243,6 +245,7 @@ function calcularEstado() {
                 else {
                     console.log('Toca adivinar');
                     opcionesycolores.innerHTML = '';
+                    cuentaAtrasEleccionActivada = false;
                     contadorEleccion = 0;
                     cuentaAtrasEleccion(true);
                     if (!cuentaAtrasActivada) {
@@ -372,7 +375,13 @@ function pausar() {
 }
 
 function actualizarJugadores(jugador) {
-    listaJugadores.innerHTML += '<tr><td><img class="aspect" src="' + jugador.photoUrl + '" alt=""><a class="user-link">' + jugador.apodo + '</a></td><td>' + jugador.score + '</td></tr>';
+    if (partidaActual.jugadores[partidaActual.turno].email == usuario.email) {
+        listaJugadores.innerHTML += '<tr><td><img class="aspect" src="' + jugador.photoUrl + '" alt=""><a class="user-link" style="font-weight: 600;">' + jugador.apodo + '</a></td><td>' + jugador.score + '</td></tr>';
+    }
+    else {
+        listaJugadores.innerHTML += '<tr><td><img class="aspect" src="' + jugador.photoUrl + '" alt=""><a class="user-link">' + jugador.apodo + '</a></td><td>' + jugador.score + '</td></tr>';
+    }
+
 }
 
 function actualizarChat(mensaje) {
@@ -426,11 +435,11 @@ function mandarMensaje(mensaje) {
     var nuevosJugadores = [];
     while (j < partidaActual.jugadores.length) {
         var puntuacion = 0;
-        if (partidaActual.jugadores[j].email == usuario.email) {
+        if (partidaActual.jugadores[j].email == usuario.email && aciertos == 1) {
             puntuacion = partidaActual.jugadores[j].score;
-            if (contador > 50) {
+            if (contador > 25) {
                 puntuacion += 25;
-            } else if (contador > 35) {
+            } else if (contador > 20) {
                 puntuacion += 15;
             } else if (contador > 15) {
                 puntuacion += 10;
@@ -473,11 +482,11 @@ function cuentaAtras(fin) {
     if (fin == true) {
         contador = 0;
         cuentaAtrasActivada = false;
-        timerCounter.innerHTML = '<h3 align="center" style="padding: 10px;">Contador: ' + contador + '</h3>';
+        timerCounter.innerHTML = '<h3 align="center" style="padding: 10px;">Ronda: ' + partidaActual.ronda + '   Contador: ' + contador + '</h3>';
     }
     else {
         cuentaAtrasActivada = true;
-        timerCounter.innerHTML = '<h3 align="center" style="padding: 10px;">Contador: ' + contador + '</h3>';
+        timerCounter.innerHTML = '<h3 align="center" style="padding: 10px;">Ronda: ' + partidaActual.ronda + '   Contador: ' + contador + '</h3>';
         if (contador > 0) {
             contador -= 1;
             setTimeout("cuentaAtras()", 1000);
@@ -502,8 +511,8 @@ var cuentaAtrasEleccionActivada = false;
 
 function cuentaAtrasEleccion(fin) {
     if (fin == true) {
-        contadorEleccion = 0;
         cuentaAtrasEleccionActivada = false;
+        contadorEleccion = 0;
         //console.log('Contador Eleccion parado');
     }
     else {
