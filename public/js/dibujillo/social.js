@@ -196,7 +196,7 @@ async function signOut() {
         message: "¿Quieres cerrar la sesión?",
         buttons: {
             confirm: {
-                label: 'Yes',
+                label: 'Si',
                 className: 'btn-success',
             },
             cancel: {
