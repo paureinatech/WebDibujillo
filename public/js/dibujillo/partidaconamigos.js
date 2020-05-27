@@ -155,6 +155,7 @@ function crearPartida() {
             });
         }).then(function(newPopulation) {
             console.log("Jugador añadido correctamente");
+            bootbox.alert("No hay más hueco en la partida");
             window.location.replace('partida.html?ref=' + idpartida);
         }).catch(function(err) {
             // This will be an "population is too big" error.
