@@ -768,7 +768,7 @@ var palabrasElegidas;
 
 async function elegirPalabra(recargar){
     if (recargar) {
-        palabrasElegidas = randomNum(0, 9);
+        palabrasElegidas = randomNum(0, 37);
     }
     await bootbox.prompt({
         title: "Elige una palabra:",
