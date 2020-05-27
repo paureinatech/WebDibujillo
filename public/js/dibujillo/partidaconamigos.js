@@ -155,11 +155,12 @@ function crearPartida() {
             });
         }).then(function(newPopulation) {
             console.log("Jugador añadido correctamente");
-            bootbox.alert("No hay más hueco en la partida");
+            //bootbox.alert("No hay más hueco en la partida");
             window.location.replace('partida.html?ref=' + idpartida);
         }).catch(function(err) {
             // This will be an "population is too big" error.
             console.error(err);
+            bootbox.alert("Error");
         });
     });
 }
@@ -206,7 +207,7 @@ function unirsePartida() {
             window.location.replace('partida.html?ref=' + idpartida);
         }).catch(function(err) {
             // This will be an "population is too big" error.
-            bootbox.alert("Datos incorrectos");
+            //bootbox.alert("Datos incorrectos");
             console.error(err);
 
         });
