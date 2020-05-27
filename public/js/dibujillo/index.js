@@ -114,9 +114,9 @@ var password = document.getElementById('password');
 var signInButton = document.getElementById('signInButton');
 
 async function signIn() {
-
+ 
     if (!validateForm()) {
-        return;
+      return;
     }
     else {
       console.log('Logueando...');
@@ -128,6 +128,7 @@ async function signIn() {
       // Handle Errors here.
       var errorCode = error.code;
       var errorMessage = error.message;
+     // alert("Error al iniciar sesión");
       console.log('Error al iniciar sesion');
       console.log(errorMessage);
       // ...
@@ -139,6 +140,7 @@ async function signIn() {
     }
     else {
         console.log('No se ha podido iniciar sesion');
+        //alert("Error al iniciar sesión");
         bootbox.alert("Error al iniciar sesión");
         document.signInForm.password.focus();
     }

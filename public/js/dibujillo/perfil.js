@@ -113,20 +113,17 @@ function cargarDatos(){
 	
 function cambiarDatos(){
 	var nuevoapodo = document.getElementById('nuevoapodo');
-	var newnickname = nuevoapodo.value;
+  var newnickname = nuevoapodo.value;
+  var newphoto = nuevafoto.value;
+  var cambiado = 0;
 	if (newnickname != "" && newnickname != usuario.apodo){
 		firestore.collection('usuarios').doc(usuario.email).update({
 			apodo: newnickname,
         });
-        alert("Apodo cambiados correctamente");
-	}
-	var newphoto = nuevafoto.value;
-	
-	
-	
+        bootbox.alert("Apodo cambiado correctamente");
+    cambiado = 1;
+  }
 	if (newphoto != "" && newphoto != usuario.photoUrl){
-		
-		
 		
 		// Create a reference to 'perfil_images/newphoto.jpg'
 		var newImagesRef = storageRef.child('perfil_images/'+ newphoto).put(archivofoto, metadatafoto).then(function(snapshot) {
@@ -141,24 +138,45 @@ function cambiarDatos(){
 				console.log('File available at', url);
 			});
       });
-      alert("Foto cambiados correctamente");
+      bootbox.alert("Foto cambiada correctamente");
+      cambiado = 1;
+  }
+  if (cambiado == 0){
+    bootbox.alert("No hay nada nuevo que cambiar");
   }
 
 }
 
 async function signOut() {
-  var opcion = confirm("¿Quieres cerrar la sesión?");
-  if (opcion == true) {
-    await firebase.auth().signOut().then(function() {
-      // Sign-out successful.
-      console.log("Sesion cerrada con exito");
-      window.location.replace("index.html");
-    }).catch(function(error) {
-      // An error happened.
-      console.log("Error al cerrar sesion");
-      console.log(error.message);
+    bootbox.confirm({
+        message: "¿Quieres cerrar la sesión?",
+        buttons: {
+            confirm: {
+                label: 'Yes',
+                className: 'btn-success',
+            },
+            cancel: {
+                label: 'No',
+                className: 'btn-danger'
+            }
+        },
+        callback: function (result) {
+            console.log('This was logged in the callback: ' + result);
+            if(result == false){
+            }
+            else if(result == true){
+                firebase.auth().signOut().then(function() {
+                    // Sign-out successful.
+                    console.log("Sesion cerrada con exito");
+                    window.location.replace("index.html");
+                  }).catch(function(error) {
+                    // An error happened.
+                    console.log("Error al cerrar sesion");
+                    console.log(error.message);
+                  }); 
+            }
+        }
     });
-  }
 }
 
 escucharAuthentication();

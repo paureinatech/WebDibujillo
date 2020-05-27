@@ -205,7 +205,7 @@ function unirsePartida() {
             window.location.replace('partida.html?ref=' + idpartida);
         }).catch(function(err) {
             // This will be an "population is too big" error.
-            bootbox.alert("No hay más hueco en la partida");
+            bootbox.alert("Datos incorrectos");
             console.error(err);
 
         });
@@ -216,19 +216,37 @@ function unirsePartida() {
     }
 }
 async function signOut() {
-    var opcion = confirm("¿Quieres cerrar la sesión?");
-    if (opcion == true) {
-      await firebase.auth().signOut().then(function() {
-        // Sign-out successful.
-        console.log("Sesion cerrada con exito");
-        window.location.replace("index.html");
-      }).catch(function(error) {
-        // An error happened.
-        console.log("Error al cerrar sesion");
-        console.log(error.message);
-      });
-    }
-  }
+    var salir = 0;
+    bootbox.confirm({
+        message: "¿Quieres cerrar la sesión?",
+        buttons: {
+            confirm: {
+                label: 'Yes',
+                className: 'btn-success',
+            },
+            cancel: {
+                label: 'No',
+                className: 'btn-danger'
+            }
+        },
+        callback: function (result) {
+            console.log('This was logged in the callback: ' + result);
+            if(result == false){
+            }
+            else if(result == true){
+                firebase.auth().signOut().then(function() {
+                    // Sign-out successful.
+                    console.log("Sesion cerrada con exito");
+                    window.location.replace("index.html");
+                  }).catch(function(error) {
+                    // An error happened.
+                    console.log("Error al cerrar sesion");
+                    console.log(error.message);
+                  }); 
+            }
+        }
+    });
+}
 //---------------------------------------------------
 // Llamada a funciones generales al cargar la paguina
 //---------------------------------------------------

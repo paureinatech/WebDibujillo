@@ -77,14 +77,35 @@ function conseguirIdPartida() {
 }
 
 async function signOut() {
-    await firebase.auth().signOut().then(function() {
-      // Sign-out successful.
-      console.log("Sesion cerrada con exito");
-      window.location.replace("index.html");
-    }).catch(function(error) {
-      // An error happened.
-      console.log("Error al cerrar sesion");
-      console.log(error.message);
+    var salir = 0;
+    bootbox.confirm({
+        message: "¿Quieres cerrar la sesión?",
+        buttons: {
+            confirm: {
+                label: 'Yes',
+                className: 'btn-success',
+            },
+            cancel: {
+                label: 'No',
+                className: 'btn-danger'
+            }
+        },
+        callback: function (result) {
+            console.log('This was logged in the callback: ' + result);
+            if(result == false){
+            }
+            else if(result == true){
+                firebase.auth().signOut().then(function() {
+                    // Sign-out successful.
+                    console.log("Sesion cerrada con exito");
+                    window.location.replace("index.html");
+                  }).catch(function(error) {
+                    // An error happened.
+                    console.log("Error al cerrar sesion");
+                    console.log(error.message);
+                  }); 
+            }
+        }
     });
 }
 
