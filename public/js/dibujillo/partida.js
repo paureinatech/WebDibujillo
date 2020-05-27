@@ -143,6 +143,7 @@ var lienzo = document.getElementById("canvas");
 var chat = document.getElementById("chat");
 var palabraHint = document.getElementById('palabra');
 var imagenPause = document.getElementById('imagePause');
+var cabecera-chat = document.getElementById('cabecera-chat');
 
 var partidaActual;
 var estado = 0;
@@ -183,6 +184,7 @@ function calcularEstado() {
     lienzo.removeEventListener('mousemove', dibujarLinea, false);
     lienzo.removeEventListener('mouseup', dejarDibujo, false);
     document.getElementById("chat-input").disabled = false;
+    cabecera-chat.innerHTML = '<h3 style="max-width: 300px;">Chat de la partida: ' + partidaActual.id + '</h3>'
     if (partidaActual.activos < 2) {
         console.log('Esperando jugadores');
         opcionesycolores.innerHTML = '';
