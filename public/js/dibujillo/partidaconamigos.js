@@ -131,6 +131,7 @@ function crearPartida() {
             return transaction.get(partidaRef).then(function(sfDoc) {
                 if (!sfDoc.exists) {
                     throw "Document does not exist!";
+                    bootbox.alert("El código o el n")
                 }
 
                 var hay_hueco = sfDoc.data().hay_hueco;
@@ -172,9 +173,9 @@ function unirsePartida() {
         var partidaRef = firestore.collection("partidas").doc(idpartida);
         firestore.runTransaction(function(transaction) {
             return transaction.get(partidaRef).then(function(sfDoc) {
-                if (!sfDoc.exists) {
+                if (!sfDoc.exists) {                   
+                    bootbox.alert("No existe una partida con ese código y número de partida");
                     throw "Document does not exist!";
-                    bootbox.alert("No existe una partida con esas características");
                 }
 
                 var hay_hueco = sfDoc.data().hay_hueco;
@@ -198,8 +199,8 @@ function unirsePartida() {
                      });
                     return "";
                 } else {
+                    bootbox.alert("No hay más hueco en esa partida");
                     return Promise.reject("No hay hueco.");
-                    bootbox.alert("No hay más hueco en la partida");
                 }
             });
         }).then(function(newPopulation) {
